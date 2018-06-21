@@ -11,9 +11,9 @@ Main_Widget::Main_Widget()
     p->setStyleSheet("background-color:red;");
     p->move(50,50);
     p->show();
-    Mini_Widget* pmini = new Mini_Widget();
-    pmini->setParent(this);
-    pmini->setStyleSheet("background-color:blue;");
+
+    QPixmap* pixmap = new QPixmap(":img/mamont");
+    Mini_Widget* pmini = new Mini_Widget("rgba(100, 100, 100, 50%)", pixmap, new QWidget, QSize(100,100), this);
     pmini->move(100,100);
     pmini->show();
 

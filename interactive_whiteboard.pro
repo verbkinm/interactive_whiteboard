@@ -31,3 +31,6 @@ SOURCES += \
 HEADERS += \
     main_widget.h \
     mini_widget.h
+
+RESOURCES += \
+    img.qrc
