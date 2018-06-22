@@ -4,7 +4,7 @@
 #include <QWidget>
 #include <QSettings>
 
-#include "mini_widget.h"
+#include "mini_widget/mini_widget.h"
 
 class Main_Widget : public QWidget
 {
@@ -26,6 +26,8 @@ public:
     QObject*        addWidget           ();
     QList<QObject*> addWidgets          ();
 
+    void            addMyWidgets        ();
+    void            addMyWidget         (int x, int y, int width, int height, int borderWidth, QString  borderRGBA, int borderClickWidth, QString borderClickRGBA, QString iconPath, QString type);
 
 };
 

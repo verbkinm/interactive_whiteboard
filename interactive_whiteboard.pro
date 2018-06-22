@@ -25,12 +25,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-    main_widget.cpp \
-    mini_widget.cpp
+    main_widget/main_widget.cpp \
+    mini_widget/mini_widget.cpp \
+    content/content.cpp \
+    widget_types/clock.cpp
 
 HEADERS += \
-    main_widget.h \
-    mini_widget.h
+    main_widget/main_widget.h \
+    mini_widget/mini_widget.h \
+    content/content.h \
+    widget_types/clock.h
 
 RESOURCES += \
     img.qrc
