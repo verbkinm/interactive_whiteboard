@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui xml
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -28,13 +28,20 @@ SOURCES += \
     main_widget/main_widget.cpp \
     mini_widget/mini_widget.cpp \
     content/content.cpp \
-    widget_types/clock.cpp
+    widget_types/clock.cpp \
+    convert_main_table_schedule/convert_main_table_schedule.cpp \
+    widget_types/schedule.cpp
+
+
 
 HEADERS += \
     main_widget/main_widget.h \
     mini_widget/mini_widget.h \
     content/content.h \
-    widget_types/clock.h
+    widget_types/clock.h \
+    convert_main_table_schedule/converter_main_table_schedule.h \
+    widget_types/schedule.h
+
 
 RESOURCES += \
     img.qrc

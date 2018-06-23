@@ -27,8 +27,12 @@ public:
     QList<QObject*> addWidgets          ();
 
     void            addMyWidgets        ();
-    void            addMyWidget         (int x, int y, int width, int height, int borderWidth, QString  borderRGBA, int borderClickWidth, QString borderClickRGBA, QString iconPath, QString type);
+    void            addMyWidget         (int x, int y, int width, int height, int borderWidth, \
+                                         QString  borderRGBA, int borderClickWidth, QString borderClickRGBA, QString iconPath, QString type, \
+                                         QString textColor, QString backgroundColor);
 
+    void            paintEvent          (QPaintEvent*);
+    virtual bool    event               (QEvent *event);
 };
 
 #endif // MAIN_WIDGET_H

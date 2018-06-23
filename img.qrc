@@ -1,5 +1,8 @@
 <RCC>
     <qresource prefix="/img">
         <file alias="mamont">img/mamont.png</file>
+        <file alias="logo">img/logo.png</file>
+        <file alias="school">img/school.jpg</file>
+        <file alias="school2">img/school2.jpg</file>
     </qresource>
 </RCC>
