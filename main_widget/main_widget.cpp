@@ -5,19 +5,24 @@
 
 #include <QDebug>
 #include <QEvent>
-#include <QDesktopWidget>
+#include <QTextCodec>
 
 Main_Widget::Main_Widget()
-    : QWidget(), widget_settings("LYCEUM","interactive_whiteboard")
+    : QWidget(),   generals_settings("LYCEUM","interactive_whiteboard_generals"), \
+                   widget_settings("LYCEUM","interactive_whiteboard_widgets")
+
 {
+    readGeneralsSettings();
+
     addMyWidgets();
 }
 void Main_Widget::addMyWidgets()
 {
+
     QStringList groups = widget_settings.childGroups();
 
     foreach (QString str, groups) {
-        qDebug() << str;
+//        qDebug() << str;
         widget_settings.beginGroup(str);
         QStringList keys = widget_settings.childKeys();
 
@@ -54,6 +59,13 @@ void Main_Widget::addMyWidget(int x, int y, int width, int height, int borderWid
     pmini->show();
 
 }
+void Main_Widget::readGeneralsSettings()
+{
+    generals_settings.setIniCodec("utf8");
+    widget_settings.setIniCodec("utf8");
+
+    backgoundImage = new QPixmap(generals_settings.value("Generals/backgoundImage", ":img/school2").toString());
+}
 bool Main_Widget::event(QEvent *event)
 {
 //    qDebug() << event->type();
@@ -63,8 +75,7 @@ void Main_Widget::paintEvent(QPaintEvent*)
 {
     QPainter painter(this);
 
-    QPixmap pix(":img/school2");
-    QPixmap newPix = pix.scaled(this->size(), Qt::IgnoreAspectRatio);
+    QPixmap newPix = backgoundImage->scaled(this->size(), Qt::IgnoreAspectRatio);
     painter.setBrush(QBrush(Qt::black, newPix));
     painter.drawRect(this->rect());
 }

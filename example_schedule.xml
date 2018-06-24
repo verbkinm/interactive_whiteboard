@@ -1,0 +1,15 @@
+<?xml version = "1.0"?>
+<schedule>
+   <lessontime>
+      <number>1</number>
+      <timebegin>8:30</timebegin>
+      <timeend>9:30</timeend>
+   </lessontime>
+   <class name="5А">
+      <lesson>
+         <name>информатика</name>
+         <place>304</place>
+         <teacher>Вербкин М.С.</teacher>
+      </lesson>
+   </class>
+</schedule>

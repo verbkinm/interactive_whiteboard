@@ -15,7 +15,10 @@ public:
     ~Main_Widget();
 
 //файл конфигураций для виджетов, добавляемых на доску
-    QSettings                       widget_settings;
+    QSettings                       generals_settings, widget_settings;
+
+//картинка фона главного окна
+    QPixmap*                        backgoundImage = nullptr;
 
 //здесь будут зраниться указатели на все виджеты на доске
     QList<QObject*>                 current_widgets;
@@ -30,6 +33,8 @@ public:
     void            addMyWidget         (int x, int y, int width, int height, int borderWidth, \
                                          QString  borderRGBA, int borderClickWidth, QString borderClickRGBA, QString iconPath, QString type, \
                                          QString textColor, QString backgroundColor);
+
+    void            readGeneralsSettings();
 
     void            paintEvent          (QPaintEvent*);
     virtual bool    event               (QEvent *event);
