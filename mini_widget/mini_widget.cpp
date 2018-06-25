@@ -8,7 +8,8 @@
 
 Mini_Widget::Mini_Widget(QString borderColor, int borderWidth, QString borderClickColor, int borderClickWidth, \
                          QPixmap *miniIcon, QSize size, QString type, \
-                         QString textColor, QString backgroudColor, QString xmlPath, QWidget *parent) : QWidget(parent)
+                         QString textColor, QString backgroudColor, \
+                         QString xmlPath, QWidget *parent) : QWidget(parent)
 {
     myType = type;
     mySize = size;
@@ -46,6 +47,25 @@ Mini_Widget::Mini_Widget(QString borderColor, int borderWidth, QString borderCli
 
     this->setStyleSheet("border-radius: 20px;");
     this->setFixedSize(borderClick->size());
+}
+//type clock
+Mini_Widget::Mini_Widget(QString borderColor, int borderWidth, QString borderClickColor, int borderClickWidth, \
+                         QSize size, QString textColor, QString backgroudColor, QWidget *parent = nullptr)
+{
+    centralWidget = new QWidget(this);
+    centralWidget->move(borderClickWidth / 2, borderClickWidth/2);
+    Clock* pClock = new Clock(textColor, backgroudColor, centralWidget);
+    pClock->setFixedSize(size);
+}
+//type schedule
+Mini_Widget::Mini_Widget(QString borderColor, int borderWidth, QString borderClickColor, int borderClickWidth, \
+            QPixmap* miniIcon, QSize size, \
+            QString xmlPath,   QWidget *parent)
+{
+    createLabelForMiniWidget();
+    pContent = new Content;
+    Schedule*   pSchedule = new Schedule(xmlPath);
+    pContent->addWidget(pSchedule);
 }
 void Mini_Widget::selectTypeWidget()
 {
