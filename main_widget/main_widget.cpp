@@ -27,34 +27,41 @@ void Main_Widget::addMyWidgets()
         QStringList keys = widget_settings.childKeys();
 
         int x,y,width,height,borderWidth,borderClickWidth;
-        QString borderRGBA, borderClickRGBA, iconPath, type, textColor, backgroundColor;
-        x                   = widget_settings.value("x").toInt();
-        y                   = widget_settings.value("y").toInt();
-        width               = widget_settings.value("width").toInt();
-        height              = widget_settings.value("height").toInt();
-        borderWidth         = widget_settings.value("borderWidth").toInt();
-        borderRGBA          = widget_settings.value("borderRGBA").toString();
-        borderClickWidth    = widget_settings.value("borderClickWidth").toInt();
-        borderClickRGBA     = widget_settings.value("borderClickRGBA").toString();
+        QString borderRGBA, borderClickRGBA, \
+                iconPath, \
+                type, \
+                textColor, backgroundColor, \
+                xmlPath;
+
+        x                   = widget_settings.value("x", 10).toInt();
+        y                   = widget_settings.value("y", 10).toInt();
+        width               = widget_settings.value("width", 50).toInt();
+        height              = widget_settings.value("height", 50).toInt();
+        borderWidth         = widget_settings.value("borderWidth", 10).toInt();
+        borderRGBA          = widget_settings.value("borderRGBA", "#000000").toString();
+        borderClickWidth    = widget_settings.value("borderClickWidth", 10).toInt();
+        borderClickRGBA     = widget_settings.value("borderClickRGBA", "#000000").toString();
         iconPath            = widget_settings.value("iconPath", ":img/logo").toString();
-        type                = widget_settings.value("type").toString();
-        textColor           = widget_settings.value("textColor").toString();
-        backgroundColor     = widget_settings.value("backgroundColor").toString();
+        type                = widget_settings.value("type", "label").toString();
+        textColor           = widget_settings.value("textColor", "black").toString();
+        backgroundColor     = widget_settings.value("backgroundColor", "#000000").toString();
+        xmlPath             = widget_settings.value("xmlPath", "\0").toString();
         widget_settings.endGroup();
 
         addMyWidget(x, y, width, height, borderWidth, borderRGBA, borderClickWidth, \
                     borderClickRGBA, iconPath, type, \
-                    textColor, backgroundColor);
+                    textColor, backgroundColor,\
+                    xmlPath);
     }
 }
 void Main_Widget::addMyWidget(int x, int y, int width, int height, int borderWidth, \
                               QString borderRGBA, int borderClickWidth, QString borderClickRGBA, QString iconPath, QString type, \
-                              QString textColor, QString backgroundColor)
+                              QString textColor, QString backgroundColor, QString xmlPath)
 {
     QPixmap* pixmap = new QPixmap(iconPath);
     Mini_Widget* pmini = new Mini_Widget(borderRGBA, borderWidth, borderClickRGBA, borderClickWidth, \
                                          pixmap, QSize(width,height), type, \
-                                         textColor, backgroundColor, this);
+                                         textColor, backgroundColor, xmlPath, this);
     pmini->move(x,y);
     pmini->show();
 

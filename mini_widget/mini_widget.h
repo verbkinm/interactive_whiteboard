@@ -14,12 +14,17 @@ class Mini_Widget : public QWidget
 public:
     Mini_Widget(QString borderColor, int borderWidth, QString borderClickColor, int borderClickWidth, \
                 QPixmap* miniIcon, QSize size, QString type, \
-                QString textColor, QString backgroudColor, QWidget *parent = nullptr);
+                QString textColor, QString backgroudColor, \
+                QString xmlPath,   QWidget *parent = nullptr);
     //~Mini_Widget();
 
 private:
     int borderWidth, borderClickWidth;
-    QString borderColor, borderClickColor, myType, textColor, backgroudColor;
+    QString borderColor, borderClickColor, \
+            myType, \
+            textColor, backgroudColor, \
+//для типа schedule путь к файлу xml
+            xmlPath;
 //рамка
     QLabel*                 border;
 //рамка, которая будет появлятся при нажатии

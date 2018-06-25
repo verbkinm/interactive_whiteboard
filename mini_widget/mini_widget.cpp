@@ -8,7 +8,7 @@
 
 Mini_Widget::Mini_Widget(QString borderColor, int borderWidth, QString borderClickColor, int borderClickWidth, \
                          QPixmap *miniIcon, QSize size, QString type, \
-                         QString textColor, QString backgroudColor, QWidget *parent) : QWidget(parent)
+                         QString textColor, QString backgroudColor, QString xmlPath, QWidget *parent) : QWidget(parent)
 {
     myType = type;
     mySize = size;
@@ -20,6 +20,8 @@ Mini_Widget::Mini_Widget(QString borderColor, int borderWidth, QString borderCli
 
     this->textColor             = textColor;
     this->backgroudColor        = backgroudColor;
+
+    this->xmlPath               = xmlPath;
 
 //рамка, которая будет появлятся при нажатии
     borderClick              = new QLabel(this);
@@ -60,7 +62,7 @@ void Mini_Widget::selectTypeWidget()
     {
         createLabelForMiniWidget();
         pContent = new Content;
-        Schedule* pSchedule = new Schedule;
+        Schedule*   pSchedule = new Schedule(xmlPath);
         pContent->addWidget(pSchedule);
     }
 }

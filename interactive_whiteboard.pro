@@ -30,7 +30,8 @@ SOURCES += \
     content/content.cpp \
     widget_types/clock.cpp \
     convert_main_table_schedule/convert_main_table_schedule.cpp \
-    widget_types/schedule.cpp
+    widget_types/schedule.cpp \
+    widget_types/cell/cell.cpp \
 
 
 
@@ -40,7 +41,8 @@ HEADERS += \
     content/content.h \
     widget_types/clock.h \
     convert_main_table_schedule/converter_main_table_schedule.h \
-    widget_types/schedule.h
+    widget_types/schedule.h \
+    widget_types/cell/cell.h
 
 
 RESOURCES += \
