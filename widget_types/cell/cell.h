@@ -1,29 +1,35 @@
 #ifndef CELL_H
 #define CELL_H
 
-#include <QObject>
-#include <QColor>
+#include <QWidget>
+#include <QHBoxLayout>
+#include <QVBoxLayout>
 
-class Cell : public QObject
+#include <QGridLayout>
+
+
+class Cell : public QWidget
 {
     Q_OBJECT
 private:
-    QStringList     nameOfLesson;
-    QStringList     teachers;
-    QStringList     roomCabinets;
+    QHBoxLayout* pHorizontLayout = nullptr;
+    QVBoxLayout pVerticalLayoutArray;
+
+    QGridLayout* pGridLayout = nullptr;
+
+// номер текущего столбца и строки в gridLayout
+    int row = 0;
+    int column = 0;
+
+    unsigned int textSize;
+    QString textColor;
 
 public:
-    Cell(QStringList nameOfLesson, QStringList teachers, QStringList roomCabinets);
-    Cell();
+    Cell(unsigned int textSize, QString textColor);
 
-    void            setNameOfLesson (QStringList nameOfLesson);
-    void            setTeachers     (QStringList teacher);
-    void            setRoomCabinets (QStringList roomCabinet);
+    void        setText                 (QString str);
 
-    QStringList     getnameOfLesson ();
-    QStringList     getTeachers     ();
-    QStringList     getRoomCabinets ();
-
+    void        separate                ();
 signals:
 
 public slots:

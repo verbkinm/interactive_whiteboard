@@ -6,24 +6,37 @@
 #include <QPaintEvent>
 #include <QPainter>
 
+//label
 Mini_Widget::Mini_Widget(QString borderColor, int borderWidth, QString borderClickColor, int borderClickWidth, \
-                         QPixmap *miniIcon, QSize size, QString type, \
-                         QString textColor, QString backgroudColor, \
-                         QString xmlPath, QWidget *parent) : QWidget(parent)
+                         QPixmap* miniIcon, QSize size, \
+                         QWidget *parent) : QWidget(parent)
 {
-    myType = type;
-    mySize = size;
-
-    this->borderWidth           = borderWidth;
-    this->borderClickWidth      = borderClickWidth;
-    this->borderColor           = borderColor;
-    this->borderClickColor      = borderClickColor;
-
-    this->textColor             = textColor;
-    this->backgroudColor        = backgroudColor;
-
-    this->xmlPath               = xmlPath;
-
+    generalSettings(borderColor, borderWidth, borderClickColor, borderClickWidth, size);
+    createLabelForMiniWidget(borderClickWidth, miniIcon, size);
+}
+//type clock
+Mini_Widget::Mini_Widget(QString borderColor, int borderWidth, QString borderClickColor, int borderClickWidth, \
+                         QSize size, QString textColor, QString backgroudColor, QWidget *parent) : QWidget(parent)
+{
+    generalSettings(borderColor, borderWidth, borderClickColor, borderClickWidth, size);
+    centralWidget = new QWidget(this);
+    centralWidget->move(borderClickWidth / 2, borderClickWidth/2);
+    Clock* pClock = new Clock(textColor, backgroudColor, centralWidget);
+    pClock->setFixedSize(size);
+}
+//type schedule
+Mini_Widget::Mini_Widget(QString borderColor, int borderWidth, QString borderClickColor, int borderClickWidth, \
+            QPixmap* miniIcon, QSize size, \
+            QString xmlPath,   QString textColor, unsigned int textSize, QWidget *parent) : QWidget(parent)
+{
+    generalSettings(borderColor, borderWidth, borderClickColor, borderClickWidth, size);
+    createLabelForMiniWidget(borderClickWidth, miniIcon, size);
+    pContent = new Content;
+    Schedule*   pSchedule = new Schedule(xmlPath, textColor, textSize);
+    pContent->addWidget(pSchedule);
+}
+void Mini_Widget::generalSettings(QString borderColor, int borderWidth, QString borderClickColor, int borderClickWidth, QSize size)
+{
 //рамка, которая будет появлятся при нажатии
     borderClick              = new QLabel(this);
     //example: border-color: rgba(255, 0, 0, 75%)
@@ -39,61 +52,18 @@ Mini_Widget::Mini_Widget(QString borderColor, int borderWidth, QString borderCli
     border->move(borderClickWidth / 2 - borderWidth / 2, borderClickWidth / 2 - borderWidth / 2);
 
     this->miniIcon      = miniIcon;
-//    this->content       = content;
-
-
-    selectTypeWidget();
-
 
     this->setStyleSheet("border-radius: 20px;");
     this->setFixedSize(borderClick->size());
 }
-//type clock
-Mini_Widget::Mini_Widget(QString borderColor, int borderWidth, QString borderClickColor, int borderClickWidth, \
-                         QSize size, QString textColor, QString backgroudColor, QWidget *parent = nullptr)
-{
-    centralWidget = new QWidget(this);
-    centralWidget->move(borderClickWidth / 2, borderClickWidth/2);
-    Clock* pClock = new Clock(textColor, backgroudColor, centralWidget);
-    pClock->setFixedSize(size);
-}
-//type schedule
-Mini_Widget::Mini_Widget(QString borderColor, int borderWidth, QString borderClickColor, int borderClickWidth, \
-            QPixmap* miniIcon, QSize size, \
-            QString xmlPath,   QWidget *parent)
-{
-    createLabelForMiniWidget();
-    pContent = new Content;
-    Schedule*   pSchedule = new Schedule(xmlPath);
-    pContent->addWidget(pSchedule);
-}
-void Mini_Widget::selectTypeWidget()
-{
-    pContent = 0;
-    if(myType == "label")
-        createLabelForMiniWidget();
-    else if(myType == "clock"){
-        centralWidget = new QWidget(this);
-        centralWidget->move(borderClickWidth / 2, borderClickWidth/2);
-            Clock* pClock = new Clock(textColor, backgroudColor, centralWidget);
-        pClock->setFixedSize(mySize);
-    }
-    else if(myType == "schedule")
-    {
-        createLabelForMiniWidget();
-        pContent = new Content;
-        Schedule*   pSchedule = new Schedule(xmlPath);
-        pContent->addWidget(pSchedule);
-    }
-}
-void Mini_Widget::createLabelForMiniWidget()
+void Mini_Widget::createLabelForMiniWidget(int borderClickWidth, QPixmap* miniIcon, QSize size)
 {
     centralLabel = new QLabel(this);
-    centralLabel->setFixedSize(mySize);
+    centralLabel->setFixedSize(size);
     centralLabel->move(borderClickWidth / 2, borderClickWidth/2);
 
     QPixmap* newPixmap = new QPixmap;
-    *newPixmap = miniIcon->scaled(mySize, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
+    *newPixmap = miniIcon->scaled(size, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
     centralLabel->setPixmap(*newPixmap);
 }
 void Mini_Widget::paintEvent(QPaintEvent *event)

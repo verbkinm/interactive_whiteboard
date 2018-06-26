@@ -4,17 +4,9 @@
 
 #include "content.h"
 
-
-
 Content::Content(QWidget *parent) : QLabel(parent)
 {
     pLayout = new QVBoxLayout();
-
-//    QLabel *label = new QLabel;
-//    label->setText("content");
-
-//    addWidget(label);
-
     this->setLayout(pLayout);
 }
 void Content::addWidget(QWidget *w)

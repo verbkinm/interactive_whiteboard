@@ -1,13 +1,102 @@
 <?xml version = "1.0"?>
 <schedule>
-   <lessontime>
+   <lessonTime>
       <number>1</number>
-      <timebegin>8:30</timebegin>
-      <timeend>9:30</timeend>
-   </lessontime>
+      <timeBegin>8:30</timeBegin>
+      <timeEnd>9:15</timeEnd>
+<!--      <separator/>
+      <timeBegin>8:30</timeBegin>
+      <timeEnd>9:15</timeEnd>
+-->
+   </lessonTime>
+   <lessonTime>
+      <number>2</number>
+      <timeBegin>9:25</timeBegin>
+      <timeEnd>10:05</timeEnd>
+   </lessonTime>
+   <lessonTime>
+      <number>3</number>
+      <timeBegin>9:25</timeBegin>
+      <timeEnd>10:05</timeEnd>
+   </lessonTime>
+   <lessonTime>
+      <number>4</number>
+      <timeBegin>9:25</timeBegin>
+      <timeEnd>10:05</timeEnd>
+   </lessonTime>
+   <lessonTime>
+      <number>5</number>
+      <timeBegin>9:25</timeBegin>
+      <timeEnd>10:05</timeEnd>
+   </lessonTime>
+
    <class name="5А">
       <lesson>
          <name>информатика</name>
+         <place>304</place>
+         <teacher>Вербкин М.С.</teacher>
+      </lesson>
+   </class>
+   <class name="5Б">
+      <lesson>
+         <name>информатика 1 </name>
+         <place>304</place>
+         <teacher>Вербкин М.С.</teacher>
+      </lesson>
+      <lesson>
+         <name>инф-2</name>
+         <place>215</place>
+         <teacher>Пупкин</teacher>
+         <separator/>
+         <name>инф-2</name>
+         <place>216</place>
+         <teacher>Пупкин-2</teacher>
+      </lesson>
+   </class>
+   <class name="5В">
+      <lesson>
+      </lesson>
+      <lesson>
+         <name>информатика 1 </name>
+         <place>304</place>
+         <teacher>Вербкин М.С.</teacher>
+      </lesson>
+   </class>
+   <class name="5Г">
+      <lesson>
+      </lesson>
+      <lesson>
+      </lesson>
+      <lesson>
+      </lesson>
+      <lesson>
+         <name>информатика 1 </name>
+         <place>304</place>
+         <teacher>Вербкин М.С.</teacher>
+      </lesson>
+   </class>
+   <class name="6А">
+      <lesson>
+      </lesson>
+      <lesson>
+      </lesson>
+      <lesson>
+      </lesson>
+      <lesson>
+         <name>информатика 1 </name>
+         <place>304</place>
+         <teacher>Вербкин М.С.</teacher>
+      </lesson>
+   </class>
+   <class name="6Б">
+      <lesson>
+      </lesson>
+      <lesson>
+      </lesson>
+      <lesson>
+      </lesson>
+      <lesson>
+         <name>информатика 1 </name>
          <place>304</place>
          <teacher>Вербкин М.С.</teacher>
       </lesson>

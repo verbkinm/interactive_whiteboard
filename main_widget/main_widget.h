@@ -14,6 +14,8 @@ public:
     Main_Widget();
     ~Main_Widget();
 
+private:
+
 //файл конфигураций для виджетов, добавляемых на доску
     QSettings                       generals_settings, widget_settings;
 
@@ -29,7 +31,7 @@ public:
     void            addMyWidgets        ();
     void            addMyWidget         (int x, int y, int width, int height, int borderWidth, \
                                          QString  borderRGBA, int borderClickWidth, QString borderClickRGBA, QString iconPath, QString type, \
-                                         QString textColor, QString backgroundColor, QString xmlPath);
+                                         QString textColor, QString backgroundColor, QString xmlPath, unsigned int textSize);
 
     void            readGeneralsSettings();
 

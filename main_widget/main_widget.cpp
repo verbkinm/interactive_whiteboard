@@ -26,7 +26,7 @@ void Main_Widget::addMyWidgets()
         widget_settings.beginGroup(str);
         QStringList keys = widget_settings.childKeys();
 
-        int x,y,width,height,borderWidth,borderClickWidth;
+        int x,y,width,height,borderWidth,borderClickWidth, textSize;
         QString borderRGBA, borderClickRGBA, \
                 iconPath, \
                 type, \
@@ -46,22 +46,35 @@ void Main_Widget::addMyWidgets()
         textColor           = widget_settings.value("textColor", "black").toString();
         backgroundColor     = widget_settings.value("backgroundColor", "#000000").toString();
         xmlPath             = widget_settings.value("xmlPath", "\0").toString();
+        textSize            = widget_settings.value("textSize", 12).toInt();
         widget_settings.endGroup();
 
         addMyWidget(x, y, width, height, borderWidth, borderRGBA, borderClickWidth, \
                     borderClickRGBA, iconPath, type, \
                     textColor, backgroundColor,\
-                    xmlPath);
+                    xmlPath, textSize);
     }
 }
 void Main_Widget::addMyWidget(int x, int y, int width, int height, int borderWidth, \
                               QString borderRGBA, int borderClickWidth, QString borderClickRGBA, QString iconPath, QString type, \
-                              QString textColor, QString backgroundColor, QString xmlPath)
+                              QString textColor, QString backgroundColor, QString xmlPath, unsigned int textSize)
 {
     QPixmap* pixmap = new QPixmap(iconPath);
-    Mini_Widget* pmini = new Mini_Widget(borderRGBA, borderWidth, borderClickRGBA, borderClickWidth, \
-                                         pixmap, QSize(width,height), type, \
-                                         textColor, backgroundColor, xmlPath, this);
+
+    Mini_Widget *pmini = nullptr;
+
+    if( type == "label" )
+        pmini = new Mini_Widget(borderRGBA, borderWidth, borderClickRGBA, borderClickWidth, \
+                                             pixmap, QSize(width,height), \
+                                             this);
+    else if( type == "clock" )
+        pmini = new Mini_Widget(borderRGBA, borderWidth, borderClickRGBA, borderClickWidth, \
+                                             QSize(width,height), \
+                                             textColor, backgroundColor, this);
+    else if( type == "schedule" )
+        pmini = new Mini_Widget(borderRGBA, borderWidth, borderClickRGBA, borderClickWidth, \
+                                             pixmap, QSize(width,height), \
+                                             xmlPath, textColor, textSize, this);
     pmini->move(x,y);
     pmini->show();
 

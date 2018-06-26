@@ -1,40 +1,32 @@
 #include "cell.h"
 
-#include <QStringList>
+#include <QLabel>
 
 #include <QDebug>
 
-Cell::Cell(QStringList nameOfLesson, QStringList teachers, QStringList roomCabinets) : QObject()
+Cell::Cell(unsigned int textSize, QString textColor) : QWidget()
 {
-    setNameOfLesson(nameOfLesson);
-    setTeachers(teachers);
-    setRoomCabinets(roomCabinets);
-}
-Cell::Cell() : QObject()
-{
+    this->textSize = textSize;
+    this->textColor= textColor;
 
+    pGridLayout = new QGridLayout;
+//    QLabel* pl = new QLabel("label");
+//    pHorizontLayout->addWidget(pl);
+    this->setLayout(pGridLayout);
 }
-void Cell::setNameOfLesson(QStringList nameOfLesson)
+void Cell::setText(QString str)
 {
-    this->nameOfLesson.append(nameOfLesson);
+        QLabel* pLabel = new QLabel(str);
+        pLabel->setStyleSheet("color:" + textColor + ";"
+                              "font-size:" + QString::number(textSize) + "px;");
+        pLabel->setAlignment(Qt::AlignCenter);
+        pGridLayout->addWidget(pLabel, row++, column);
+
+        if (row > 2)
+            row = 0;
 }
-void Cell::setTeachers(QStringList teacher)
+void Cell::separate()
 {
-    this->teachers.append(teacher);
-}
-void Cell::setRoomCabinets(QStringList roomCabinet)
-{
-    this->roomCabinets.append(roomCabinet);
-}
-QStringList Cell::getnameOfLesson()
-{
-    return nameOfLesson;
-}
-QStringList Cell::getTeachers()
-{
-    return teachers;
-}
-QStringList Cell::getRoomCabinets()
-{
-    return roomCabinets;
+    row = 0;
+    column++;
 }
