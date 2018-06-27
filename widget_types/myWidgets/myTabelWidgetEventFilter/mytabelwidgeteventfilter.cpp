@@ -11,7 +11,8 @@ bool MyTabelWidgetEventFilter::eventFilter(QObject* object, QEvent* event)
 {
 //    qDebug() << "EventFilter" << event->type() << " Object " << object->objectName();
     if(event->type() == QEvent::MouseButtonPress || event->type() == QEvent::MouseButtonDblClick || \
-       event->type() == QEvent::MouseButtonRelease || event->type() == QEvent::MouseMove)
+       event->type() == QEvent::MouseButtonRelease || event->type() == QEvent::MouseMove || \
+       event->type() == QEvent::Wheel)
         return true;
     return false;
 }

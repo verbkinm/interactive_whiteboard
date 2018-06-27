@@ -9,44 +9,38 @@
 #include <QPushButton>
 
 #include <QPainter>
+#include <QPalette>
 
 #include <QMessageBox>
 #include <QDebug>
 
+#include <QScrollBar>
 
-// сдвиг для таблицы, первые два столбца зарезервированы под номер и время урока
-#define SHIFT 2
 
 #define COLOMN_FOR_LESSON_NUMBER    0
 #define COLOMN_FOR_TIME             1
 
 #define SEPARATOR                   " - "
 
-// макрос склеивания времени начала и конца урока и вставки его в ячейку таблицы
-#define INSERT_TIME                 if( this->item(numberOfCurrentRowForLessonNumberAndTime, COLOMN_FOR_TIME) == 0 ){ \
-                                        QTableWidgetItem* item = new QTableWidgetItem; \
-                                        QFont font = item->font(); \
-                                        font.setPixelSize(textSize); \
-                                        item->setFont(font); \
-                                        item->setTextAlignment(Qt::AlignCenter); \
-                                        item->setText(subDomElement.text()); \
-                                        this->setItem(numberOfCurrentRowForLessonNumberAndTime, COLOMN_FOR_TIME, item); \
-                                    }   \
-                                    else \
-                                    { \
-                                        QTableWidgetItem* item = this->item(numberOfCurrentRowForLessonNumberAndTime, COLOMN_FOR_TIME); \
-                                        item->setTextAlignment(Qt::AlignCenter); \
-                                        item->setText(item->text() + SEPARATOR + subDomElement.text()); \
-                                    }
 // установка данных об уроке(название, кабинет, учитель) в ячейку балицы
-#define INSERT_DATA                 Cell* cell = static_cast<Cell*>(this->cellWidget(numberLesson, numberOfCurrentColumn)); \
+#define INSERT_DATA                 Cell* cell = static_cast<Cell*>(tableLessonData->cellWidget(numberLesson, numberOfCurrentColumn)); \
                                     cell->setText(subSubDomElement.text());
 
-Schedule::Schedule(QString xmlPath, QString textColor, unsigned int textSize) : QTableWidget()
+Schedule::Schedule(QString xmlPath, QString textColor, unsigned int textSize) : QWidget()
 { 
+    tableNumberAndTime  = new QTableWidget;
+    tableLessonData     = new QTableWidget;
+
+    connect(tableLessonData->verticalScrollBar(), SIGNAL(valueChanged(int)), tableNumberAndTime->verticalScrollBar(), SLOT(setValue(int)));
+
+    gridLayout.addWidget(tableNumberAndTime, 0, 0);
+    gridLayout.addWidget(tableLessonData, 0, 1);
+
 //отлавливаем все события таблицы
-    this->viewport()->installEventFilter(new MyTabelWidgetEventFilter(this->viewport()));
-    this->horizontalHeader()->viewport()->installEventFilter(new MyTabelWidgetEventFilter(this->horizontalHeader()->viewport()));
+    tableNumberAndTime->viewport()->installEventFilter(new MyTabelWidgetEventFilter(tableNumberAndTime->viewport()));
+    tableNumberAndTime->horizontalHeader()->viewport()->installEventFilter(new MyTabelWidgetEventFilter(tableNumberAndTime->horizontalHeader()->viewport()));
+    tableLessonData->viewport()->installEventFilter(new MyTabelWidgetEventFilter(tableLessonData->viewport()));
+    tableLessonData->horizontalHeader()->viewport()->installEventFilter(new MyTabelWidgetEventFilter(tableLessonData->horizontalHeader()->viewport()));
 
     this->xmlPath   = xmlPath;
     this->textColor = textColor;
@@ -63,8 +57,11 @@ Schedule::Schedule(QString xmlPath, QString textColor, unsigned int textSize) : 
             countingLessonsAndClasses(domElement);
 
 //установка кол-ва столбцов и строк
-            this->setColumnCount(countClass + SHIFT);
-            this->setRowCount(countLesson);
+            tableNumberAndTime->setColumnCount(2);
+            tableNumberAndTime->setRowCount(countLesson);
+
+            tableLessonData->setColumnCount(countClass);
+            tableLessonData->setRowCount(countLesson);
 
             parseXml(domElement);
         }
@@ -73,18 +70,31 @@ Schedule::Schedule(QString xmlPath, QString textColor, unsigned int textSize) : 
     else
         qDebug() << "Can't open file " << xmlPath;
 
-    this->setHorizontalHeaderLabels(tableHeader);
+    tableNumberAndTime->setHorizontalHeaderLabels(tableHeaderNumberAndTime);
+    tableLessonData->setHorizontalHeaderLabels(tableHeaderLessonData);
 
-    this->resizeRowsToContents();
-    this->resizeColumnsToContents();
 
-// растягиваем таблицу
-//    for (int i = SHIFT; i < this->columnCount(); ++i)
-//        this->horizontalHeader()->setSectionResizeMode(i, QHeaderView::Stretch);
-//    for (int i = SHIFT; i < this->rowCount(); ++i)
-//        this->verticalHeader()->setSectionResizeMode(i, QHeaderView::Stretch);
+//растягивание ячеек по содержимому
+    tableNumberAndTime->resizeRowsToContents();
+    tableNumberAndTime->resizeColumnsToContents();
+    tableLessonData->resizeRowsToContents();
+    tableLessonData->resizeColumnsToContents();
 
-    zebra();
+//заливка ячеек таблицы
+    filling();
+
+//установка компоновщика
+    this->setLayout(&gridLayout);
+// ширина таблицы с номерами и временем уроков
+    tableNumberAndTime->setFixedWidth(tableNumberAndTime->columnWidth(0) + tableNumberAndTime->columnWidth(1));
+
+
+
+// синхронизируем высоту строк в твух таблицах
+    heightSynchronization();
+
+//снимаем фокус с таблиц
+    this->setFocus();
 }
 void Schedule::countingLessonsAndClasses(const QDomNode &node)
 {
@@ -112,7 +122,7 @@ void Schedule::parseXml(const QDomNode &node)
 // счетчик для текущей строки, только для столбцов номера урока и времени
     int numberOfCurrentRowForLessonNumberAndTime      = 0;
 // счетчик для текущего столбца, используется непосредственно для установки данных урока в ячейку таблицы
-    int numberOfCurrentColumn  = SHIFT;
+    int numberOfCurrentColumn  = 0;
 
     while(!domNode.isNull()) {
         if(domNode.isElement()) {
@@ -122,9 +132,9 @@ void Schedule::parseXml(const QDomNode &node)
                 if(domElement.tagName() == "lessonTime"){
 // создание пустого виджета в ячейках номера и времени урока
                     Cell* cell_for_number = new Cell(textSize, textColor);
-                        this->setCellWidget(numberOfCurrentRowForLessonNumberAndTime, COLOMN_FOR_LESSON_NUMBER, cell_for_number);
+                        tableNumberAndTime->setCellWidget(numberOfCurrentRowForLessonNumberAndTime, COLOMN_FOR_LESSON_NUMBER, cell_for_number);
                     Cell* cell_for_time = new Cell(textSize, textColor);
-                        this->setCellWidget(numberOfCurrentRowForLessonNumberAndTime, COLOMN_FOR_TIME, cell_for_time);
+                        tableNumberAndTime->setCellWidget(numberOfCurrentRowForLessonNumberAndTime, COLOMN_FOR_TIME, cell_for_time);
 
                     QDomNode subNode = domNode.firstChild();
 // внутриности тега lessonTime
@@ -142,7 +152,7 @@ void Schedule::parseXml(const QDomNode &node)
                                 else if(subDomElement.tagName() == "timeEnd")
                                     cell_for_time->setText(subDomElement.text());
                                 else if(subDomElement.tagName() == "separator"){
-                                    Cell* cell = static_cast<Cell*>(this->cellWidget(numberOfCurrentRowForLessonNumberAndTime, COLOMN_FOR_TIME));
+                                    Cell* cell = static_cast<Cell*>(tableNumberAndTime->cellWidget(numberOfCurrentRowForLessonNumberAndTime, COLOMN_FOR_TIME));
                                     cell->separate();
                                 }
                             }
@@ -155,7 +165,7 @@ void Schedule::parseXml(const QDomNode &node)
 // проверка тега class
                 else if(domElement.tagName() == "class"){
                     int numberLesson = 0;
-                    tableHeader.append(domElement.attribute("name"));
+                    tableHeaderLessonData.append(domElement.attribute("name"));
 //внутриности тега lesson
                     QDomNode subNode = domNode.firstChild();// должен быть тег lesson
                     while(!subNode.isNull()){
@@ -164,7 +174,7 @@ void Schedule::parseXml(const QDomNode &node)
                             if(!subDomElement.isNull()) {
                                 if(subDomElement.tagName() == "lesson"){
                                     Cell* cell = new Cell(textSize, textColor);
-                                    this->setCellWidget(numberLesson, numberOfCurrentColumn, cell);
+                                    tableLessonData->setCellWidget(numberLesson, numberOfCurrentColumn, cell);
                                     QDomNode subSubNode = subNode.firstChild(); // должен быть тег name
                                     while ( !subSubNode.isNull() ) {
                                         if(subSubNode.isElement()) {
@@ -180,7 +190,7 @@ void Schedule::parseXml(const QDomNode &node)
                                                     INSERT_DATA
                                                 }
                                                 else if(subSubDomElement.tagName() == "separator"){
-                                                    Cell* cell = static_cast<Cell*>(this->cellWidget(numberLesson, numberOfCurrentColumn));
+                                                    Cell* cell = static_cast<Cell*>(tableLessonData->cellWidget(numberLesson, numberOfCurrentColumn));
                                                     cell->separate();
                                                 }
                                             }
@@ -204,34 +214,54 @@ void Schedule::parseXml(const QDomNode &node)
 }
 void Schedule::setDefaultSettings()
 {
-    tableHeader << "№" << "Вермя";
+    tableHeaderNumberAndTime << "№" << "Вермя";
                                                             //увеличить размер шрифта на n процентов
-    this->horizontalHeader()->setStyleSheet("font-size: " + QString::number(textSize + float(textSize) / 100 * 50 ) + "px;");
+    tableNumberAndTime->horizontalHeader()->setStyleSheet("font-size: " + QString::number(textSize + float(textSize) / 100 * 50 ) + "px;");
+    tableLessonData->horizontalHeader()->setStyleSheet("font-size: " + QString::number(textSize + float(textSize) / 100 * 50 ) + "px;");
 
-    this->verticalHeader()->hide();
-    this->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
-    this->setSelectionMode(QAbstractItemView::NoSelection);
-    this->setDragDropMode(QAbstractItemView::NoDragDrop);
+    tableNumberAndTime->verticalHeader()->hide();
+    tableLessonData->verticalHeader()->hide();
 
-//    this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-//    this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    tableNumberAndTime->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    tableNumberAndTime->setSelectionMode(QAbstractItemView::NoSelection);
+    tableNumberAndTime->setDragDropMode(QAbstractItemView::NoDragDrop);
+
+    tableLessonData->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    tableLessonData->setSelectionMode(QAbstractItemView::NoSelection);
+    tableLessonData->setDragDropMode(QAbstractItemView::NoDragDrop);
+
+    tableNumberAndTime->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    tableNumberAndTime->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+    tableLessonData->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    tableLessonData->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+// создаём ссылки на скролл бары таблицы, дабы отделить их своей таблицы
+    QScrollBar* pScrollHorizontal = new QScrollBar;
+    pScrollHorizontal = tableLessonData->horizontalScrollBar();
+
+    QScrollBar* pScrollVertical = new QScrollBar;
+    pScrollVertical = tableLessonData->verticalScrollBar();
+
+    gridLayout.addWidget(pScrollHorizontal, 1, 0, 1, 3);
+    gridLayout.addWidget(pScrollVertical, 0, 2);
 }
-void Schedule::zebra()
+void Schedule::filling()
 {
-    for (int row = 0; row < this->rowCount(); row += 2)
-        for (int column = SHIFT; column < this->columnCount(); ++column) {
-            Cell* cell = static_cast<Cell*>(this->cellWidget(row,column));
+    for (int row = 0; row < tableLessonData->rowCount(); row += 2)
+        for (int column = 0; column < tableLessonData->columnCount(); ++column) {
+            Cell* cell = static_cast<Cell*>(tableLessonData->cellWidget(row,column));
             if(cell != nullptr)
                 cell->setBackgroundColor(Cell::LESSON);
         }
 
-    for (int row = 0; row < this->rowCount(); ++row) {
-        Cell* cell = static_cast<Cell*>(this->cellWidget(row,0));
+    for (int row = 0; row < tableNumberAndTime->rowCount(); ++row) {
+        Cell* cell = static_cast<Cell*>(tableNumberAndTime->cellWidget(row,COLOMN_FOR_LESSON_NUMBER));
         if(cell != nullptr)
             cell->setBackgroundColor(Cell::NUMBER);
 
-        cell = static_cast<Cell*>(this->cellWidget(row,1));
+        cell = static_cast<Cell*>(tableNumberAndTime->cellWidget(row,COLOMN_FOR_TIME));
         if(cell != nullptr)
             cell->setBackgroundColor(Cell::TIME);
     }
@@ -246,6 +276,45 @@ void Schedule::xmlError()
     qDebug() << "синтаксическая ошибка в файле " + xmlPath;
     msgBox.exec();
     exit(1);
+}
+void Schedule::heightSynchronization()
+{
+// если количество строк в таблицах одинаково, а оно должно быть одинаково, если все нормально с xml файлом
+    if(tableNumberAndTime->rowCount() == tableLessonData->rowCount()){
+        int totalRows = tableNumberAndTime->rowCount();
+        for (int row = 0; row < totalRows; ++row) {
+            int heightRow_TableNumberAndTime = tableNumberAndTime->rowHeight(row);
+            int heightRow_TableLessonData    = tableLessonData->rowHeight(row);
+
+            if(heightRow_TableNumberAndTime < heightRow_TableLessonData)
+                tableNumberAndTime->setRowHeight(row, heightRow_TableLessonData);
+            else if(heightRow_TableNumberAndTime > heightRow_TableLessonData)
+                tableLessonData->setRowHeight(row, heightRow_TableNumberAndTime);
+        }
+    }
+}
+bool Schedule::event(QEvent *event)
+{
+    qDebug() << event->type();
+    if(event->type() == QEvent::Enter){
+// растягиваем ширину столбцов до предела, если ширина всех столбцов меньше ширины тыблицы
+        unsigned int widthColumns_TableLessonData = 0;
+        for (int column = 0; column < tableLessonData->columnCount(); ++column)
+            widthColumns_TableLessonData += tableLessonData->columnWidth(column);
+        if(widthColumns_TableLessonData < tableLessonData->width())
+            for (int column = 0; column < tableLessonData->columnCount(); ++column)
+                tableLessonData->horizontalHeader()->setSectionResizeMode(column, QHeaderView::Stretch);
+// растягиваем высоту строк до предела, если высота всех строк меньше высоты тыблицы
+        unsigned int heightRows_TableLessonData = 0;
+        for (int row = 0; row < tableLessonData->columnCount(); ++row)
+            heightRows_TableLessonData += tableLessonData->rowHeight(row);
+        if(heightRows_TableLessonData < tableLessonData->height())
+            for (int row = 0; row < tableLessonData->columnCount(); ++row){
+                tableLessonData->verticalHeader()->setSectionResizeMode(row, QHeaderView::Stretch);
+                tableNumberAndTime->verticalHeader()->setSectionResizeMode(row, QHeaderView::Stretch);
+            }
+    }
+    return true;
 }
 void Schedule::paintEvent(QPaintEvent *)
 {
