@@ -1,11 +1,14 @@
 #include "schedule.h"
 #include "cell/cell.h"
+#include "myWidgets/myTabelWidgetEventFilter/mytabelwidgeteventfilter.h"
 
 #include <QFile>
 #include <QHeaderView>
 
 #include <QLabel>
 #include <QPushButton>
+
+#include <QPainter>
 
 #include <QMessageBox>
 #include <QDebug>
@@ -41,6 +44,10 @@
 
 Schedule::Schedule(QString xmlPath, QString textColor, unsigned int textSize) : QTableWidget()
 { 
+//отлавливаем все события таблицы
+    this->viewport()->installEventFilter(new MyTabelWidgetEventFilter(this->viewport()));
+    this->horizontalHeader()->viewport()->installEventFilter(new MyTabelWidgetEventFilter(this->horizontalHeader()->viewport()));
+
     this->xmlPath   = xmlPath;
     this->textColor = textColor;
     this->textSize  = textSize;
@@ -70,6 +77,14 @@ Schedule::Schedule(QString xmlPath, QString textColor, unsigned int textSize) : 
 
     this->resizeRowsToContents();
     this->resizeColumnsToContents();
+
+// растягиваем таблицу
+//    for (int i = SHIFT; i < this->columnCount(); ++i)
+//        this->horizontalHeader()->setSectionResizeMode(i, QHeaderView::Stretch);
+//    for (int i = SHIFT; i < this->rowCount(); ++i)
+//        this->verticalHeader()->setSectionResizeMode(i, QHeaderView::Stretch);
+
+    zebra();
 }
 void Schedule::countingLessonsAndClasses(const QDomNode &node)
 {
@@ -190,8 +205,8 @@ void Schedule::parseXml(const QDomNode &node)
 void Schedule::setDefaultSettings()
 {
     tableHeader << "№" << "Вермя";
-
-    this->horizontalHeader()->setStyleSheet("font-size: " + QString::number(textSize) + "px;");
+                                                            //увеличить размер шрифта на n процентов
+    this->horizontalHeader()->setStyleSheet("font-size: " + QString::number(textSize + float(textSize) / 100 * 50 ) + "px;");
 
     this->verticalHeader()->hide();
     this->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -201,6 +216,25 @@ void Schedule::setDefaultSettings()
 
 //    this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 //    this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+}
+void Schedule::zebra()
+{
+    for (int row = 0; row < this->rowCount(); row += 2)
+        for (int column = SHIFT; column < this->columnCount(); ++column) {
+            Cell* cell = static_cast<Cell*>(this->cellWidget(row,column));
+            if(cell != nullptr)
+                cell->setBackgroundColor(Cell::LESSON);
+        }
+
+    for (int row = 0; row < this->rowCount(); ++row) {
+        Cell* cell = static_cast<Cell*>(this->cellWidget(row,0));
+        if(cell != nullptr)
+            cell->setBackgroundColor(Cell::NUMBER);
+
+        cell = static_cast<Cell*>(this->cellWidget(row,1));
+        if(cell != nullptr)
+            cell->setBackgroundColor(Cell::TIME);
+    }
 }
 void Schedule::xmlError()
 {
@@ -212,4 +246,11 @@ void Schedule::xmlError()
     qDebug() << "синтаксическая ошибка в файле " + xmlPath;
     msgBox.exec();
     exit(1);
+}
+void Schedule::paintEvent(QPaintEvent *)
+{
+//    QPainter painter(this);
+
+//    painter.setBrush(QBrush(Qt::red));
+//    painter.drawRect(this->rect());
 }

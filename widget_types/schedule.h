@@ -1,6 +1,8 @@
 #ifndef SCHEDULE_H
 #define SCHEDULE_H
 
+#include "myWidgets/mytablewidget.h"
+
 #include <QTableWidget>
 #include <QDomComment>
 
@@ -28,12 +30,13 @@ private:
 
 //настройки таблицы по умолчанию
     void    setDefaultSettings          ();
-
+    void    zebra                       ();
 
 // ошибка чтения файла xml - кол-во тегов <lesson> превышает кол-во тего <lessonTime>.
 // попытка записи данных в не существующие ячейки таблицы
     void    xmlError();
-// установка основных свойство таблицы для
+
+    void        paintEvent              (QPaintEvent*);
 };
 
 #endif // SCHEDULE_H

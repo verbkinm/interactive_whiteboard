@@ -32,7 +32,8 @@ SOURCES += \
     convert_main_table_schedule/convert_main_table_schedule.cpp \
     widget_types/schedule.cpp \
     widget_types/cell/cell.cpp \
-
+    widget_types/myWidgets/mytablewidget.cpp \
+    widget_types/myWidgets/myTabelWidgetEventFilter/mytabelwidgeteventfilter.cpp
 
 
 HEADERS += \
@@ -42,8 +43,10 @@ HEADERS += \
     widget_types/clock.h \
     convert_main_table_schedule/converter_main_table_schedule.h \
     widget_types/schedule.h \
-    widget_types/cell/cell.h
-
+    widget_types/cell/cell.h \
+    widget_types/mytablewidget.h \
+    widget_types/myWidgets/myTabelWidgetEventFilter/mytabelwidgeteventfilter.h
+    widget_types/myWidgets/mytablewidget.h
 
 RESOURCES += \
     img.qrc

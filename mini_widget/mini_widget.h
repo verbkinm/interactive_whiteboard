@@ -1,6 +1,8 @@
 #ifndef MINI_WIDGET_H
 #define MINI_WIDGET_H
 
+#include "widget_types/schedule.h"
+
 #include <QWidget>
 #include <QLabel>
 #include <QSize>
@@ -27,6 +29,8 @@ public:
     //~Mini_Widget();
 
 private:
+
+    enum TYPE_WIDGETS{LABEL, CLOCK, SCHEDULE};
 //рамка
     QLabel*                 border;
 //рамка, которая будет появлятся при нажатии
@@ -39,7 +43,11 @@ private:
 //указатель на содержимое
     Content*                pContent = 0;
 
-
+//сохранение настроек
+    QString                 *xmlPath, *textColor;
+    unsigned int            *type;
+    unsigned int            *textSize;
+    Schedule* pSchedule     =   nullptr;
 //FUNCTIONS
 
     void    paintEvent              (QPaintEvent*);
@@ -53,6 +61,10 @@ private:
 signals:
 
 public slots:
+
+private slots:
+// удаление объекта из памяти при закрытии окна
+    void slotDeletepSchedule();
 };
 
 #endif // MINI_WIDGET_H

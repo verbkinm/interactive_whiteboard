@@ -59,24 +59,31 @@ void Main_Widget::addMyWidget(int x, int y, int width, int height, int borderWid
                               QString borderRGBA, int borderClickWidth, QString borderClickRGBA, QString iconPath, QString type, \
                               QString textColor, QString backgroundColor, QString xmlPath, unsigned int textSize)
 {
-    QPixmap* pixmap = new QPixmap(iconPath);
+    Mini_Widget *pmini  = nullptr;
+    QPixmap     *pixmap = nullptr;
 
-    Mini_Widget *pmini = nullptr;
-
-    if( type == "label" )
+    if( type == "label" ){
+        pixmap = new QPixmap(iconPath);
         pmini = new Mini_Widget(borderRGBA, borderWidth, borderClickRGBA, borderClickWidth, \
                                              pixmap, QSize(width,height), \
                                              this);
-    else if( type == "clock" )
+    }
+    else if( type == "clock" ){
         pmini = new Mini_Widget(borderRGBA, borderWidth, borderClickRGBA, borderClickWidth, \
                                              QSize(width,height), \
                                              textColor, backgroundColor, this);
-    else if( type == "schedule" )
+    }
+    else if( type == "schedule" ){
+        pixmap = new QPixmap(iconPath);
         pmini = new Mini_Widget(borderRGBA, borderWidth, borderClickRGBA, borderClickWidth, \
                                              pixmap, QSize(width,height), \
                                              xmlPath, textColor, textSize, this);
-    pmini->move(x,y);
-    pmini->show();
+    }
+
+    if(pmini != nullptr){
+        pmini->move(x,y);
+        pmini->show();
+    }
 
 }
 void Main_Widget::readGeneralsSettings()

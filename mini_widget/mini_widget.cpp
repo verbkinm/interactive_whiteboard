@@ -1,5 +1,4 @@
 #include "mini_widget.h"
-#include "widget_types/schedule.h"
 
 #include <QDebug>
 #include <QEvent>
@@ -29,11 +28,16 @@ Mini_Widget::Mini_Widget(QString borderColor, int borderWidth, QString borderCli
             QPixmap* miniIcon, QSize size, \
             QString xmlPath,   QString textColor, unsigned int textSize, QWidget *parent) : QWidget(parent)
 {
+    this->xmlPath       = new QString(xmlPath);
+    this->textColor     = new QString(textColor);
+    this->textSize      = new unsigned int(textSize);
+    this->type          = new unsigned int(SCHEDULE);
+
     generalSettings(borderColor, borderWidth, borderClickColor, borderClickWidth, size);
     createLabelForMiniWidget(borderClickWidth, miniIcon, size);
+
     pContent = new Content;
-    Schedule*   pSchedule = new Schedule(xmlPath, textColor, textSize);
-    pContent->addWidget(pSchedule);
+    pContent->setTextSize(textSize);
 }
 void Mini_Widget::generalSettings(QString borderColor, int borderWidth, QString borderClickColor, int borderClickWidth, QSize size)
 {
@@ -50,8 +54,6 @@ void Mini_Widget::generalSettings(QString borderColor, int borderWidth, QString 
     border->setStyleSheet("background-color:" + borderColor + ";");
     border->setFixedSize(size.width() + borderWidth, size.height() + borderWidth);
     border->move(borderClickWidth / 2 - borderWidth / 2, borderClickWidth / 2 - borderWidth / 2);
-
-    this->miniIcon      = miniIcon;
 
     this->setStyleSheet("border-radius: 20px;");
     this->setFixedSize(borderClick->size());
@@ -78,9 +80,31 @@ bool Mini_Widget::event(QEvent *event)
     }
     if(event->type() == QEvent::MouseButtonRelease){
         borderClick->setVisible(false);
-        if(pContent != 0)
+        if(pContent != 0 && type != 0){
+            switch (*type) {
+            case LABEL:
+
+                break;
+            case CLOCK:
+                break;
+            case SCHEDULE:
+                pSchedule = new Schedule(*xmlPath, *textColor, *textSize);
+                pContent->addWidget(pSchedule);
+                connect(pContent, SIGNAL(signalClose()), this, SLOT(slotDeletepSchedule()));
+                break;
+
+//            default:
+//                break;
+            }
             pContent->showFullScreen();
+            pContent->setWindowModality(Qt::ApplicationModal);
+        }
     }
 
     return QWidget::event(event);
+}
+void Mini_Widget::slotDeletepSchedule()
+{
+    delete pSchedule;
+    disconnect(pContent, SIGNAL(signalClose()),this, SLOT(slotDeletepSchedule()));
 }

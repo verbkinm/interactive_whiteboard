@@ -24,12 +24,19 @@ private:
     unsigned int textSize;
     QString textColor;
 
+
+
 public:
     Cell(unsigned int textSize, QString textColor);
 
-    void        setText                 (QString str);
+    enum tp {NONE, NUMBER, TIME, LESSON} TYPE_COLUMN;
+    bool background = false;
 
+    void        setText                 (QString str);
     void        separate                ();
+    void        setBackgroundColor      (tp role);
+
+    void        paintEvent              (QPaintEvent*event);
 signals:
 
 public slots:
