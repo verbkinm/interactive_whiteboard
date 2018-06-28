@@ -37,6 +37,7 @@ Mini_Widget::Mini_Widget(QString borderColor, int borderWidth, QString borderCli
     createLabelForMiniWidget(borderClickWidth, miniIcon, size);
 
     pContent = new Content;
+    pContent->setObjectName("Content");
     pContent->setTextSize(textSize);
 }
 void Mini_Widget::generalSettings(QString borderColor, int borderWidth, QString borderClickColor, int borderClickWidth, QSize size)
@@ -88,7 +89,8 @@ bool Mini_Widget::event(QEvent *event)
             case CLOCK:
                 break;
             case SCHEDULE:
-                pSchedule = new Schedule(*xmlPath, *textColor, *textSize);
+                pSchedule = new Schedule(*xmlPath, *textColor, *textSize, pContent);
+                pSchedule->setObjectName("Schedule");
                 pContent->addWidget(pSchedule);
                 connect(pContent, SIGNAL(signalClose()), this, SLOT(slotDeletepSchedule()));
                 break;

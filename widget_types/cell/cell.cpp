@@ -14,8 +14,6 @@ Cell::Cell(unsigned int textSize, QString textColor) : QWidget()
     this->textColor= textColor;
 
     pGridLayout = new QGridLayout;
-//    QLabel* pl = new QLabel("label");
-//    pHorizontLayout->addWidget(pl);
     this->setLayout(pGridLayout);
 
     setBackgroundColor(NONE);
@@ -49,7 +47,7 @@ void Cell::paintEvent(QPaintEvent *event)
 //        QLinearGradient gradient(0, 0, width(), height());
 //        gradient.setColorAt(0, QColor(255, 140, 0, 255));
 //        gradient.setColorAt(1, Qt::white);
-        painter.setBrush(QBrush(QColor(255, 140, 0, 255)));
+        painter.setBrush(QBrush(QColor(255, 140, 0, 230)));
         break;
         }
     case TIME:{
@@ -57,18 +55,18 @@ void Cell::paintEvent(QPaintEvent *event)
 //        gradient.setColorAt(0, QColor(255, 228, 0, 255));
 //        gradient.setColorAt(1, Qt::white);
 //        painter.setBrush(gradient);
-        painter.setBrush(QBrush(QColor(255, 228, 0, 255)));
+        painter.setBrush(QBrush(QColor(255, 228, 0, 230)));
         break;
         }
     case LESSON: {
 //        QLinearGradient gradient(0, 0, width(), height());
 //        gradient.setColorAt(0, QColor(0, 0, 255, 100));
 //        gradient.setColorAt(1, Qt::white);
-        painter.setBrush(QBrush(QColor(0, 0, 255, 50)));
+        painter.setBrush(QBrush(QColor(210, 210, 255, 230)));
         break;
         }
     default:
-        painter.setBrush(QBrush(QColor(128, 128, 128, 20)));
+        painter.setBrush(QBrush(QColor(200, 200, 200, 230)));
         break;
     }
     painter.setPen(Qt::SolidLine);

@@ -4,6 +4,7 @@
 #include <QObject>
 
 #include <QEvent>
+#include <QMouseEvent>
 
 class MyTabelWidgetEventFilter : public QObject
 {
@@ -11,8 +12,16 @@ class MyTabelWidgetEventFilter : public QObject
 public:
     MyTabelWidgetEventFilter(QObject *parent = nullptr);
 
+private:
+//координаты курсора
+    int x, y;
 protected:
     virtual bool eventFilter(QObject* object, QEvent* event);
+
+//имитация touchpada'а
+    void slide(QObject* object, QEvent* event);
+
+    enum direction {UP, DOWN};
 
 signals:
 
