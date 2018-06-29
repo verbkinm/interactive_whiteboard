@@ -5,4 +5,5 @@
         <file alias="school">img/school.jpg</file>
         <file alias="school2">img/school2.jpg</file>
     </qresource>
+    <qresource prefix="/example"/>
 </RCC>

@@ -31,7 +31,7 @@ private:
     void            addMyWidgets        ();
     void            addMyWidget         (int x, int y, int width, int height, int borderWidth, \
                                          QString  borderRGBA, int borderClickWidth, QString borderClickRGBA, QString iconPath, QString type, \
-                                         QString textColor, QString backgroundColor, QString xmlPath, unsigned int textSize);
+                                         QString textColor, QString backgroundColor, QString xmlPath, unsigned int textSize, QString dirPath, QString title);
 
     void            readGeneralsSettings();
 

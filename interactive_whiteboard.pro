@@ -23,30 +23,34 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 
-SOURCES += \
-        main.cpp \
-    main_widget/main_widget.cpp \
-    mini_widget/mini_widget.cpp \
-    content/content.cpp \
-    widget_types/clock.cpp \
-    convert_main_table_schedule/convert_main_table_schedule.cpp \
-    widget_types/schedule.cpp \
-    widget_types/cell/cell.cpp \
-    widget_types/myWidgets/mytablewidget.cpp \
-    widget_types/myWidgets/myTabelWidgetEventFilter/mytabelwidgeteventfilter.cpp
-
-
-HEADERS += \
-    main_widget/main_widget.h \
-    mini_widget/mini_widget.h \
-    content/content.h \
-    widget_types/clock.h \
-    convert_main_table_schedule/converter_main_table_schedule.h \
-    widget_types/schedule.h \
-    widget_types/cell/cell.h \
-    widget_types/mytablewidget.h \
-    widget_types/myWidgets/myTabelWidgetEventFilter/mytabelwidgeteventfilter.h
-    widget_types/myWidgets/mytablewidget.h
-
 RESOURCES += \
     img.qrc
+
+FORMS += \
+    widget_types/myWidgets/viewer/viewer.ui
+
+HEADERS += \
+    content/content.h \
+    convert_main_table_schedule/converter_main_table_schedule.h \
+    main_widget/main_widget.h \
+    mini_widget/mini_widget.h \
+    widget_types/cell/cell.h \
+    widget_types/myWidgets/myTabelWidgetEventFilter/mytabelwidgeteventfilter.h \
+    widget_types/myWidgets/viewer/viewer.h \
+    widget_types/myWidgets/mytablewidget.h \
+    widget_types/clock.h \
+    widget_types/schedule.h
+
+SOURCES += \
+    content/content.cpp \
+    convert_main_table_schedule/convert_main_table_schedule.cpp \
+    main_widget/main_widget.cpp \
+    mini_widget/mini_widget.cpp \
+    widget_types/cell/cell.cpp \
+    widget_types/myWidgets/myTabelWidgetEventFilter/mytabelwidgeteventfilter.cpp \
+    widget_types/myWidgets/mytablewidget.cpp \
+    widget_types/myWidgets/viewer/viewer.cpp \
+    widget_types/clock.cpp \
+    widget_types/schedule.cpp \
+    main.cpp
+

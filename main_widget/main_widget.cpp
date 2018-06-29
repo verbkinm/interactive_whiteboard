@@ -24,14 +24,15 @@ void Main_Widget::addMyWidgets()
     foreach (QString str, groups) {
 //        qDebug() << str;
         widget_settings.beginGroup(str);
-        QStringList keys = widget_settings.childKeys();
+//        QStringList keys = widget_settings.childKeys();
 
         int x,y,width,height,borderWidth,borderClickWidth, textSize;
         QString borderRGBA, borderClickRGBA, \
                 iconPath, \
                 type, \
                 textColor, backgroundColor, \
-                xmlPath;
+                xmlPath, \
+                dirPath, title;
 
         x                   = widget_settings.value("x", 10).toInt();
         y                   = widget_settings.value("y", 10).toInt();
@@ -47,38 +48,33 @@ void Main_Widget::addMyWidgets()
         backgroundColor     = widget_settings.value("backgroundColor", "#000000").toString();
         xmlPath             = widget_settings.value("xmlPath", "\0").toString();
         textSize            = widget_settings.value("textSize", 12).toInt();
+        dirPath             = widget_settings.value("dirPath", "\0").toString();
+        title               = widget_settings.value("title", "\0").toString();
+
         widget_settings.endGroup();
 
         addMyWidget(x, y, width, height, borderWidth, borderRGBA, borderClickWidth, \
                     borderClickRGBA, iconPath, type, \
                     textColor, backgroundColor,\
-                    xmlPath, textSize);
+                    xmlPath, textSize, \
+                    dirPath, title);
     }
 }
 void Main_Widget::addMyWidget(int x, int y, int width, int height, int borderWidth, \
                               QString borderRGBA, int borderClickWidth, QString borderClickRGBA, QString iconPath, QString type, \
-                              QString textColor, QString backgroundColor, QString xmlPath, unsigned int textSize)
+                              QString textColor, QString backgroundColor, QString xmlPath, unsigned int textSize, \
+                              QString dirPath, QString title)
 {
     Mini_Widget *pmini  = nullptr;
     QPixmap     *pixmap = nullptr;
 
-    if( type == "label" ){
-        pixmap = new QPixmap(iconPath);
-        pmini = new Mini_Widget(borderRGBA, borderWidth, borderClickRGBA, borderClickWidth, \
-                                             pixmap, QSize(width,height), \
-                                             this);
-    }
-    else if( type == "clock" ){
-        pmini = new Mini_Widget(borderRGBA, borderWidth, borderClickRGBA, borderClickWidth, \
-                                             QSize(width,height), \
-                                             textColor, backgroundColor, this);
-    }
-    else if( type == "schedule" ){
-        pixmap = new QPixmap(iconPath);
-        pmini = new Mini_Widget(borderRGBA, borderWidth, borderClickRGBA, borderClickWidth, \
-                                             pixmap, QSize(width,height), \
-                                             xmlPath, textColor, textSize, this);
-    }
+
+    pixmap = new QPixmap(iconPath);
+    pmini = new  Mini_Widget(borderRGBA, borderWidth, borderClickRGBA, borderClickWidth, \
+                                pixmap, QSize(width,height ), \
+                                xmlPath,   dirPath, \
+                                textColor, backgroundColor, \
+                                title, textSize, type, this);
 
     if(pmini != nullptr){
         pmini->move(x,y);

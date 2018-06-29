@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/example_config">
+        <file>example_schedule.xml</file>
+        <file>example_izmenenie.html</file>
+        <file>example_interactive_whiteboard_widgets.conf</file>
+    </qresource>
+</RCC>

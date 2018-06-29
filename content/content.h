@@ -12,7 +12,7 @@ class Content : public QLabel
 {
     Q_OBJECT
 public:
-    Content(QWidget *parent = nullptr);
+    Content(QString title, QWidget *parent = nullptr);
     ~Content();
 
     void            addWidget       (QWidget* w);

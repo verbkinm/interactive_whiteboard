@@ -4,12 +4,12 @@
 
 #include "content.h"
 
-Content::Content(QWidget *parent) : QLabel(parent)
+Content::Content(QString title, QWidget *parent) : QLabel(parent)
 {
     pLayout = new QVBoxLayout();
     this->setLayout(pLayout);
 
-    pTitle = new QLabel("Расписание");
+    pTitle = new QLabel(title);
     pTitle->setAlignment(Qt::AlignCenter);
     pLayout->addWidget(pTitle);
 
@@ -49,6 +49,7 @@ void Content::paintEvent(QPaintEvent*)
 {
     QPainter painter(this);
 
+// ИСПРАВИТЬ!!! фон из настроек
     QPixmap backgoundImage(":img/school2");
     QPixmap newPix = backgoundImage.scaled(this->size(), Qt::IgnoreAspectRatio);
     painter.setBrush(QBrush(Qt::black, newPix));
