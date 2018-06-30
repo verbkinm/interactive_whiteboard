@@ -39,7 +39,8 @@ HEADERS += \
     widget_types/myWidgets/viewer/viewer.h \
     widget_types/myWidgets/mytablewidget.h \
     widget_types/clock.h \
-    widget_types/schedule.h
+    widget_types/schedule.h \
+    widget_types/myWidgets/viewer/myviewereventfilter.h
 
 SOURCES += \
     content/content.cpp \
@@ -52,5 +53,6 @@ SOURCES += \
     widget_types/myWidgets/viewer/viewer.cpp \
     widget_types/clock.cpp \
     widget_types/schedule.cpp \
-    main.cpp
+    main.cpp \
+    widget_types/myWidgets/viewer/myviewereventfilter.cpp
 

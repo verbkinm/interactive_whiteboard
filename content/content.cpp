@@ -12,8 +12,6 @@ Content::Content(QString title, QWidget *parent) : QLabel(parent)
     pTitle = new QLabel(title);
     pTitle->setAlignment(Qt::AlignCenter);
     pLayout->addWidget(pTitle);
-
-
 }
 void Content::addWidget(QWidget *w)
 {

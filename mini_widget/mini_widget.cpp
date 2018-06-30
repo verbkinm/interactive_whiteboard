@@ -4,6 +4,8 @@
 #include <QEvent>
 #include <QPaintEvent>
 #include <QPainter>
+#include <QPropertyAnimation>
+
 
 Mini_Widget::Mini_Widget(QString borderColor, int borderWidth, QString borderClickColor, int borderClickWidth, \
             QPixmap* miniIcon, QSize size, \
@@ -135,20 +137,38 @@ bool Mini_Widget::event(QEvent *event)
             case CLOCK:
                 break;
 
-            case SCHEDULE:
+            case SCHEDULE:{
                 pSchedule = new Schedule(*xmlPath, *textColor, *textSize, pContent);
                 pSchedule->setObjectName("Schedule");
                 pContent->addWidget(pSchedule);
+                pContent->setWindowModality(Qt::ApplicationModal);
                 connect(pContent, SIGNAL(signalClose()), this, SLOT(slotDeleteWidgetInContent()));
-                break;
 
-            case IMAGE_VIEWER:
+                QPropertyAnimation* panim1 = new QPropertyAnimation(pContent, "geometry");
+                panim1->setDuration(500);
+                panim1->setStartValue( QRect(this->x(), this->y(), this->width(), this->height()) );
+                panim1->setEndValue(QRect(static_cast<QWidget*>(this->parent())->rect()));
+                panim1->setEasingCurve(QEasingCurve::Linear);
+
+                panim1->start();
+                pContent->repaint();
+                break;
+                }
+            case IMAGE_VIEWER:{
                 pImageViewer = new viewer(*dirPath, *textColor, *textSize, pContent);
                 pImageViewer->setObjectName("ImageViewer");
                 pContent->addWidget(pImageViewer);
                 connect(pContent, SIGNAL(signalClose()), this, SLOT(slotDeleteWidgetInContent()));
-                break;
+                QPropertyAnimation* panim1 = new QPropertyAnimation(pContent, "geometry");
+                panim1->setDuration(500);
+                panim1->setStartValue( QRect(this->x(), this->y(), this->width(), this->height()) );
+                panim1->setEndValue(QRect(static_cast<QWidget*>(this->parent())->rect()));
+                panim1->setEasingCurve(QEasingCurve::InQuad);
 
+                panim1->start();
+                pContent->repaint();
+                break;
+                }
             default:
                 break;
             }

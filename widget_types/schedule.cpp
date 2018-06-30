@@ -350,7 +350,7 @@ void Schedule::stretchTable()
 bool Schedule::event(QEvent *event)
 {
 //    qDebug() << event->type();
-    if(event->type() == QEvent::Enter)
+    if(event->type() == QEvent::Resize)
         stretchTable();
 
     return true;

@@ -4,6 +4,6 @@
         <file alias="logo">img/logo.png</file>
         <file alias="school">img/school.jpg</file>
         <file alias="school2">img/school2.jpg</file>
+        <file alias="schedule">img/schedule.jpg</file>
     </qresource>
-    <qresource prefix="/example"/>
 </RCC>

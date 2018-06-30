@@ -3,6 +3,9 @@
 
 #include <QWidget>
 #include <QPixmap>
+#include <QDir>
+#include <QFileInfoList>
+
 
 
 namespace Ui {
@@ -21,13 +24,33 @@ public:
 private:
     Ui::viewer *ui;
 
-    QPixmap originPixmap;
-    float width, height;
+    QPixmap     originPixmap;
+    float       width, height;
+
+    int         step;
+
+    QDir dir;
+    QStringList list;
+    unsigned int it = 0;
+
+//координаты курсора
+    int x, y;
+
+    virtual bool event(QEvent *event);
+
+    enum ERROR {CANT_OPEN_DIR, EMPTY_DIR, SYNTAX_ERROR};
+
+    void errorConfig(ERROR error);
+
+    void createImageList(QString dirPath);
 
 private slots:
     void slotPlusImage();
     void slotMinusImage();
     void slotRealSize();
+
+    void slotNextImage();
+    void slotPrevoisImage();
 };
 
 #endif // VIEWER_H

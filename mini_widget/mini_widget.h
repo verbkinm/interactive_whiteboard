@@ -7,6 +7,8 @@
 #include <QWidget>
 #include <QLabel>
 #include <QSize>
+#include <QPropertyAnimation>
+
 
 #include "content/content.h"
 
@@ -64,6 +66,8 @@ private:
 
     Schedule* pSchedule     =   nullptr;
     viewer*   pImageViewer  =   nullptr;
+
+
 //FUNCTIONS
 
     void    paintEvent              (QPaintEvent*);
