@@ -6,7 +6,9 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     Main_Widget w;
 
-    w.showFullScreen();
+    w.setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
+    w.showMaximized();
+//    w.showFullScreen();
 //    w.show();
 
     return a.exec();

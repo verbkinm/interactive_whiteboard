@@ -3,6 +3,7 @@
 
 #include "widget_types/schedule.h"
 #include "widget_types/myWidgets/viewer/viewer.h"
+#include "structes/structes.h"
 
 #include <QWidget>
 #include <QLabel>
@@ -11,6 +12,7 @@
 
 
 #include "content/content.h"
+#include "structes/structes.h"
 
 
 class Mini_Widget : public QWidget
@@ -18,70 +20,75 @@ class Mini_Widget : public QWidget
     Q_OBJECT
 public:
 
-    Mini_Widget(QString borderColor, int borderWidth, QString borderClickColor, int borderClickWidth, \
-                QPixmap* miniIcon, QSize size, \
-                QString xmlPath,   QString dirPath, \
-                QString textColor, QString backgroundColor, \
-                QString titleText, unsigned int textSize, QString type, QWidget *parent);
+    Mini_Widget(const struct border &struct_border, \
+                QSize size, \
+                const struct path &struct_path, \
+                const struct background &struct_background, \
+                const struct text &struct_text, \
+                const struct miscellanea &struct_miscellanea, \
+                QWidget *parent);
 
-void createLabelWidget(QPixmap* miniIcon, QSize size);
+    ~Mini_Widget();
 
-void createClockWidget(QSize size, QString textColor, QString backgroudColor);
+void createLabelWidget();
 
-void createScheduleWidget(QPixmap* miniIcon, QSize size, \
-                          QString xmlPath,   QString textColor, \
-                          unsigned int textSize, QString titleText);
-//type image_viewer
-//    Mini_Widget(QString borderColor, int borderWidth, QString borderClickColor, int borderClickWidth, \
-//                QPixmap* miniIcon, QSize size, \
-//                QString dirPath,   QString textColor, \
-//                QString titleText, unsigned int textSize, QWidget *parent);
-void createImageViewerWidget(QPixmap* miniIcon, QSize size, \
-                             QString dirPath,   QString textColor, \
-                             QString titleText, unsigned int textSize);
+void createClockWidget();
+
+void createScheduleWidget();
+
+void createImageViewerWidget();
     //~Mini_Widget();
 
 private:
 
     enum TYPE_WIDGETS{LABEL, CLOCK, SCHEDULE, IMAGE_VIEWER};
 //рамка
-    QLabel*                 border;
+    QLabel*                 border          = nullptr;
 //рамка, которая будет появлятся при нажатии
-    QLabel*                 borderClick;
-    int                     borderClickWidth;
+    QLabel*                 borderClick     = nullptr;
+
+// указатель на виджет часов
+    Clock*                  pClock          = nullptr;
+
+// структура рамки для мини виджета
+    struct border struct_border;
+// структура свойств текста
+    struct text   struct_text;
+//структура путей к файлам
+    struct path   struct_path;
+// структура свойств фона
+    struct background struct_background;
+// структура разных свойств
+    struct miscellanea struct_miscellanea;
+// передаваемый через конструктор параметр size, используется в функциях сосдания конкретных виджетов
+    QSize _size;
+
 //центральная миниатюра
-    QPixmap*                miniIcon;
-    QLabel*                 centralLabel;
+    QLabel*                 centralLabel    = nullptr;
 // центральный виджет в таком типе виджета как clock
-    QWidget*                centralWidget;
+    QWidget*                centralWidget   = nullptr;
 //указатель на содержимое
-    Content*                pContent = 0;
+    Content*                pContent        = nullptr;
 
-//сохранение настроек
-    QString                 *xmlPath, *textColor, \
-                            *dirPath, *titleText;
+//нужно для перевода типа виджета из QString в enum TYPE_WIDGETS
+    int                     *type           = nullptr;
 
-    unsigned int            *type;
-    unsigned int            *textSize;
-
-    Schedule* pSchedule     =   nullptr;
-    viewer*   pImageViewer  =   nullptr;
-
+//указатели на типы содержиого мини виджета
+    Schedule                *pSchedule      = nullptr;
+    viewer                  *pImageViewer   = nullptr;
 
 //FUNCTIONS
 
-    void    paintEvent              (QPaintEvent*);
     virtual bool event              (QEvent *event);
 
 // для установления общих параметров для всех виджетов
-    void    generalSettings         (QString borderColor, int borderWidth, QString borderClickColor, int borderClickWidth, QSize size);
+    void    generalSettings         ();
 // просто создание мини виджета с миниатюрой
-    void    createLabelForMiniWidget(QPixmap* miniIcon, QSize size);
+    void    createLabelForMiniWidget();
 
     void    setTypeValue            (QString typeStr);
-signals:
 
-public slots:
+signals:
 
 private slots:
 // удаление объекта из памяти при закрытии окна

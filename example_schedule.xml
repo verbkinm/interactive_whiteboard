@@ -36,6 +36,11 @@
          <place>304</place>
          <teacher>Вербкин М.С.</teacher>
       </lesson>
+      <lesson/>
+      <lesson/>
+      <lesson/>
+      <lesson/>
+      
    </class>
    <class name="5Б">
       <lesson>
@@ -52,6 +57,9 @@
          <place>216</place>
          <teacher>Пупкин-2</teacher>
       </lesson>
+      <lesson/>
+      <lesson/>
+      <lesson/>
    </class>
    <class name="5В">
       <lesson>
@@ -61,6 +69,9 @@
          <place>304</place>
          <teacher>Вербкин М.С.</teacher>
       </lesson>
+      <lesson/>
+      <lesson/>
+      <lesson/>
    </class>
    <class name="5Г">
       <lesson>
@@ -74,6 +85,7 @@
          <place>304</place>
          <teacher>Вербкин М.С.</teacher>
       </lesson>
+      <lesson/>
    </class>
    <class name="6А">
       <lesson>
@@ -87,6 +99,7 @@
          <place>304</place>
          <teacher>Вербкин М.С.</teacher>
       </lesson>
+      <lesson/>
    </class>
    <class name="6Б">
       <lesson>
@@ -100,5 +113,6 @@
          <place>304</place>
          <teacher>Вербкин М.С.</teacher>
       </lesson>
+      <lesson/>
    </class>
 </schedule>

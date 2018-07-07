@@ -40,7 +40,8 @@ HEADERS += \
     widget_types/myWidgets/mytablewidget.h \
     widget_types/clock.h \
     widget_types/schedule.h \
-    widget_types/myWidgets/viewer/myviewereventfilter.h
+    widget_types/myWidgets/viewer/myviewereventfilter.h \
+    structes/structes.h
 
 SOURCES += \
     content/content.cpp \

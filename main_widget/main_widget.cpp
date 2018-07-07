@@ -13,7 +13,6 @@ Main_Widget::Main_Widget()
 
 {
     readGeneralsSettings();
-
     addMyWidgets();
 }
 void Main_Widget::addMyWidgets()
@@ -22,62 +21,68 @@ void Main_Widget::addMyWidgets()
     QStringList groups = widget_settings.childGroups();
 
     foreach (QString str, groups) {
-//        qDebug() << str;
         widget_settings.beginGroup(str);
-//        QStringList keys = widget_settings.childKeys();
 
-        int x,y,width,height,borderWidth,borderClickWidth, textSize;
-        QString borderRGBA, borderClickRGBA, \
-                iconPath, \
-                type, \
-                textColor, backgroundColor, \
-                xmlPath, \
-                dirPath, title;
+// структура рамки для мини виджета
+        struct border struct_border;
+        struct text struct_text;
+        struct path struct_path;
+        struct background struct_background;
+        struct miscellanea struct_miscellanea;
 
-        x                   = widget_settings.value("x", 10).toInt();
-        y                   = widget_settings.value("y", 10).toInt();
-        width               = widget_settings.value("width", 50).toInt();
-        height              = widget_settings.value("height", 50).toInt();
-        borderWidth         = widget_settings.value("borderWidth", 10).toInt();
-        borderRGBA          = widget_settings.value("borderRGBA", "#000000").toString();
-        borderClickWidth    = widget_settings.value("borderClickWidth", 10).toInt();
-        borderClickRGBA     = widget_settings.value("borderClickRGBA", "#000000").toString();
-        iconPath            = widget_settings.value("iconPath", ":img/logo").toString();
-        type                = widget_settings.value("type", "label").toString();
-        textColor           = widget_settings.value("textColor", "black").toString();
-        backgroundColor     = widget_settings.value("backgroundColor", "#000000").toString();
-        xmlPath             = widget_settings.value("xmlPath", "\0").toString();
-        textSize            = widget_settings.value("textSize", 12).toInt();
-        dirPath             = widget_settings.value("dirPath", "\0").toString();
-        title               = widget_settings.value("title", "\0").toString();
+        QRect rect;
+
+        rect.setX(widget_settings.value("x", 10).toInt());
+        rect.setY(widget_settings.value("y", 10).toInt());
+        rect.setWidth(widget_settings.value("width", 50).toInt());
+        rect.setHeight(widget_settings.value("height", 50).toInt());
+
+        struct_border.borderWidth           = widget_settings.value("borderWidth", 10).toInt();
+        struct_border.borderColor           = widget_settings.value("borderRGBA", "balck").toString();
+        struct_border.borderClickWidth      = widget_settings.value("borderClickWidth", 10).toInt();
+        struct_border.borderClickColor      = widget_settings.value("borderClickRGBA", "black").toString();
+
+        struct_miscellanea.type             = widget_settings.value("type", "label").toString();
+        struct_miscellanea.timerSec         = generals_settings.value("Generals/timerSec", 30).toInt();
+
+        struct_background.backgroundColor   = widget_settings.value("backgroundColor", "black").toString();
+        struct_background.backgroundImage   = generals_settings.value("Generals/backgoundImage", ":img/school2").toString();
+
+        struct_text.textColor               = widget_settings.value("textColor", "black").toString();
+        struct_text.textSize                = widget_settings.value("textSize", 12).toInt();
+        struct_text.titleText               = widget_settings.value("title", "\0").toString();
+
+        struct_path.dirPath                 = widget_settings.value("dirPath", "\0").toString();
+        struct_path.xmlPath                 = widget_settings.value("xmlPath", "\0").toString();
+        struct_path.iconPath                = widget_settings.value("iconPath", ":img/logo").toString();
+
 
         widget_settings.endGroup();
 
-        addMyWidget(x, y, width, height, borderWidth, borderRGBA, borderClickWidth, \
-                    borderClickRGBA, iconPath, type, \
-                    textColor, backgroundColor,\
-                    xmlPath, textSize, \
-                    dirPath, title);
+        addMyWidget(rect, \
+                    struct_border, \
+                    struct_miscellanea, \
+                    struct_background,\
+                    struct_path, \
+                    struct_text);
     }
 }
-void Main_Widget::addMyWidget(int x, int y, int width, int height, int borderWidth, \
-                              QString borderRGBA, int borderClickWidth, QString borderClickRGBA, QString iconPath, QString type, \
-                              QString textColor, QString backgroundColor, QString xmlPath, unsigned int textSize, \
-                              QString dirPath, QString title)
+void Main_Widget::addMyWidget(const QRect &rect, \
+                              const border &struct_border, \
+                              const struct miscellanea &struct_miscellanea, \
+                              const struct background &struct_background, \
+                              const struct path &struct_path, \
+                              const struct text &struct_text)
 {
-    Mini_Widget *pmini  = nullptr;
-    QPixmap     *pixmap = nullptr;
-
-
-    pixmap = new QPixmap(iconPath);
-    pmini = new  Mini_Widget(borderRGBA, borderWidth, borderClickRGBA, borderClickWidth, \
-                                pixmap, QSize(width,height ), \
-                                xmlPath,   dirPath, \
-                                textColor, backgroundColor, \
-                                title, textSize, type, this);
+    pmini = new  Mini_Widget(   struct_border, \
+                                QSize(rect.width(),rect.height()), \
+                                struct_path, \
+                                struct_background, \
+                                struct_text, \
+                                struct_miscellanea, this);
 
     if(pmini != nullptr){
-        pmini->move(x,y);
+        pmini->move(rect.x(),rect.y());
         pmini->show();
     }
 
@@ -86,8 +91,6 @@ void Main_Widget::readGeneralsSettings()
 {
     generals_settings.setIniCodec("utf8");
     widget_settings.setIniCodec("utf8");
-
-    backgoundImage = new QPixmap(generals_settings.value("Generals/backgoundImage", ":img/school2").toString());
 }
 bool Main_Widget::event(QEvent *event)
 {
@@ -98,11 +101,12 @@ void Main_Widget::paintEvent(QPaintEvent*)
 {
     QPainter painter(this);
 
-    QPixmap newPix = backgoundImage->scaled(this->size(), Qt::IgnoreAspectRatio);
+    QPixmap pixMap(generals_settings.value("Generals/backgoundImage", ":img/school2").toString());
+    QPixmap newPix = pixMap.scaled(this->size(), Qt::IgnoreAspectRatio);
     painter.setBrush(QBrush(Qt::black, newPix));
     painter.drawRect(this->rect());
 }
 Main_Widget::~Main_Widget()
 {
-
+    delete pmini;
 }

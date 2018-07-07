@@ -45,7 +45,6 @@ void MyViewerEventFilter::slide(QObject *object, QEvent *event)
         difference = mouseEvent->x() - x;
         x = mouseEvent->x();
         pScroll = pScrollArea->horizontalScrollBar();
-        qDebug() << pScroll->value();
         pScroll->setValue(pScroll->value() + abs(difference) );
     }
     if(x < mouseEvent->x()){

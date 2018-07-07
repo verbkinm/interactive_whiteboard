@@ -6,6 +6,7 @@
 #include <QDir>
 #include <QFileInfoList>
 
+#include "myviewereventfilter.h"
 
 
 namespace Ui {
@@ -25,16 +26,21 @@ private:
     Ui::viewer *ui;
 
     QPixmap     originPixmap;
-    float       width, height;
+    float       width   = 0;
+    float       height  = 0;
 
-    int         step;
+// текущий шаг при масштабировании
+    int         step    = 0;
 
     QDir dir;
     QStringList list;
-    unsigned int it = 0;
+// итератор при листании слайдов
+    int it     = 0;
 
 //координаты курсора
     int x, y;
+
+    MyViewerEventFilter* eventFilter = nullptr;
 
     virtual bool event(QEvent *event);
 
@@ -44,6 +50,8 @@ private:
 
     void createImageList(QString dirPath);
 
+    void setPageNumbers();
+
 private slots:
     void slotPlusImage();
     void slotMinusImage();
@@ -51,6 +59,10 @@ private slots:
 
     void slotNextImage();
     void slotPrevoisImage();
+
+signals:
+// сигнал передается в класс Content - прерывание таймера бездействия
+    void    signalTimerStart();
 };
 
 #endif // VIEWER_H

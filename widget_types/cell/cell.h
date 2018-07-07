@@ -6,6 +6,7 @@
 #include <QVBoxLayout>
 
 #include <QGridLayout>
+#include <QLabel>
 
 
 class Cell : public QWidget
@@ -24,10 +25,11 @@ private:
     unsigned int textSize;
     QString textColor;
 
-
+    QLabel* pLabel = nullptr;
 
 public:
     Cell(unsigned int textSize, QString textColor);
+    ~Cell();
 
     enum tp {NONE, NUMBER, TIME, LESSON} TYPE_COLUMN;
     bool background = false;
@@ -36,7 +38,7 @@ public:
     void        separate                ();
     void        setBackgroundColor      (tp role);
 
-    void        paintEvent              (QPaintEvent*event);
+    void        paintEvent              (QPaintEvent*);
 signals:
 
 public slots:

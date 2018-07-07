@@ -1,6 +1,5 @@
 #include "schedule.h"
 #include "cell/cell.h"
-#include "myWidgets/myTabelWidgetEventFilter/mytabelwidgeteventfilter.h"
 
 #include <QFile>
 #include <QHeaderView>
@@ -26,8 +25,9 @@
 #define INSERT_DATA                 Cell* cell = static_cast<Cell*>(tableLessonData->cellWidget(numberLesson, numberOfCurrentColumn)); \
                                     cell->setText(subSubDomElement.text());
 
-Schedule::Schedule(QString xmlPath, QString textColor, unsigned int textSize, QWidget *parent) : QWidget(parent)
+Schedule::Schedule(QString xmlPath, QString textColor, int textSize, QWidget *parent) : QWidget(parent)
 { 
+
     setDefaultSettings();
 
     this->xmlPath   = xmlPath;
@@ -94,6 +94,7 @@ Schedule::Schedule(QString xmlPath, QString textColor, unsigned int textSize, QW
 //ширина скроллбаров
     pScrollHorizontal->setFixedHeight(tableLessonData->horizontalHeader()->height());
     pScrollVertical->setFixedWidth(tableLessonData->horizontalHeader()->height());
+
 }
 void Schedule::countingLessonsAndClasses(const QDomNode &node)
 {
@@ -225,10 +226,12 @@ void Schedule::setDefaultSettings()
     gridLayout.addWidget(tableLessonData, 0, 1);
 
 //отлавливаем все события таблиц
-    tableNumberAndTime->viewport()->installEventFilter(new MyTabelWidgetEventFilter(tableNumberAndTime->viewport()));
-    tableNumberAndTime->horizontalHeader()->viewport()->installEventFilter(new MyTabelWidgetEventFilter(tableNumberAndTime->horizontalHeader()->viewport()));
-    tableLessonData->viewport()->installEventFilter(new MyTabelWidgetEventFilter(tableLessonData->viewport()));
-    tableLessonData->horizontalHeader()->viewport()->installEventFilter(new MyTabelWidgetEventFilter(tableLessonData->horizontalHeader()->viewport()));
+    eventFilterTableNumberAndTime = new MyTabelWidgetEventFilter(tableNumberAndTime->viewport());
+    tableNumberAndTime->viewport()->installEventFilter(eventFilterTableNumberAndTime);
+//    tableNumberAndTime->horizontalHeader()->viewport()->installEventFilter(new MyTabelWidgetEventFilter(tableNumberAndTime->horizontalHeader()->viewport()));
+    eventFilterTableLessonData = new MyTabelWidgetEventFilter(tableLessonData->viewport());
+    tableLessonData->viewport()->installEventFilter(eventFilterTableLessonData);
+//    tableLessonData->horizontalHeader()->viewport()->installEventFilter(new MyTabelWidgetEventFilter(tableLessonData->horizontalHeader()->viewport()));
 
     tableHeaderNumberAndTime << "№" << "Врeмя";
 
@@ -350,22 +353,35 @@ void Schedule::stretchTable()
 bool Schedule::event(QEvent *event)
 {
 //    qDebug() << event->type();
+    emit signalTimerStart();
+
     if(event->type() == QEvent::Resize)
         stretchTable();
 
-    return true;
-}
-void Schedule::paintEvent(QPaintEvent *)
-{
-//    QPainter painter(this);
-
-//    painter.setBrush(QBrush(Qt::red));
-//    painter.drawRect(this->rect());
+    return QWidget::event(event);
 }
 Schedule::~Schedule()
 {
+//    qDebug() << "Schedule destructor";
+
+    for (int row = 0; row < tableNumberAndTime->rowCount(); ++row)
+        for (int column = 0; column < tableNumberAndTime->columnCount(); ++column) {
+            Cell* cell = static_cast<Cell*>(tableNumberAndTime->cellWidget(row,column));
+            delete cell;
+        }
+
+    for (int row = 0; row < tableLessonData->rowCount(); ++row)
+        for (int column = 0; column < tableLessonData->columnCount(); ++column) {
+            Cell* cell = static_cast<Cell*>(tableLessonData->cellWidget(row,column));
+            delete cell;
+        }
+
+    delete eventFilterTableNumberAndTime;
+    delete eventFilterTableLessonData;
+
     delete tableNumberAndTime;
     delete tableLessonData;
+
     delete pScrollHorizontal;
     delete pScrollVertical;
 }

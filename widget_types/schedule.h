@@ -2,15 +2,19 @@
 #define SCHEDULE_H
 
 #include "myWidgets/mytablewidget.h"
+#include "myWidgets/myTabelWidgetEventFilter/mytabelwidgeteventfilter.h"
 
-#include <QTableWidget>
+
+#include <QWidget>
 #include <QGridLayout>
 #include <QDomComment>
 
 class Schedule : public QWidget
 {
+    Q_OBJECT
+
 public:
-    Schedule(QString xmlPath, QString textColor, unsigned int textSize, QWidget* parent = nullptr);
+    Schedule(QString xmlPath, QString textColor, int textSize, QWidget* parent = 0);
     ~Schedule();
 private:
 
@@ -20,8 +24,8 @@ private:
 // таблица с уроками
     QTableWidget* tableLessonData       = nullptr;
 
-    QScrollBar* pScrollHorizontal     = nullptr;
-    QScrollBar* pScrollVertical       = nullptr;
+    QScrollBar* pScrollHorizontal       = nullptr;
+    QScrollBar* pScrollVertical         = nullptr;
 
     QGridLayout gridLayout;
 // кол-во тегов lessonTime и class в xml файле
@@ -35,7 +39,10 @@ private:
 //цвет текста
     QString textColor;
 //размер текста
-    unsigned int textSize;
+    int textSize;
+
+    MyTabelWidgetEventFilter* eventFilterTableNumberAndTime = nullptr;
+    MyTabelWidgetEventFilter* eventFilterTableLessonData    = nullptr;
 
 // для подсчета уроков и классов = кол-во столбцов и строк будущей таблицы
     void    countingLessonsAndClasses   (const QDomNode& node);
@@ -57,7 +64,10 @@ private:
     void    stretchTable();
 
     virtual bool event                  (QEvent *event);
-    void        paintEvent              (QPaintEvent*);
+
+signals:
+// сигнал передается в класс Content - прерывание таймера бездействия
+    void    signalTimerStart();
 };
 
 #endif // SCHEDULE_H

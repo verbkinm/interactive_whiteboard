@@ -1,7 +1,5 @@
 #include "cell.h"
 
-#include <QLabel>
-
 #include <QDebug>
 #include <QPainter>
 #include <QBrush>
@@ -20,7 +18,7 @@ Cell::Cell(unsigned int textSize, QString textColor) : QWidget()
 }
 void Cell::setText(QString str)
 {
-        QLabel* pLabel = new QLabel(str);
+        pLabel = new QLabel(str);
         pLabel->setStyleSheet("color:" + textColor + ";"
                               "font-size:" + QString::number(textSize) + "px;");
         pLabel->setAlignment(Qt::AlignCenter);
@@ -28,6 +26,7 @@ void Cell::setText(QString str)
 
         if (row > 2)
             row = 0;
+
 }
 void Cell::setBackgroundColor(tp role)
 {
@@ -38,7 +37,7 @@ void Cell::separate()
     row = 0;
     column++;
 }
-void Cell::paintEvent(QPaintEvent *event)
+void Cell::paintEvent(QPaintEvent *)
 {
     QPainter painter(this);
 
@@ -72,4 +71,11 @@ void Cell::paintEvent(QPaintEvent *event)
     painter.setPen(Qt::SolidLine);
     painter.drawRect(this->rect());
 //    painter.drawRoundRect(this->rect(), 15, 15);
+}
+Cell::~Cell()
+{
+//    qDebug() << "cell destructor";
+    delete pLabel;
+    delete pHorizontLayout;
+    delete pGridLayout;
 }

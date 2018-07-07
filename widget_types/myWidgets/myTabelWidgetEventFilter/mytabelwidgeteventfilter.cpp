@@ -15,7 +15,8 @@ MyTabelWidgetEventFilter::MyTabelWidgetEventFilter(QObject *parent) : QObject(pa
 }
 bool MyTabelWidgetEventFilter::eventFilter(QObject* object, QEvent* event)
 {
-//    qDebug() << "EventFilter" << event->type() << " Object " << object->objectName();
+//    qDebug() << "EventFilter" << event->type() << " Object " << object->objectName() << "parent" << object->parent()->objectName();
+
     if(event->type() == QEvent::MouseButtonDblClick || \
        event->type() == QEvent::Wheel)
         return true;
@@ -26,9 +27,8 @@ bool MyTabelWidgetEventFilter::eventFilter(QObject* object, QEvent* event)
         y = mouseEvent->y();
     }
 
-    if(event->type() == QEvent::MouseMove){
+    if(event->type() == QEvent::MouseMove && object->parent()->objectName() != "tableNumberAndTime"){
         slide(object, event);
-
         return true;
     }
 

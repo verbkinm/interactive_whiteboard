@@ -1,6 +1,5 @@
 #include "viewer.h"
 #include "ui_viewer.h"
-#include "myviewereventfilter.h"
 
 #include <QDebug>
 #include <QMessageBox>
@@ -23,8 +22,10 @@ viewer::viewer(QString dirPath, QString textColor, unsigned int textSize, QWidge
     ui->real_size->setStyleSheet("font-size: " + QString::number(textSize) + "px; color:" + textColor + ";");
     ui->plus->setStyleSheet("font-size: " + QString::number(textSize) + "px; color:" + textColor + ";");
     ui->minus->setStyleSheet("font-size: " + QString::number(textSize) + "px; color:" + textColor + ";");
+    ui->pages->setStyleSheet("font-size: " + QString::number(textSize) + "px; color:" + textColor + ";");
 
-    ui->scrollArea->viewport()->installEventFilter(new MyViewerEventFilter(ui->scrollArea->viewport()));
+    eventFilter = new MyViewerEventFilter(ui->scrollArea->viewport());
+    ui->scrollArea->viewport()->installEventFilter(eventFilter);
 
     createImageList(dirPath);
 
@@ -39,6 +40,7 @@ viewer::viewer(QString dirPath, QString textColor, unsigned int textSize, QWidge
     connect(ui->prevois,        SIGNAL(clicked(bool)), this, SLOT(slotPrevoisImage()));
 
     ui->prevois->setEnabled(false);
+
 }
 void viewer::errorConfig(ERROR error)
 {
@@ -79,13 +81,13 @@ void viewer::createImageList(QString dirPath)
     dir.setNameFilters(filters);
 
     QFileInfoList fl = dir.entryInfoList();
-    foreach (QFileInfo fi, fl) {
+    foreach (QFileInfo fi, fl)
         list << fi.filePath();
-    }
 
     if(list.isEmpty())
         errorConfig(EMPTY_DIR);
 
+    setPageNumbers();
 }
 void viewer::slotPlusImage()
 {
@@ -132,13 +134,14 @@ void viewer::slotNextImage()
 {
     ui->prevois->setEnabled(true);
     if(it != list.length() - 1){
-        qDebug() << list.length();
         originPixmap  = QPixmap(list.at(++it));
         ui->label->setPixmap(originPixmap);
         slotRealSize();
     }
     if(it == list.length() - 1)
         ui->next->setEnabled(false);
+
+    setPageNumbers();
 }
 void viewer::slotPrevoisImage()
 {
@@ -150,9 +153,13 @@ void viewer::slotPrevoisImage()
     }
     if(it == 0)
         ui->prevois->setEnabled(false);
+
+    setPageNumbers();
 }
 bool viewer::event(QEvent *event)
 {
+    emit signalTimerStart();
+
     if(event->type() == QEvent::Resize){
         ui->label->setPixmap(originPixmap.scaled(ui->scrollArea->width() - ui->scrollArea->frameWidth() - MARGIN, \
                                                  ui->scrollArea->height() - ui->scrollArea->frameWidth() - MARGIN, \
@@ -160,13 +167,21 @@ bool viewer::event(QEvent *event)
         width = ui->label->pixmap()->width();
         height = ui->label->pixmap()->height();
         step = 0;
-
-//        qDebug() << ui->scrollArea->
     }
 
     return QWidget::event(event);
 }
+void viewer::setPageNumbers()
+{
+    QString firstPart, secondPart;
+    firstPart = QString::number(it + 1);
+    secondPart= QString::number(list.length());
+    ui->pages->setText(firstPart + " / " + secondPart);
+    this->setFocus();
+}
 viewer::~viewer()
 {
+//    qDebug() << "viewer destructor";
     delete ui;
+    delete eventFilter;
 }

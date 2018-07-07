@@ -6,120 +6,110 @@
 #include <QPainter>
 #include <QPropertyAnimation>
 
-
-Mini_Widget::Mini_Widget(QString borderColor, int borderWidth, QString borderClickColor, int borderClickWidth, \
-            QPixmap* miniIcon, QSize size, \
-            QString xmlPath, QString dirPath,   \
-            QString textColor, QString backgroundColor, \
-            QString titleText, unsigned int textSize, QString type, QWidget *parent) : QWidget(parent)
+Mini_Widget::Mini_Widget(const struct border &struct_border, QSize size, \
+                         const struct path &struct_path, \
+                         const struct background &struct_background, \
+                         const struct text &struct_text, \
+                         const struct miscellanea &struct_miscellanea, \
+                         QWidget *parent) : QWidget(parent)
 {
-    generalSettings(borderColor, borderWidth, borderClickColor, borderClickWidth, size);
-    setTypeValue(type);
+    this->struct_border     = struct_border;
+    this->struct_text       = struct_text;
+    this->struct_path       = struct_path;
+    this->struct_background = struct_background;
+    this->struct_miscellanea= struct_miscellanea;
+
+    this->_size             = size;
+
+    generalSettings();
+    setTypeValue(this->struct_miscellanea.type);
 
     switch (*(this->type)) {
         case LABEL:
-                createLabelWidget(miniIcon, size);
+                createLabelWidget();
             break;
         case CLOCK:
-                createClockWidget(size, textColor, backgroundColor);
+                createClockWidget();
              break;
         case SCHEDULE:
-                createScheduleWidget(miniIcon, size, xmlPath, textColor, textSize, titleText);
+                createScheduleWidget();
             break;
         case IMAGE_VIEWER:
-                createImageViewerWidget(miniIcon, size, dirPath, textColor, titleText, textSize);
+                createImageViewerWidget();
             break;
 
         default:
             break;
     }
 }
-void Mini_Widget::generalSettings(QString borderColor, int borderWidth, QString borderClickColor, int borderClickWidth, \
-                                  QSize size)
+void Mini_Widget::generalSettings()
 {
-    this->borderClickWidth  = borderClickWidth;
 //рамка, которая будет появлятся при нажатии
     borderClick              = new QLabel(this);
     //example: border-color: rgba(255, 0, 0, 75%)
-    borderClick->setStyleSheet("background-color:" + borderClickColor + ";");
-    borderClick->setFixedSize(size.width() + borderClickWidth, size.height() + borderClickWidth);
+    borderClick->setStyleSheet("background-color:" + struct_border.borderClickColor + ";");
+    borderClick->setFixedSize(_size.width() + struct_border.borderClickWidth, _size.height() + struct_border.borderClickWidth);
     borderClick->hide();
 
 //рамка
     border              = new QLabel(this);
     //example: border-color: rgba(255, 0, 0, 75%)
-    border->setStyleSheet("background-color:" + borderColor + ";");
-    border->setFixedSize(size.width() + borderWidth, size.height() + borderWidth);
-    border->move(borderClickWidth / 2 - borderWidth / 2, borderClickWidth / 2 - borderWidth / 2);
+    border->setStyleSheet("background-color:" + struct_border.borderColor + ";");
+    border->setFixedSize(_size.width() + struct_border.borderWidth, _size.height() + struct_border.borderWidth);
+    border->move(struct_border.borderClickWidth / 2 - struct_border.borderWidth / 2, struct_border.borderClickWidth / 2 - struct_border.borderWidth / 2);
 
     this->setStyleSheet("border-radius: 20px;");
     this->setFixedSize(borderClick->size());
 }
-void Mini_Widget::createLabelWidget(QPixmap *miniIcon, QSize size)
+void Mini_Widget::createLabelWidget()
 {
-    createLabelForMiniWidget(miniIcon, size);
+    createLabelForMiniWidget();
 }
-void Mini_Widget::createClockWidget(QSize size, QString textColor, QString backgroudColor)
+void Mini_Widget::createClockWidget()
 {
     centralWidget = new QWidget(this);
-    centralWidget->move(borderClickWidth / 2, borderClickWidth/2);
-    Clock* pClock = new Clock(textColor, backgroudColor, centralWidget);
-    pClock->setFixedSize(size);
+    centralWidget->move(struct_border.borderClickWidth / 2, struct_border.borderClickWidth/2);
+    pClock = new Clock(struct_text.textColor, struct_background.backgroundColor, centralWidget);
+    pClock->setFixedSize(_size);
 }
-void Mini_Widget::createScheduleWidget(QPixmap *miniIcon, QSize size, \
-                                       QString xmlPath, QString textColor, unsigned int textSize, QString titleText)
+void Mini_Widget::createScheduleWidget()
 {
-    this->xmlPath       = new QString(xmlPath);
-    this->textColor     = new QString(textColor);
-    this->textSize      = new unsigned int(textSize);
+    createLabelForMiniWidget();
 
-    createLabelForMiniWidget(miniIcon, size);
-
-    pContent = new Content(titleText);
+    pContent = new Content(struct_text.titleText, struct_background.backgroundImage, struct_miscellanea.timerSec);
     pContent->setObjectName("Content");
-    pContent->setTextSize(textSize);
+    pContent->setTextSize(struct_text.textSize);
 }
-void Mini_Widget::createImageViewerWidget(QPixmap *miniIcon, QSize size, \
-                                          QString dirPath, QString textColor, \
-                                          QString titleText, unsigned int textSize)
+void Mini_Widget::createImageViewerWidget()
 {
-    this->dirPath       = new QString(dirPath);
-    this->textColor     = new QString(textColor);
-    this->textSize      = new unsigned int(textSize);
-    this->titleText     = new QString(titleText);
+    createLabelForMiniWidget();
 
-    createLabelForMiniWidget(miniIcon, size);
-
-    pContent = new Content(titleText);
+    pContent = new Content(struct_text.titleText, struct_background.backgroundImage);
     pContent->setObjectName("Content");
-    pContent->setTextSize(textSize);
+    pContent->setTextSize(struct_text.textSize);
 }
 void Mini_Widget::setTypeValue(QString typeStr)
 {
     if( typeStr == "label" )
-        type = new unsigned int(LABEL);
+        type = new int(LABEL);
     else if( typeStr == "clock" )
-        type = new unsigned int(CLOCK);
+        type = new int(CLOCK);
     else if( typeStr == "schedule" )
-        type = new unsigned int(SCHEDULE);
+        type = new int(SCHEDULE);
     else if( typeStr == "image_viewer" )
-        type = new unsigned int(IMAGE_VIEWER);
+        type = new int(IMAGE_VIEWER);
 }
 
-void Mini_Widget::createLabelForMiniWidget(QPixmap* miniIcon, QSize size)
+void Mini_Widget::createLabelForMiniWidget()
 {
     centralLabel = new QLabel(this);
-    centralLabel->setFixedSize(size);
-    centralLabel->move(borderClickWidth / 2, borderClickWidth/2);
+    centralLabel->setFixedSize(_size);
+    centralLabel->move(struct_border.borderClickWidth / 2, struct_border.borderClickWidth / 2);
 
-    QPixmap* newPixmap = new QPixmap;
-    *newPixmap = miniIcon->scaled(size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-    centralLabel->setPixmap(*newPixmap);
+    QPixmap pixMap(struct_path.iconPath);
+    QPixmap newPixmap = pixMap.scaled(_size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    centralLabel->setPixmap(newPixmap);
     centralLabel->setAlignment(Qt::AlignCenter);
-}
-void Mini_Widget::paintEvent(QPaintEvent *event)
-{
-
 }
 bool Mini_Widget::event(QEvent *event)
 {
@@ -138,42 +128,43 @@ bool Mini_Widget::event(QEvent *event)
                 break;
 
             case SCHEDULE:{
-                pSchedule = new Schedule(*xmlPath, *textColor, *textSize, pContent);
+                pSchedule = new Schedule(struct_path.xmlPath, struct_text.textColor, struct_text.textSize, pContent);
                 pSchedule->setObjectName("Schedule");
+                connect(pSchedule, SIGNAL(signalTimerStart()), pContent, SLOT(slotRestartTimer()));
                 pContent->addWidget(pSchedule);
-                pContent->setWindowModality(Qt::ApplicationModal);
                 connect(pContent, SIGNAL(signalClose()), this, SLOT(slotDeleteWidgetInContent()));
 
                 QPropertyAnimation* panim1 = new QPropertyAnimation(pContent, "geometry");
                 panim1->setDuration(500);
-                panim1->setStartValue( QRect(this->x(), this->y(), this->width(), this->height()) );
+                panim1->setStartValue(QRect(this->x(), this->y(), this->width(), this->height()));
                 panim1->setEndValue(QRect(static_cast<QWidget*>(this->parent())->rect()));
                 panim1->setEasingCurve(QEasingCurve::Linear);
-
                 panim1->start();
-                pContent->repaint();
-                break;
                 }
+                break;
+
             case IMAGE_VIEWER:{
-                pImageViewer = new viewer(*dirPath, *textColor, *textSize, pContent);
+                pImageViewer = new viewer(struct_path.dirPath, struct_text.textColor, struct_text.textSize, pContent);
                 pImageViewer->setObjectName("ImageViewer");
+                connect(pImageViewer, SIGNAL(signalTimerStart()), pContent, SLOT(slotRestartTimer()));
                 pContent->addWidget(pImageViewer);
                 connect(pContent, SIGNAL(signalClose()), this, SLOT(slotDeleteWidgetInContent()));
+
                 QPropertyAnimation* panim1 = new QPropertyAnimation(pContent, "geometry");
                 panim1->setDuration(500);
                 panim1->setStartValue( QRect(this->x(), this->y(), this->width(), this->height()) );
                 panim1->setEndValue(QRect(static_cast<QWidget*>(this->parent())->rect()));
                 panim1->setEasingCurve(QEasingCurve::InQuad);
-
                 panim1->start();
-                pContent->repaint();
-                break;
                 }
+                break;
+
             default:
                 break;
             }
-            pContent->showFullScreen();
+            pContent->setWindowFlag(Qt::SplashScreen);
             pContent->setWindowModality(Qt::ApplicationModal);
+            pContent->show();
         }
     }
 
@@ -182,12 +173,45 @@ bool Mini_Widget::event(QEvent *event)
 void Mini_Widget::slotDeleteWidgetInContent()
 {
     if(pSchedule != nullptr){
+        disconnect(pSchedule, SIGNAL(signalTimerStart()), pContent, SLOT(slotRestartTimer()));
         delete pSchedule;
+        pSchedule = nullptr;
         disconnect(pContent, SIGNAL(signalClose()),this, SLOT(slotDeleteWidgetInContent()));
     }
     if(pImageViewer != nullptr){
+        disconnect(pImageViewer, SIGNAL(signalTimerStart()), pContent, SLOT(slotRestartTimer()));
         delete pImageViewer;
+        pImageViewer = nullptr;
         disconnect(pContent, SIGNAL(signalClose()),this, SLOT(slotDeleteWidgetInContent()));
     }
 
+}
+Mini_Widget::~Mini_Widget()
+{
+    if(pSchedule != nullptr)
+        delete pSchedule;
+
+    if(pImageViewer != nullptr)
+        delete pImageViewer;
+
+    if(type != nullptr)
+        delete type;
+
+    if(pClock != nullptr)
+        delete pClock;
+
+    if(centralWidget != nullptr)
+        delete centralWidget;
+
+    if(pContent != nullptr)
+        delete pContent;
+
+    if(centralLabel != nullptr)
+        delete centralLabel;
+
+    if(borderClick != nullptr)
+        delete borderClick;
+
+    if(border != nullptr)
+        delete border;
 }
