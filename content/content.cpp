@@ -6,16 +6,18 @@
 
 #include "content.h"
 
-Content::Content(QString title, QString backgoundImagePath, int timerSec, QWidget *parent) : QLabel(parent)
+Content::Content(const struct text &struct_text, QString backgoundImagePath, int timerSec, QWidget *parent) : QLabel(parent)
 {
     timerSec *= 1000;
+    this->struct_text = struct_text;
+    this->struct_text.textSize = this->struct_text.textSize + float(this->struct_text.textSize) / 100 * 50;
 
     this->backgoundImage = new QPixmap(backgoundImagePath);
 
     pLayout = new QVBoxLayout();
     this->setLayout(pLayout);
 
-    pTitle = new QLabel(title);
+    pTitle = new QLabel(this->struct_text.titleText);
     pTitle->setAlignment(Qt::AlignCenter);
     pLayout->addWidget(pTitle);
 
@@ -47,6 +49,11 @@ void Content::setTextSize(const int &textSize)
     pTitle->setStyleSheet("font-size:" + QString::number(textSize + float(textSize) / 100 * 50 ) + "px;");
     home.setStyleSheet("font-size:" + QString::number(textSize + float(textSize) / 100 * 50 ) + "px;");
 }
+void Content::setTitle(const QString &title)
+{
+    pTitle->setText(struct_text.titleText + title);
+    pTitle->setStyleSheet("font: bold " + QString::number(struct_text.textSize) + "px;");
+}
 void Content::slotRestartTimer()
 {
     timer.start(timerSec);
@@ -64,7 +71,6 @@ void Content::paintEvent(QPaintEvent*)
 {
     QPainter painter(this);
 
-// ИСПРАВИТЬ!!! фон из настроек
     QPixmap newPix = backgoundImage->scaled(this->size(), Qt::IgnoreAspectRatio);
     painter.setBrush(QBrush(Qt::black, newPix));
     painter.drawRect(this->rect());

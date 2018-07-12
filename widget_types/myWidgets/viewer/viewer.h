@@ -6,7 +6,7 @@
 #include <QDir>
 #include <QFileInfoList>
 
-#include "myviewereventfilter.h"
+#include "../myTabelWidgetEventFilter/fingerslide.h"
 
 
 namespace Ui {
@@ -40,7 +40,7 @@ private:
 //координаты курсора
     int x, y;
 
-    MyViewerEventFilter* eventFilter = nullptr;
+    FingerSlide* eventFilter = nullptr;
 
     virtual bool event(QEvent *event);
 

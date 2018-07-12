@@ -22,16 +22,18 @@ private:
     int row = 0;
     int column = 0;
 
+    bool bold  = false;
+
     unsigned int textSize;
     QString textColor;
 
     QLabel* pLabel = nullptr;
 
 public:
-    Cell(unsigned int textSize, QString textColor);
+    Cell(unsigned int textSize, QString textColor, bool bold = false);
     ~Cell();
 
-    enum tp {NONE, NUMBER, TIME, LESSON} TYPE_COLUMN;
+    enum tp {NONE, NUMBER, TIME, LESSON, HEADER} TYPE_COLUMN;
     bool background = false;
 
     void        setText                 (QString str);

@@ -1,16 +1,16 @@
-#ifndef MYTABELWIDGETEVENTFILTER_H
-#define MYTABELWIDGETEVENTFILTER_H
+#ifndef FINGERSLIDE_H
+#define FINGERSLIDE_H
 
 #include <QObject>
 
 #include <QEvent>
 #include <QMouseEvent>
 
-class MyTabelWidgetEventFilter : public QObject
+class FingerSlide : public QObject
 {
     Q_OBJECT
 public:
-    MyTabelWidgetEventFilter(QObject *parent = nullptr);
+    FingerSlide(QObject *parent = nullptr);
 
 private:
 //координаты курсора
@@ -28,4 +28,4 @@ signals:
 public slots:
 };
 
-#endif // MYTABELWIDGETEVENTFILTER_H
+#endif // FINGERSLIDE_H

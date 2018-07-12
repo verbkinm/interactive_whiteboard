@@ -3,6 +3,9 @@
 
 #include "widget_types/schedule.h"
 #include "widget_types/myWidgets/viewer/viewer.h"
+#include "widget_types/clock.h"
+
+#include "content/content.h"
 #include "structes/structes.h"
 
 #include <QWidget>
@@ -11,8 +14,6 @@
 #include <QPropertyAnimation>
 
 
-#include "content/content.h"
-#include "structes/structes.h"
 
 
 class Mini_Widget : public QWidget

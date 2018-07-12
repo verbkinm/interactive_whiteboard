@@ -31,29 +31,25 @@ FORMS += \
 
 HEADERS += \
     content/content.h \
-    convert_main_table_schedule/converter_main_table_schedule.h \
     main_widget/main_widget.h \
     mini_widget/mini_widget.h \
     widget_types/cell/cell.h \
-    widget_types/myWidgets/myTabelWidgetEventFilter/mytabelwidgeteventfilter.h \
     widget_types/myWidgets/viewer/viewer.h \
     widget_types/myWidgets/mytablewidget.h \
     widget_types/clock.h \
     widget_types/schedule.h \
-    widget_types/myWidgets/viewer/myviewereventfilter.h \
-    structes/structes.h
+    structes/structes.h \
+    widget_types/myWidgets/myTabelWidgetEventFilter/fingerslide.h
 
 SOURCES += \
     content/content.cpp \
-    convert_main_table_schedule/convert_main_table_schedule.cpp \
     main_widget/main_widget.cpp \
     mini_widget/mini_widget.cpp \
     widget_types/cell/cell.cpp \
-    widget_types/myWidgets/myTabelWidgetEventFilter/mytabelwidgeteventfilter.cpp \
     widget_types/myWidgets/mytablewidget.cpp \
     widget_types/myWidgets/viewer/viewer.cpp \
     widget_types/clock.cpp \
     widget_types/schedule.cpp \
     main.cpp \
-    widget_types/myWidgets/viewer/myviewereventfilter.cpp
+    widget_types/myWidgets/myTabelWidgetEventFilter/fingerslide.cpp
 

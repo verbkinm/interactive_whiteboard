@@ -8,13 +8,14 @@
 #include <QTimer>
 #include <QTimerEvent>
 
-#include "../widget_types/clock.h"
+#include "../structes/structes.h"
+
 
 class Content : public QLabel
 {
     Q_OBJECT
 public:
-    Content(QString title, QString backgoundImagePath, int timerSec = 5, QWidget *parent = nullptr);
+    Content(const struct text &struct_text, QString backgoundImagePath, int timerSec = 5, QWidget *parent = nullptr);
     ~Content();
 
 // таймер при истечении которого вызывается слот close()
@@ -24,12 +25,15 @@ public:
     void            addWidget       (QWidget* w);
     void            setTextSize     (const int &textSize);
 
+    void            setTitle(const QString &title);
 private:
     QVBoxLayout*    pLayout     = nullptr;
     QHBoxLayout*    pHLayout    = nullptr;
 
+    struct text struct_text;
 //
     QLabel*         pTitle      = nullptr;
+
 //указатель на виджет содержимогоs
     QWidget*        pWidget     = nullptr;
 //кнопка возврата в главное окно

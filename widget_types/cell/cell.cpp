@@ -6,10 +6,11 @@
 #include <QPaintEvent>
 #include <QLinearGradient>
 
-Cell::Cell(unsigned int textSize, QString textColor) : QWidget()
+Cell::Cell(unsigned int textSize, QString textColor, bool bold) : QWidget()
 {
     this->textSize = textSize;
     this->textColor= textColor;
+    this->bold     = bold;
 
     pGridLayout = new QGridLayout;
     this->setLayout(pGridLayout);
@@ -18,15 +19,20 @@ Cell::Cell(unsigned int textSize, QString textColor) : QWidget()
 }
 void Cell::setText(QString str)
 {
-        pLabel = new QLabel(str);
-        pLabel->setStyleSheet("color:" + textColor + ";"
-                              "font-size:" + QString::number(textSize) + "px;");
-        pLabel->setAlignment(Qt::AlignCenter);
-        pGridLayout->addWidget(pLabel, row++, column);
+    QString boldText;
 
-        if (row > 2)
-            row = 0;
+    if(bold)
+        boldText = "font: bold;";
 
+    pLabel = new QLabel(str);
+    pLabel->setStyleSheet("color:" + textColor + ";"
+            "font-size:" + QString::number(textSize) + "px;" +
+            boldText );
+    pLabel->setAlignment(Qt::AlignCenter);
+    pGridLayout->addWidget(pLabel, row++, column);
+
+    if (row > 2)
+        row = 0;
 }
 void Cell::setBackgroundColor(tp role)
 {
@@ -43,25 +49,20 @@ void Cell::paintEvent(QPaintEvent *)
 
     switch (TYPE_COLUMN) {
     case NUMBER:{
-//        QLinearGradient gradient(0, 0, width(), height());
-//        gradient.setColorAt(0, QColor(255, 140, 0, 255));
-//        gradient.setColorAt(1, Qt::white);
         painter.setBrush(QBrush(QColor(255, 140, 0, 230)));
         break;
         }
     case TIME:{
-//        QLinearGradient gradient(0, 0, width(), height());
-//        gradient.setColorAt(0, QColor(255, 228, 0, 255));
-//        gradient.setColorAt(1, Qt::white);
-//        painter.setBrush(gradient);
         painter.setBrush(QBrush(QColor(255, 228, 0, 230)));
         break;
         }
     case LESSON: {
-//        QLinearGradient gradient(0, 0, width(), height());
-//        gradient.setColorAt(0, QColor(0, 0, 255, 100));
-//        gradient.setColorAt(1, Qt::white);
+
         painter.setBrush(QBrush(QColor(210, 210, 255, 230)));
+        break;
+        }
+    case HEADER: {
+        painter.setBrush(QBrush(QColor(203, 102, 51, 230)));
         break;
         }
     default:
@@ -70,7 +71,6 @@ void Cell::paintEvent(QPaintEvent *)
     }
     painter.setPen(Qt::SolidLine);
     painter.drawRect(this->rect());
-//    painter.drawRoundRect(this->rect(), 15, 15);
 }
 Cell::~Cell()
 {

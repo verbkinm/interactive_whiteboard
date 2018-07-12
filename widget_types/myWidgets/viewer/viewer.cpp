@@ -24,7 +24,7 @@ viewer::viewer(QString dirPath, QString textColor, unsigned int textSize, QWidge
     ui->minus->setStyleSheet("font-size: " + QString::number(textSize) + "px; color:" + textColor + ";");
     ui->pages->setStyleSheet("font-size: " + QString::number(textSize) + "px; color:" + textColor + ";");
 
-    eventFilter = new MyViewerEventFilter(ui->scrollArea->viewport());
+    eventFilter = new FingerSlide(ui->scrollArea->viewport());
     ui->scrollArea->viewport()->installEventFilter(eventFilter);
 
     createImageList(dirPath);

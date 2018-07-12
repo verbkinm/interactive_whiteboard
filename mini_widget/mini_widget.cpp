@@ -76,7 +76,7 @@ void Mini_Widget::createScheduleWidget()
 {
     createLabelForMiniWidget();
 
-    pContent = new Content(struct_text.titleText, struct_background.backgroundImage, struct_miscellanea.timerSec);
+    pContent = new Content(struct_text, struct_background.backgroundImage, struct_miscellanea.timerSec);
     pContent->setObjectName("Content");
     pContent->setTextSize(struct_text.textSize);
 }
@@ -84,7 +84,7 @@ void Mini_Widget::createImageViewerWidget()
 {
     createLabelForMiniWidget();
 
-    pContent = new Content(struct_text.titleText, struct_background.backgroundImage);
+    pContent = new Content(struct_text, struct_background.backgroundImage);
     pContent->setObjectName("Content");
     pContent->setTextSize(struct_text.textSize);
 }
@@ -132,6 +132,7 @@ bool Mini_Widget::event(QEvent *event)
                 pSchedule->setObjectName("Schedule");
                 connect(pSchedule, SIGNAL(signalTimerStart()), pContent, SLOT(slotRestartTimer()));
                 pContent->addWidget(pSchedule);
+                pContent->setTitle(pSchedule->getTitle());
                 connect(pContent, SIGNAL(signalClose()), this, SLOT(slotDeleteWidgetInContent()));
 
                 QPropertyAnimation* panim1 = new QPropertyAnimation(pContent, "geometry");

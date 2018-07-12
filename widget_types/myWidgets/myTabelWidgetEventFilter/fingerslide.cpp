@@ -1,4 +1,4 @@
-#include "mytabelwidgeteventfilter.h"
+#include "fingerslide.h"
 #include "content/content.h"
 
 #include <QDebug>
@@ -9,14 +9,12 @@
 
 #define SLIDE   1
 
-MyTabelWidgetEventFilter::MyTabelWidgetEventFilter(QObject *parent) : QObject(parent)
+FingerSlide::FingerSlide(QObject *parent) : QObject(parent)
 {
 
 }
-bool MyTabelWidgetEventFilter::eventFilter(QObject* object, QEvent* event)
+bool FingerSlide::eventFilter(QObject* object, QEvent* event)
 {
-//    qDebug() << "EventFilter" << event->type() << " Object " << object->objectName() << "parent" << object->parent()->objectName();
-
     if(event->type() == QEvent::MouseButtonDblClick || \
        event->type() == QEvent::Wheel)
         return true;
@@ -27,14 +25,14 @@ bool MyTabelWidgetEventFilter::eventFilter(QObject* object, QEvent* event)
         y = mouseEvent->y();
     }
 
-    if(event->type() == QEvent::MouseMove && object->parent()->objectName() != "tableNumberAndTime"){
+    if(event->type() == QEvent::MouseMove){
         slide(object, event);
         return true;
     }
 
     return false;
 }
-void MyTabelWidgetEventFilter::slide(QObject *object, QEvent *event)
+void FingerSlide::slide(QObject *object, QEvent *event)
 {
     QMouseEvent* mouseEvent = static_cast<QMouseEvent*>(event);
 

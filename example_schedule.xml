@@ -1,5 +1,7 @@
 <?xml version = "1.0"?>
 <schedule>
+	<title>Понедельник</title>
+	
    <lessonTime>
       <number>1</number>
       <timeBegin>8:30</timeBegin>
