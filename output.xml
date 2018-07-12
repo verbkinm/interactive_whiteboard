@@ -1,0 +1,1165 @@
+<schedule>
+ <title>Субб.</title>
+ <lessonTime>
+  <number>1</number>
+  <timeBegin>08:30</timeBegin>
+  <timeEnd>08:55</timeEnd>
+ </lessonTime>
+ <lessonTime>
+  <number>2</number>
+  <timeBegin>09:05</timeBegin>
+  <timeEnd>09:30</timeEnd>
+ </lessonTime>
+ <lessonTime>
+  <number>3</number>
+  <timeBegin>09:45</timeBegin>
+  <timeEnd>10:10</timeEnd>
+ </lessonTime>
+ <lessonTime>
+  <number>4</number>
+  <timeBegin>10:25</timeBegin>
+  <timeEnd>10:50</timeEnd>
+ </lessonTime>
+ <lessonTime>
+  <number>5</number>
+  <timeBegin>11:00</timeBegin>
+  <timeEnd>11:25</timeEnd>
+ </lessonTime>
+ <lessonTime>
+  <number>6</number>
+  <timeBegin>11:35</timeBegin>
+  <timeEnd>12:00</timeEnd>
+ </lessonTime>
+ <lessonTime>
+  <number>7</number>
+  <timeBegin>12:10</timeBegin>
+  <timeEnd>12:35</timeEnd>
+ </lessonTime>
+ <lessonTime>
+  <number>8</number>
+  <timeBegin>12:45</timeBegin>
+  <timeEnd>13:10</timeEnd>
+ </lessonTime>
+ <lessonTime>
+  <number>9</number>
+  <timeBegin>13:20</timeBegin>
+  <timeEnd>13:45</timeEnd>
+ </lessonTime>
+ <lessonTime>
+  <number>10</number>
+  <timeBegin>13:55</timeBegin>
+  <timeEnd>14:20</timeEnd>
+ </lessonTime>
+ <class name="2а">
+  <lesson>
+   <name>Русский язык</name>
+   <place>147</place>
+   <teacher>Степанова Л.А.</teacher>
+  </lesson>
+  <lesson>
+   <name>Математика</name>
+   <place>147</place>
+   <teacher>Степанова Л.А.</teacher>
+  </lesson>
+  <lesson>
+   <name>Социокультурные истоки</name>
+   <place>147</place>
+   <teacher>Степанова Л.А.</teacher>
+  </lesson>
+  <lesson>
+   <name>Классный Час</name>
+   <place>147</place>
+   <teacher>Степанова Л.А.</teacher>
+  </lesson>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+ </class>
+ <class name="2б">
+  <lesson>
+   <name>Литературное Чтение</name>
+   <place>118</place>
+   <teacher>Малинина С.А.</teacher>
+  </lesson>
+  <lesson>
+   <name>Математика</name>
+   <place>118</place>
+   <teacher>Малинина С.А.</teacher>
+  </lesson>
+  <lesson>
+   <name>музыка</name>
+   <place>348</place>
+   <teacher>Буторина О.В</teacher>
+  </lesson>
+  <lesson>
+   <name>Классный Час</name>
+   <place>118</place>
+   <teacher>Малинина С.А.</teacher>
+  </lesson>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+ </class>
+ <class name="2в">
+  <lesson>
+   <name>Русский язык</name>
+   <place>117</place>
+   <teacher>Симонова Л.Н.</teacher>
+  </lesson>
+  <lesson>
+   <name>музыка</name>
+   <place>348</place>
+   <teacher>Буторина О.В</teacher>
+  </lesson>
+  <lesson>
+   <name>Литературное Чтение</name>
+   <place>117</place>
+   <teacher>Симонова Л.Н.</teacher>
+  </lesson>
+  <lesson>
+   <name>Классный Час</name>
+   <place>117</place>
+   <teacher>Симонова Л.Н.</teacher>
+  </lesson>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+ </class>
+ <class name="2г">
+  <lesson>
+   <name>музыка</name>
+   <place>348</place>
+   <teacher>Буторина О.В</teacher>
+  </lesson>
+  <lesson>
+   <name>Русский язык</name>
+   <place>116</place>
+   <teacher>Гайсина Ф.З.</teacher>
+  </lesson>
+  <lesson>
+   <name>Труд</name>
+   <place>116</place>
+   <teacher>Гайсина Ф.З.</teacher>
+  </lesson>
+  <lesson>
+   <name>Социокультурные истоки</name>
+   <place>116</place>
+   <teacher>Гайсина Ф.З.</teacher>
+  </lesson>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+ </class>
+ <class name="3а">
+  <lesson>
+   <name>Математика</name>
+   <place>209</place>
+   <teacher>Старшова Л.П.</teacher>
+  </lesson>
+  <lesson>
+   <name>Окружающий мир</name>
+   <place>209</place>
+   <teacher>Старшова Л.П.</teacher>
+  </lesson>
+  <lesson>
+   <name>Русский язык</name>
+   <place>209</place>
+   <teacher>Старшова Л.П.</teacher>
+  </lesson>
+  <lesson>
+   <name>Труд</name>
+   <place>209</place>
+   <teacher>Старшова Л.П.</teacher>
+  </lesson>
+  <lesson>
+   <name>Классный Час</name>
+   <place>209</place>
+   <teacher>Старшова Л.П.</teacher>
+  </lesson>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+ </class>
+ <class name="3б">
+  <lesson/>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+  <lesson>
+   <name>Труд</name>
+   <place>302</place>
+   <teacher>Комаренко Н.А.</teacher>
+  </lesson>
+  <lesson>
+   <name>Математика</name>
+   <place>302</place>
+   <teacher>Комаренко Н.А.</teacher>
+  </lesson>
+  <lesson>
+   <name>шахматы</name>
+   <place>302</place>
+   <teacher>Комаренко Н.А.</teacher>
+  </lesson>
+  <lesson>
+   <name>Классный Час</name>
+   <place>302</place>
+   <teacher>Комаренко Н.А.</teacher>
+  </lesson>
+  <lesson/>
+  <lesson/>
+ </class>
+ <class name="3в">
+  <lesson>
+   <name>Русский язык</name>
+   <place>115</place>
+   <teacher>Петролай А.С.</teacher>
+  </lesson>
+  <lesson>
+   <name>шахматы</name>
+   <place>115</place>
+   <teacher>Петролай А.С.</teacher>
+  </lesson>
+  <lesson>
+   <name>Окружающий мир</name>
+   <place>115</place>
+   <teacher>Петролай А.С.</teacher>
+  </lesson>
+  <lesson>
+   <name>Классный Час</name>
+   <place>115</place>
+   <teacher>Петролай А.С.</teacher>
+  </lesson>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+ </class>
+ <class name="3г">
+  <lesson>
+   <name>шахматы</name>
+   <place>340</place>
+   <teacher>Ярикова Н.И.</teacher>
+  </lesson>
+  <lesson>
+   <name>Английский язык</name>
+   <place>303</place>
+   <teacher>Садюкова Н.С.:1</teacher>
+   <separator/>
+   <name>Английский язык</name>
+   <place>304</place>
+   <teacher>Журавская М.В.:2</teacher>
+  </lesson>
+  <lesson>
+   <name>Русский язык</name>
+   <place>340</place>
+   <teacher>Ярикова Н.И.</teacher>
+  </lesson>
+  <lesson>
+   <name>Математика</name>
+   <place>340</place>
+   <teacher>Ярикова Н.И.</teacher>
+  </lesson>
+  <lesson>
+   <name>Классный Час</name>
+   <place>340</place>
+   <teacher>Ярикова Н.И.</teacher>
+  </lesson>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+ </class>
+ <class name="4а">
+  <lesson>
+   <name>шахматы</name>
+   <place>219</place>
+   <teacher>Подольская Ю.Ю.</teacher>
+  </lesson>
+  <lesson>
+   <name>Литературное Чтение</name>
+   <place>219</place>
+   <teacher>Подольская Ю.Ю.</teacher>
+  </lesson>
+  <lesson>
+   <name>ИЗО</name>
+   <place>442</place>
+   <teacher>Гардер И.А.</teacher>
+  </lesson>
+  <lesson>
+   <name>Физкультура</name>
+   <place>новый спортзал</place>
+   <teacher>Руди А.И.</teacher>
+  </lesson>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+ </class>
+ <class name="4б">
+  <lesson>
+   <name>Литературное Чтение</name>
+   <place>218</place>
+   <teacher>Хватова Л.В.</teacher>
+  </lesson>
+  <lesson>
+   <name>Математика</name>
+   <place>218</place>
+   <teacher>Хватова Л.В.</teacher>
+  </lesson>
+  <lesson>
+   <name>Окружающий мир</name>
+   <place>218</place>
+   <teacher>Хватова Л.В.</teacher>
+  </lesson>
+  <lesson>
+   <name>Труд</name>
+   <place>218</place>
+   <teacher>Хватова Л.В.</teacher>
+  </lesson>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+ </class>
+ <class name="4в">
+  <lesson>
+   <name>Русский язык</name>
+   <place>113</place>
+   <teacher>Терехина Т.Л.</teacher>
+  </lesson>
+  <lesson>
+   <name>Литературное Чтение</name>
+   <place>113</place>
+   <teacher>Терехина Т.Л.</teacher>
+  </lesson>
+  <lesson>
+   <name>Физкультура</name>
+   <place>новый спортзал</place>
+   <teacher>Руди А.И.</teacher>
+  </lesson>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+ </class>
+ <class name="4г">
+  <lesson>
+   <name>Физкультура</name>
+   <place>площадка</place>
+   <teacher>Руди А.И.</teacher>
+  </lesson>
+  <lesson>
+   <name>Физкультура</name>
+   <place>площадка</place>
+   <teacher>Руди А.И.</teacher>
+  </lesson>
+  <lesson>
+   <name>Литературное Чтение</name>
+   <place>217</place>
+   <teacher>Потапова И.Г.</teacher>
+  </lesson>
+  <lesson>
+   <name>Математика</name>
+   <place>217</place>
+   <teacher>Потапова И.Г.</teacher>
+  </lesson>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+ </class>
+ <class name="5а">
+  <lesson>
+   <name>ИЗО</name>
+   <place>442</place>
+   <teacher>Гардер И.А.</teacher>
+  </lesson>
+  <lesson>
+   <name>Русский язык</name>
+   <place>445</place>
+   <teacher>Лаптева Е.С.</teacher>
+  </lesson>
+  <lesson>
+   <name>Математика</name>
+   <place>345</place>
+   <teacher>Кадргулов Р.Р.</teacher>
+  </lesson>
+  <lesson>
+   <name>История</name>
+   <place>450</place>
+   <teacher>Павленко П.В.</teacher>
+  </lesson>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+ </class>
+ <class name="5б">
+  <lesson>
+   <name>Английский язык</name>
+   <place>304</place>
+   <teacher>Федера Т.А.:1</teacher>
+   <separator/>
+   <name>Английский язык</name>
+   <place>303</place>
+   <teacher>Журавская М.В.:2</teacher>
+  </lesson>
+  <lesson>
+   <name>ИЗО</name>
+   <place>442</place>
+   <teacher>Гардер И.А.</teacher>
+  </lesson>
+  <lesson>
+   <name>История</name>
+   <place>244</place>
+   <teacher>Павленко П.В.</teacher>
+  </lesson>
+  <lesson>
+   <name>Русский язык</name>
+   <place>440</place>
+   <teacher>Луценко Г.И.</teacher>
+  </lesson>
+  <lesson>
+   <name>Математика</name>
+   <place>306</place>
+   <teacher>Делянова С.В.</teacher>
+  </lesson>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+ </class>
+ <class name="5в">
+  <lesson>
+   <name>Классный Час</name>
+   <place>443</place>
+   <teacher>Зайцева Л.В.</teacher>
+  </lesson>
+  <lesson>
+   <name>Биология</name>
+   <place>443</place>
+   <teacher>Зайцева Л.В.</teacher>
+  </lesson>
+  <lesson>
+   <name>Математика</name>
+   <place>307</place>
+   <teacher>Фалалеева Л.А.</teacher>
+  </lesson>
+  <lesson>
+   <name>Русский язык</name>
+   <place>445</place>
+   <teacher>Лаптева Е.С.</teacher>
+  </lesson>
+  <lesson>
+   <name>Литература</name>
+   <place>445</place>
+   <teacher>Лаптева Е.С.</teacher>
+  </lesson>
+  <lesson>
+   <name>музыка</name>
+   <place>348</place>
+   <teacher>Савченко О.Б.</teacher>
+  </lesson>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+ </class>
+ <class name="6а">
+  <lesson>
+   <name>Математика</name>
+   <place>306</place>
+   <teacher>Делянова С.В.</teacher>
+  </lesson>
+  <lesson>
+   <name>История</name>
+   <place>244</place>
+   <teacher>Павленко П.В.</teacher>
+  </lesson>
+  <lesson>
+   <name>Английский язык</name>
+   <place>309</place>
+   <teacher>Седова Р.С.:1</teacher>
+   <separator/>
+   <name>Английский язык</name>
+   <place>303</place>
+   <teacher>Журавская М.В.:2</teacher>
+  </lesson>
+  <lesson>
+   <name>Русский язык</name>
+   <place>343</place>
+   <teacher>Ягодарова С.Э</teacher>
+  </lesson>
+  <lesson>
+   <name>Социокультурные истоки</name>
+   <place>142</place>
+   <teacher>Никулина Т.В.</teacher>
+  </lesson>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+ </class>
+ <class name="6б">
+  <lesson>
+   <name>Математика</name>
+   <place>307</place>
+   <teacher>Фалалеева Л.А.</teacher>
+  </lesson>
+  <lesson>
+   <name>Литература</name>
+   <place>216</place>
+   <teacher>Ягодарова С.Э</teacher>
+  </lesson>
+  <lesson>
+   <name>Английский язык</name>
+   <place>304</place>
+   <teacher>Федера Т.А.:1</teacher>
+   <separator/>
+   <name>Английский язык</name>
+   <place>305</place>
+   <teacher>Мокшина Я.В.:2</teacher>
+  </lesson>
+  <lesson>
+   <name>ОУИПД</name>
+   <place>302</place>
+   <teacher>Окишева И.В.</teacher>
+  </lesson>
+  <lesson>
+   <name>Русский язык</name>
+   <place>343</place>
+   <teacher>Ягодарова С.Э</teacher>
+  </lesson>
+  <lesson>
+   <name>Социокультурные истоки</name>
+   <place>443</place>
+   <teacher>Никулина Т.В.</teacher>
+  </lesson>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+ </class>
+ <class name="6в">
+  <lesson>
+   <name>Русский язык</name>
+   <place>216</place>
+   <teacher>Ганжа Н.К.</teacher>
+  </lesson>
+  <lesson>
+   <name>Литература</name>
+   <place>216</place>
+   <teacher>Ганжа Н.К.</teacher>
+  </lesson>
+  <lesson>
+   <name>География</name>
+   <place>342</place>
+   <teacher>Кузьмина В.В.</teacher>
+  </lesson>
+  <lesson>
+   <name>Математика</name>
+   <place>306</place>
+   <teacher>Делянова С.В.</teacher>
+  </lesson>
+  <lesson>
+   <name>Физкультура</name>
+   <place>новый спортзал</place>
+   <teacher>Шкаликов В.А.</teacher>
+  </lesson>
+  <lesson>
+   <name>Английский язык</name>
+   <place>304</place>
+   <teacher>Федера Т.А.:1</teacher>
+   <separator/>
+   <name>Английский язык</name>
+   <place>244</place>
+   <teacher>Журавская М.В.:2</teacher>
+  </lesson>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+ </class>
+ <class name="6г">
+  <lesson>
+   <name>Русский язык</name>
+   <place>216</place>
+   <teacher>Лаптева Е.С.</teacher>
+  </lesson>
+  <lesson>
+   <name>Математика</name>
+   <place>307</place>
+   <teacher>Фалалеева Л.А.</teacher>
+  </lesson>
+  <lesson>
+   <name>Литература</name>
+   <place>445</place>
+   <teacher>Лаптева Е.С.</teacher>
+  </lesson>
+  <lesson>
+   <name>ИЗО</name>
+   <place>442</place>
+   <teacher>Гардер И.А.</teacher>
+  </lesson>
+  <lesson>
+   <name>Английский язык</name>
+   <place>304</place>
+   <teacher>Федера Т.А.:1</teacher>
+   <separator/>
+   <name>Английский язык</name>
+   <place>244</place>
+   <teacher>Журавская М.В.:2</teacher>
+  </lesson>
+  <lesson>
+   <name>История</name>
+   <place>306</place>
+   <teacher>Павленко П.В.</teacher>
+  </lesson>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+ </class>
+ <class name="7а">
+  <lesson>
+   <name>Литература</name>
+   <place>343</place>
+   <teacher>Ягодарова С.Э</teacher>
+  </lesson>
+  <lesson>
+   <name>География</name>
+   <place>342</place>
+   <teacher>Кузьмина В.В.</teacher>
+  </lesson>
+  <lesson>
+   <name>Русский язык</name>
+   <place>343</place>
+   <teacher>Ягодарова С.Э</teacher>
+  </lesson>
+  <lesson>
+   <name>Английский язык</name>
+   <place>309</place>
+   <teacher>Седова Р.С.:1</teacher>
+   <separator/>
+   <name>Английский язык</name>
+   <place>305</place>
+   <teacher>Журавская М.В.:2</teacher>
+  </lesson>
+  <lesson>
+   <name>Геометрия</name>
+   <place>307</place>
+   <teacher>Фалалеева Л.А.</teacher>
+  </lesson>
+  <lesson>
+   <name>Физика</name>
+   <place>345</place>
+   <teacher>Кадргулов Р.Р.</teacher>
+  </lesson>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+ </class>
+ <class name="7б">
+  <lesson>
+   <name>География</name>
+   <place>342</place>
+   <teacher>Кузьмина В.В.</teacher>
+  </lesson>
+  <lesson>
+   <name>Алгебра</name>
+   <place>306</place>
+   <teacher>Делянова С.В.</teacher>
+  </lesson>
+  <lesson>
+   <name>Обществознание</name>
+   <place>216</place>
+   <teacher>Шепилов Р.М.</teacher>
+  </lesson>
+  <lesson>
+   <name>музыка</name>
+   <place>348</place>
+   <teacher>Савченко О.Б.</teacher>
+  </lesson>
+  <lesson>
+   <name>Физика</name>
+   <place>345</place>
+   <teacher>Кадргулов Р.Р.</teacher>
+  </lesson>
+  <lesson>
+   <name>Русский язык</name>
+   <place>343</place>
+   <teacher>Ягодарова С.Э</teacher>
+  </lesson>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+ </class>
+ <class name="7в">
+  <lesson>
+   <name>История</name>
+   <place>445</place>
+   <teacher>Павленко П.В.</teacher>
+  </lesson>
+  <lesson>
+   <name>Физика</name>
+   <place>345</place>
+   <teacher>Кадргулов Р.Р.</teacher>
+  </lesson>
+  <lesson>
+   <name>Алгебра</name>
+   <place>306</place>
+   <teacher>Делянова С.В.</teacher>
+  </lesson>
+  <lesson>
+   <name>Английский язык</name>
+   <place>304</place>
+   <teacher>Федера Т.А.:1</teacher>
+   <separator/>
+   <name>Английский язык</name>
+   <place>303</place>
+   <teacher>Садюкова Н.С.:2</teacher>
+  </lesson>
+  <lesson>
+   <name>музыка</name>
+   <place>348</place>
+   <teacher>Савченко О.Б.</teacher>
+  </lesson>
+  <lesson>
+   <name>ИЗО</name>
+   <place>442</place>
+   <teacher>Гардер И.А.</teacher>
+  </lesson>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+ </class>
+ <class name="8а">
+  <lesson>
+   <name>Физкультура</name>
+   <place>старый спортзал</place>
+   <teacher>Таран Ю.И.</teacher>
+  </lesson>
+  <lesson>
+   <name>Физика</name>
+   <place>347</place>
+   <teacher>Таирова С.Е.</teacher>
+  </lesson>
+  <lesson>
+   <name>Алгебра</name>
+   <place>347</place>
+   <teacher>Таирова С.Е.</teacher>
+  </lesson>
+  <lesson>
+   <name>Обществознание</name>
+   <place>216</place>
+   <teacher>Шепилов Р.М.</teacher>
+  </lesson>
+  <lesson>
+   <name>Английский язык</name>
+   <place>305</place>
+   <teacher>Мокшина Я.В.:1</teacher>
+   <separator/>
+   <name>Английский язык</name>
+   <place>303</place>
+   <teacher>Садюкова Н.С.:2</teacher>
+  </lesson>
+  <lesson>
+   <name>География</name>
+   <place>342</place>
+   <teacher>Кузьмина В.В.</teacher>
+  </lesson>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+ </class>
+ <class name="8б">
+  <lesson>
+   <name>Обществознание</name>
+   <place>450</place>
+   <teacher>Шепилов Р.М.</teacher>
+  </lesson>
+  <lesson>
+   <name>Английский язык</name>
+   <place>305</place>
+   <teacher>Мокшина Я.В.:1</teacher>
+   <separator/>
+   <name>Английский язык</name>
+   <place>309</place>
+   <teacher>Седова Р.С.:2</teacher>
+  </lesson>
+  <lesson>
+   <name>Физкультура</name>
+   <place>старый спортзал</place>
+   <teacher>Таран Ю.И.</teacher>
+  </lesson>
+  <lesson>
+   <name>Химия</name>
+   <place>443</place>
+   <teacher>Грибовская Г.К.</teacher>
+  </lesson>
+  <lesson>
+   <name>География</name>
+   <place>342</place>
+   <teacher>Кузьмина В.В.</teacher>
+  </lesson>
+  <lesson>
+   <name>ОБЖ</name>
+   <place>142</place>
+   <teacher>Назаренко А.В.</teacher>
+  </lesson>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+ </class>
+ <class name="8в">
+  <lesson>
+   <name>Английский язык</name>
+   <place>305</place>
+   <teacher>Мокшина Я.В.:1</teacher>
+   <separator/>
+   <name>Английский язык</name>
+   <place>309</place>
+   <teacher>Седова Р.С.:2</teacher>
+  </lesson>
+  <lesson>
+   <name>Физкультура</name>
+   <place>старый спортзал</place>
+   <teacher>Таран Ю.И.</teacher>
+  </lesson>
+  <lesson>
+   <name>Химия</name>
+   <place>447</place>
+   <teacher>Грибовская Г.К.</teacher>
+  </lesson>
+  <lesson>
+   <name>Алгебра</name>
+   <place>307</place>
+   <teacher>Фалалеева Л.А.</teacher>
+  </lesson>
+  <lesson>
+   <name>Физика</name>
+   <place>347</place>
+   <teacher>Таирова С.Е.</teacher>
+  </lesson>
+  <lesson>
+   <name>Геометрия</name>
+   <place>307</place>
+   <teacher>Фалалеева Л.А.</teacher>
+  </lesson>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+ </class>
+ <class name="9а">
+  <lesson>
+   <name>Алгебра</name>
+   <place>308</place>
+   <teacher>Фирсенков С.Е.</teacher>
+  </lesson>
+  <lesson>
+   <name>Геометрия</name>
+   <place>308</place>
+   <teacher>Фирсенков С.Е.</teacher>
+  </lesson>
+  <lesson>
+   <name>Информатика</name>
+   <place>242</place>
+   <teacher>Заломина Е.Ю.:1</teacher>
+   <separator/>
+   <name>Информатика</name>
+   <place>242</place>
+   <teacher>Ермакова Н.И.:2</teacher>
+  </lesson>
+  <lesson>
+   <name>География</name>
+   <place>342</place>
+   <teacher>Кузьмина В.В.</teacher>
+  </lesson>
+  <lesson>
+   <name>Химия</name>
+   <place>443</place>
+   <teacher>Грибовская Г.К.</teacher>
+  </lesson>
+  <lesson>
+   <name>Английский язык</name>
+   <place>305</place>
+   <teacher>Мокшина Я.В.:1</teacher>
+   <separator/>
+   <name>Английский язык</name>
+   <place>309</place>
+   <teacher>Седова Р.С.:2</teacher>
+  </lesson>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+ </class>
+ <class name="9б">
+  <lesson>
+   <name>Химия</name>
+   <place>447</place>
+   <teacher>Грибовская Г.К.</teacher>
+  </lesson>
+  <lesson>
+   <name>Физкультура</name>
+   <place>новый спортзал</place>
+   <teacher>Ленков А.И.</teacher>
+  </lesson>
+  <lesson>
+   <name>Русский язык</name>
+   <place>450</place>
+   <teacher>Ганжа Н.К.</teacher>
+  </lesson>
+  <lesson>
+   <name>Информатика</name>
+   <place>242</place>
+   <teacher>Заломина Е.Ю.:1</teacher>
+   <separator/>
+   <name>Информатика</name>
+   <place>242</place>
+   <teacher>Ермакова Н.И.:2</teacher>
+  </lesson>
+  <lesson>
+   <name>Информатика</name>
+   <place>242</place>
+   <teacher>Заломина Е.Ю.:1</teacher>
+   <separator/>
+   <name>Информатика</name>
+   <place>242</place>
+   <teacher>Ермакова Н.И.:2</teacher>
+  </lesson>
+  <lesson>
+   <name>Алгебра</name>
+   <place>347</place>
+   <teacher>Таирова С.Е.</teacher>
+  </lesson>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+ </class>
+ <class name="9в">
+  <lesson>
+   <name>Алгебра</name>
+   <place>345</place>
+   <teacher>Кадргулов Р.Р.</teacher>
+  </lesson>
+  <lesson>
+   <name>ОБЖ</name>
+   <place>142</place>
+   <teacher>Назаренко А.В.</teacher>
+  </lesson>
+  <lesson>
+   <name>Физкультура</name>
+   <place>площадка</place>
+   <teacher>Ленков А.И.</teacher>
+  </lesson>
+  <lesson>
+   <name>Физкультура</name>
+   <place>площадка</place>
+   <teacher>Ленков А.И.</teacher>
+  </lesson>
+  <lesson>
+   <name>История</name>
+   <place>450</place>
+   <teacher>Павленко П.В.</teacher>
+  </lesson>
+  <lesson>
+   <name>Информатика</name>
+   <place>242</place>
+   <teacher>Заломина Е.Ю.:1</teacher>
+   <separator/>
+   <name>Информатика</name>
+   <place>242</place>
+   <teacher>Ермакова Н.И.:2</teacher>
+  </lesson>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+ </class>
+ <class name="10а">
+  <lesson>
+   <name>Физика</name>
+   <place>347</place>
+   <teacher>Таирова С.Е.</teacher>
+  </lesson>
+  <lesson>
+   <name>Химия</name>
+   <place>447</place>
+   <teacher>Грибовская Г.К.</teacher>
+  </lesson>
+  <lesson>
+   <name>Биология</name>
+   <place>443</place>
+   <teacher>Зайцева Л.В.</teacher>
+  </lesson>
+  <lesson>
+   <name>Геометрия</name>
+   <place>308</place>
+   <teacher>Фирсенков С.Е.</teacher>
+  </lesson>
+  <lesson>
+   <name>Алгебра</name>
+   <place>308</place>
+   <teacher>Фирсенков С.Е.</teacher>
+  </lesson>
+  <lesson>
+   <name>Литература</name>
+   <place>440</place>
+   <teacher>Луценко Г.И.</teacher>
+  </lesson>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+ </class>
+ <class name="10б">
+  <lesson>
+   <name>проф. ориентация</name>
+   <place>245</place>
+   <teacher>Балчугова А.Ю.</teacher>
+  </lesson>
+  <lesson>
+   <name>Литература</name>
+   <place>440</place>
+   <teacher>Луценко Г.И.</teacher>
+  </lesson>
+  <lesson>
+   <name>Русский язык</name>
+   <place>440</place>
+   <teacher>Луценко Г.И.</teacher>
+  </lesson>
+  <lesson>
+   <name>Биология</name>
+   <place>447</place>
+   <teacher>Лукина Е.А.</teacher>
+  </lesson>
+  <lesson>
+   <name>Химия</name>
+   <place>447</place>
+   <teacher>Лукина Е.А.</teacher>
+  </lesson>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+ </class>
+ <class name="11а">
+  <lesson>
+   <name>Русский язык</name>
+   <place>440</place>
+   <teacher>Луценко Г.И.</teacher>
+  </lesson>
+  <lesson>
+   <name>Обществознание</name>
+   <place>450</place>
+   <teacher>Шепилов Р.М.</teacher>
+  </lesson>
+  <lesson>
+   <name>Геометрия</name>
+   <place>308</place>
+   <teacher>Фирсенков С.Е.</teacher>
+  </lesson>
+  <lesson>
+   <name>Физика</name>
+   <place>347</place>
+   <teacher>Таирова С.Е.</teacher>
+  </lesson>
+  <lesson>
+   <name>История</name>
+   <place>216</place>
+   <teacher>Шепилов Р.М.</teacher>
+  </lesson>
+  <lesson>
+   <name>Алгебра</name>
+   <place>308</place>
+   <teacher>Фирсенков С.Е.</teacher>
+  </lesson>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+ </class>
+ <class name="11б">
+  <lesson>
+   <name>Информатика</name>
+   <place>242</place>
+   <teacher>Заломина Е.Ю.:1</teacher>
+   <separator/>
+   <name>Информатика</name>
+   <place>242</place>
+   <teacher>Ермакова Н.И.:2</teacher>
+  </lesson>
+  <lesson>
+   <name>Информатика</name>
+   <place>242</place>
+   <teacher>Заломина Е.Ю.:1</teacher>
+   <separator/>
+   <name>Информатика</name>
+   <place>242</place>
+   <teacher>Ермакова Н.И.:2</teacher>
+  </lesson>
+  <lesson>
+   <name>проф. ориентация</name>
+   <place>241</place>
+   <teacher>Лукина Е.А.</teacher>
+  </lesson>
+  <lesson>
+   <name>Алгебра</name>
+   <place>345</place>
+   <teacher>Кадргулов Р.Р.</teacher>
+  </lesson>
+  <lesson>
+   <name>Литература</name>
+   <place>440</place>
+   <teacher>Луценко Г.И.</teacher>
+  </lesson>
+  <lesson>
+   <name>Химия</name>
+   <place>447</place>
+   <teacher>Лукина Е.А.</teacher>
+  </lesson>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+  <lesson/>
+ </class>
+</schedule>
