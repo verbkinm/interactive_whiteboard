@@ -23,10 +23,10 @@ Content::Content(const struct text &struct_text, QString backgoundImagePath, int
 
 
     home.setText("Закрыть");
-    connect(&home, SIGNAL(clicked(bool)), this, SLOT(close()));
+    connect(&home, SIGNAL(clicked(bool)), this, SLOT(slotAnimCloseWindow()));
 
 //таймер бездействия
-    connect(&timer, SIGNAL(timeout()), this, SLOT(close()));
+    connect(&timer, SIGNAL(timeout()), this, SLOT(slotAnimCloseWindow()));
     timer.start(timerSec);
 
     this->timerSec = timerSec;
@@ -42,7 +42,7 @@ void Content::addWidget(QWidget *w)
     pHLayout->addStretch(1);
     pLayout->addLayout(pHLayout);
 // снимаем фокус с pWidget
-    this->setFocus();
+//    this->setFocus();
 }
 void Content::setTextSize(const int &textSize)
 {
@@ -54,6 +54,16 @@ void Content::setTitle(const QString &title)
     pTitle->setText(struct_text.titleText + title);
     pTitle->setStyleSheet("font: bold " + QString::number(struct_text.textSize) + "px;");
 }
+void Content::slotAnimCloseWindow()
+{
+    panimClose = new QPropertyAnimation(this, "windowOpacity");
+    panimClose->setDuration(500);
+    panimClose->setStartValue(1);
+    panimClose->setEndValue(0);
+    panimClose->start();
+
+    connect(panimClose, SIGNAL(finished()), this, SLOT(close()));
+}
 void Content::slotRestartTimer()
 {
     timer.start(timerSec);
@@ -62,8 +72,11 @@ void Content::slotRestartTimer()
 bool Content::event(QEvent *event)
 {
 //    qDebug() << "Content" << event->type();
-    if(event->type() == QEvent::Close)
+    if(event->type() == QEvent::Close){
+        this->setWindowOpacity(1);
+        delete panimClose;
         emit signalClose(); // сигнал используется в классе mini_widget
+    }
 
     return QWidget::event(event);
 }

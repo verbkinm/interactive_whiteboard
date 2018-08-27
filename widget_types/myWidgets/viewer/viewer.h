@@ -6,7 +6,7 @@
 #include <QDir>
 #include <QFileInfoList>
 
-#include "../myTabelWidgetEventFilter/fingerslide.h"
+#include "../fingerslide/fingerslide.h"
 
 
 namespace Ui {

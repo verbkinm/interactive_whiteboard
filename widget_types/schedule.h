@@ -2,7 +2,7 @@
 #define SCHEDULE_H
 
 #include "myWidgets/mytablewidget.h"
-#include "myWidgets/myTabelWidgetEventFilter/fingerslide.h"
+#include "myWidgets/fingerslide/fingerslide.h"
 
 
 #include <QWidget>

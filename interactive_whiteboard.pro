@@ -39,7 +39,7 @@ HEADERS += \
     widget_types/clock.h \
     widget_types/schedule.h \
     structes/structes.h \
-    widget_types/myWidgets/myTabelWidgetEventFilter/fingerslide.h
+    widget_types/myWidgets/fingerslide/fingerslide.h
 
 SOURCES += \
     content/content.cpp \
@@ -51,5 +51,5 @@ SOURCES += \
     widget_types/clock.cpp \
     widget_types/schedule.cpp \
     main.cpp \
-    widget_types/myWidgets/myTabelWidgetEventFilter/fingerslide.cpp
+    widget_types/myWidgets/fingerslide/fingerslide.cpp
 

@@ -7,6 +7,7 @@
 #include <QPushButton>
 #include <QTimer>
 #include <QTimerEvent>
+#include <QPropertyAnimation>
 
 #include "../structes/structes.h"
 
@@ -42,16 +43,21 @@ private:
 // путь к файлу фона виджета
     QPixmap         *backgoundImage = nullptr;
 
+    QPropertyAnimation* panimClose  = nullptr;
+
 protected:
 
     bool virtual    event           (QEvent *event);
     void            paintEvent      (QPaintEvent *);
 
+
 signals:
 // вызвать сигнал для родителя Mini_Widget, что бы тот очистил память указателя pSchedule
-    void signalClose();
+    void signalClose                ();
 public slots:
-    void slotRestartTimer();
+    void slotRestartTimer           ();
+    void slotAnimCloseWindow        ();
+
 };
 
 #endif // CONTENT_H

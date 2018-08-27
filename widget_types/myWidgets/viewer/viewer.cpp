@@ -5,8 +5,6 @@
 #include <QMessageBox>
 #include <QScrollBar>
 
-
-
 #define STEP        10
 #define MAX_STEP    5
 #define MARGIN      15
