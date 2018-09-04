@@ -44,6 +44,8 @@ void Main_Widget::addMyWidgets()
 
         struct_miscellanea.type             = widget_settings.value("type", "label").toString();
         struct_miscellanea.timerSec         = generals_settings.value("Generals/timerSec", 30).toInt();
+        struct_miscellanea.dynamicMiniWidget= widget_settings.value("dynamicMiniWidget", false).toBool();
+        struct_miscellanea.dynamicMiniWidgetTimer= widget_settings.value("dynamicMiniWidgetTimer", 5).toInt();
 
         struct_background.backgroundColor   = widget_settings.value("backgroundColor", "black").toString();
         struct_background.backgroundImage   = generals_settings.value("Generals/backgoundImage", ":img/school2").toString();
@@ -58,6 +60,8 @@ void Main_Widget::addMyWidgets()
 
 
         widget_settings.endGroup();
+
+        qDebug() << str << struct_miscellanea.dynamicMiniWidget;
 
         addMyWidget(rect, \
                     struct_border, \

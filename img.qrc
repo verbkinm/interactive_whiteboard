@@ -5,5 +5,7 @@
         <file alias="school">img/school.jpg</file>
         <file alias="school2">img/school2.jpg</file>
         <file alias="schedule">img/schedule.jpg</file>
+        <file>img/next.png</file>
+        <file>img/previos.png</file>
     </qresource>
 </RCC>

@@ -33,8 +33,13 @@ struct background
 
 struct miscellanea
 {
-    QString type                = "\0";
-    int     timerSec            = 0;
+    QString type                    = "\0";
+//таймер, по которому виджет закрывается
+    int     timerSec                = 0;
+//виджет с заголовком и меняющимися изображениями, а так же с кнопками вперед и назад
+    bool    dynamicMiniWidget       = false;
+//таймер для автоматической смены изображений у dynamicMiniWidget
+    int     dynamicMiniWidgetTimer  = 5;
 };
 
 #endif // STRUCTES_H

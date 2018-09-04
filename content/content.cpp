@@ -57,11 +57,13 @@ void Content::setTitle(const QString &title)
 void Content::slotAnimCloseWindow()
 {
     panimClose = new QPropertyAnimation(this, "windowOpacity");
-    panimClose->setDuration(500);
+    panimClose->setDuration(1000);
     panimClose->setStartValue(1);
     panimClose->setEndValue(0);
     panimClose->start();
 
+//при закрытии окна, оно на мгновение появляеться полностью, чтобы это избежать - с начало окно скрываем, потом закрываем
+    connect(panimClose, SIGNAL(finished()), this, SLOT(hide()));
     connect(panimClose, SIGNAL(finished()), this, SLOT(close()));
 }
 void Content::slotRestartTimer()

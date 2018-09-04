@@ -27,7 +27,8 @@ RESOURCES += \
     img.qrc
 
 FORMS += \
-    widget_types/myWidgets/viewer/viewer.ui
+    widget_types/myWidgets/viewer/viewer.ui \
+    widget_types/leafer.ui
 
 HEADERS += \
     content/content.h \
@@ -39,7 +40,9 @@ HEADERS += \
     widget_types/clock.h \
     widget_types/schedule.h \
     structes/structes.h \
-    widget_types/myWidgets/fingerslide/fingerslide.h
+    widget_types/myWidgets/fingerslide/fingerslide.h \
+    mini_widget/widgetforminiwidget.h \
+    widget_types/leafer.h
 
 SOURCES += \
     content/content.cpp \
@@ -51,5 +54,7 @@ SOURCES += \
     widget_types/clock.cpp \
     widget_types/schedule.cpp \
     main.cpp \
-    widget_types/myWidgets/fingerslide/fingerslide.cpp
+    widget_types/myWidgets/fingerslide/fingerslide.cpp \
+    mini_widget/widgetforminiwidget.cpp \
+    widget_types/leafer.cpp
 

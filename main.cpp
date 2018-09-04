@@ -4,6 +4,7 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    a.setOverrideCursor(Qt::BlankCursor);
     Main_Widget w;
 
     w.setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);

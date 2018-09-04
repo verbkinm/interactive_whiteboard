@@ -99,6 +99,10 @@ signals:
 private slots:
 // удаление объекта из памяти при закрытии окна
     void slotDeleteWidgetInContent();
+
+    void slotWidgetPressed();
+    void slotWidgetReleased();
+    void slotWidgetClicked();
 };
 
 #endif // MINI_WIDGET_H
