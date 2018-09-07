@@ -20,8 +20,8 @@ private:
 //файл конфигураций для виджетов, добавляемых на доску
     QSettings                       generals_settings, widget_settings;
 
-//здесь будут зраниться указатели на все виджеты на доске
-    QList<QObject*>                 current_widgets;
+//здесь будут храниться указатели на все виджеты на доске
+//    QList<QObject*>                 current_widgets;
 
 //указатель на мини виджет
     Mini_Widget *pmini  = nullptr;
@@ -35,7 +35,6 @@ private:
                                          const struct path &struct_path, \
                                          const struct text &struct_text);
 
-    void            readGeneralsSettings();
 
     void            paintEvent          (QPaintEvent*);
     virtual bool    event               (QEvent *event);

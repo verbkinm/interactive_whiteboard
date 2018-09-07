@@ -31,7 +31,7 @@
         <x>0</x>
         <y>0</y>
         <width>707</width>
-        <height>479</height>
+        <height>478</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -75,14 +75,22 @@
      <item>
       <widget class="QPushButton" name="prevois">
        <property name="text">
-        <string>&lt;-</string>
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../../../img.qrc">
+         <normaloff>:/img/img/previos.png</normaloff>:/img/img/previos.png</iconset>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="next">
        <property name="text">
-        <string>-&gt;</string>
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../../../img.qrc">
+         <normaloff>:/img/img/next.png</normaloff>:/img/img/next.png</iconset>
        </property>
       </widget>
      </item>
@@ -157,6 +165,8 @@
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="../../../img.qrc"/>
+ </resources>
  <connections/>
 </ui>

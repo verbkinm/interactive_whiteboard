@@ -12,11 +12,12 @@ Main_Widget::Main_Widget()
                    widget_settings("LYCEUM","interactive_whiteboard_widgets")
 
 {
-    readGeneralsSettings();
     addMyWidgets();
 }
 void Main_Widget::addMyWidgets()
 {
+    generals_settings.setIniCodec("utf8");
+    widget_settings.setIniCodec("utf8");
 
     QStringList groups = widget_settings.childGroups();
 
@@ -24,12 +25,13 @@ void Main_Widget::addMyWidgets()
         widget_settings.beginGroup(str);
 
 // структура рамки для мини виджета
-        struct border struct_border;
-        struct text struct_text;
-        struct path struct_path;
-        struct background struct_background;
-        struct miscellanea struct_miscellanea;
+        border struct_border;
+        text struct_text;
+        path struct_path;
+        background struct_background;
+        miscellanea struct_miscellanea;
 
+//rectangle для мини виджета
         QRect rect;
 
         rect.setX(widget_settings.value("x", 10).toInt());
@@ -61,7 +63,7 @@ void Main_Widget::addMyWidgets()
 
         widget_settings.endGroup();
 
-        qDebug() << str << struct_miscellanea.dynamicMiniWidget;
+//        qDebug() << str << struct_miscellanea.dynamicMiniWidget;
 
         addMyWidget(rect, \
                     struct_border, \
@@ -90,11 +92,6 @@ void Main_Widget::addMyWidget(const QRect &rect, \
         pmini->show();
     }
 
-}
-void Main_Widget::readGeneralsSettings()
-{
-    generals_settings.setIniCodec("utf8");
-    widget_settings.setIniCodec("utf8");
 }
 bool Main_Widget::event(QEvent *event)
 {

@@ -9,14 +9,16 @@
 #define MAX_STEP    5
 #define MARGIN      15
 
-viewer::viewer(QString dirPath, QString textColor, unsigned int textSize, QWidget *parent) :
+viewer::viewer(QString dirPath, QString textColor, unsigned int textSize, int startPage, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::viewer)
 {
     ui->setupUi(this);
 
     ui->next->setStyleSheet("font-size: " + QString::number(textSize) + "px; color:" + textColor + ";");
+    ui->next->setIconSize(QSize(textSize*2,textSize*2));
     ui->prevois->setStyleSheet("font-size: " + QString::number(textSize) + "px; color:" + textColor + ";");
+    ui->prevois->setIconSize(QSize(textSize*2,textSize*2));
     ui->real_size->setStyleSheet("font-size: " + QString::number(textSize) + "px; color:" + textColor + ";");
     ui->plus->setStyleSheet("font-size: " + QString::number(textSize) + "px; color:" + textColor + ";");
     ui->minus->setStyleSheet("font-size: " + QString::number(textSize) + "px; color:" + textColor + ";");
@@ -25,10 +27,16 @@ viewer::viewer(QString dirPath, QString textColor, unsigned int textSize, QWidge
     eventFilter = new FingerSlide(ui->scrollArea->viewport());
     ui->scrollArea->viewport()->installEventFilter(eventFilter);
 
+    this->dirPath = dirPath;
+    it = startPage;
+
     createImageList(dirPath);
 
-    originPixmap  = QPixmap(list[it]);
+    if(!CRITICAL_ERROR && it < list.length() && it > -1)
+        originPixmap  = QPixmap(list[it]);
+
     ui->label->setPixmap(originPixmap);
+
 
     connect(ui->plus,           SIGNAL(clicked(bool)), this, SLOT(slotPlusImage()));
     connect(ui->minus,          SIGNAL(clicked(bool)), this, SLOT(slotMinusImage()));
@@ -36,41 +44,41 @@ viewer::viewer(QString dirPath, QString textColor, unsigned int textSize, QWidge
 
     connect(ui->next,           SIGNAL(clicked(bool)), this, SLOT(slotNextImage()));
     connect(ui->prevois,        SIGNAL(clicked(bool)), this, SLOT(slotPrevoisImage()));
-
-    ui->prevois->setEnabled(false);
-
 }
 void viewer::errorConfig(ERROR error)
 {
+    CRITICAL_ERROR = true;
+
     QMessageBox msgBox;
 
     switch (error) {
     case CANT_OPEN_DIR:{
         msgBox.setIcon(QMessageBox::Critical);
         msgBox.setText(QString("ОШИБКА!\n"
-                               "Не возможно открыть каталог " + dir.path() + "!" ));
+                               "Не возможно открыть каталог \"" + dir.path() + "\" !" ));
         qDebug() << "Не возможно открыть каталог " + dir.path() + "!";
         }
         break;
     case EMPTY_DIR:{
         msgBox.setIcon(QMessageBox::Critical);
         msgBox.setText(QString("ОШИБКА!\n"
-                               "Каталог " + dir.path() + " не содержит файлов для отображения!" ));
+                               "Каталог \"" + dir.path() + "\" не содержит файлов для отображения!" ));
         qDebug() << "Каталог " + dir.path() + " не содержит файлов для отображения!" ;
         }
         break;
     default:
         break;
     }
-
     msgBox.exec();
-    exit(1);
+//    exit(1);
 }
 void viewer::createImageList(QString dirPath)
 {
     dir.setPath(dirPath);
-    if(!dir.exists())
+    if(!dir.exists()){
         errorConfig(CANT_OPEN_DIR);
+        return;
+    }
 
     dir.setSorting(QDir::Name);
     QStringList filters;
@@ -79,13 +87,18 @@ void viewer::createImageList(QString dirPath)
     dir.setNameFilters(filters);
 
     QFileInfoList fl = dir.entryInfoList();
+
+    list.clear();
     foreach (QFileInfo fi, fl)
         list << fi.filePath();
 
-    if(list.isEmpty())
+    if(list.isEmpty()){
         errorConfig(EMPTY_DIR);
+        return;
+    }
 
     setPageNumbers();
+
 }
 void viewer::slotPlusImage()
 {
@@ -130,28 +143,46 @@ void viewer::slotRealSize()
 }
 void viewer::slotNextImage()
 {
-    ui->prevois->setEnabled(true);
-    if(it != list.length() - 1){
-        originPixmap  = QPixmap(list.at(++it));
-        ui->label->setPixmap(originPixmap);
-        slotRealSize();
-    }
-    if(it == list.length() - 1)
-        ui->next->setEnabled(false);
+    createImageList(dirPath);
 
+    if(!list.isEmpty())
+    {
+        ++it;
+
+        if(it < list.length()){
+            originPixmap  = QPixmap(list.at(it));
+            ui->label->setPixmap(originPixmap);
+        }
+        if(it >= list.length()){
+            originPixmap  = QPixmap(list.at(0));
+            ui->label->setPixmap(originPixmap);
+            it = 0;
+        }
+    }
+
+    slotRealSize();
     setPageNumbers();
 }
 void viewer::slotPrevoisImage()
 {
-    ui->next->setEnabled(true);
-    if(it != 0){
-        originPixmap  = QPixmap(list.at(--it));
-        ui->label->setPixmap(originPixmap);
-        slotRealSize();
-    }
-    if(it == 0)
-        ui->prevois->setEnabled(false);
+    createImageList(dirPath);
 
+    if(!list.isEmpty())
+    {
+        --it;
+
+        if(it > -1)
+        {
+            originPixmap  = QPixmap(list.at(it));
+            ui->label->setPixmap(originPixmap);
+        }
+        if(it < 0){
+            originPixmap  = QPixmap(list.at(list.length()-1));
+            it = list.length()-1;
+        }
+    }
+
+    slotRealSize();
     setPageNumbers();
 }
 bool viewer::event(QEvent *event)

@@ -19,6 +19,8 @@ public:
 
     QString getTitle();
 
+    bool CRITICAL_ERROR = false;
+
 private:
 
     enum ERROR {CANT_OPEN_FILE, SYNTAX_ERROR};
@@ -86,6 +88,7 @@ private:
 signals:
 // сигнал передается в класс Content - прерывание таймера бездействия
     void    signalTimerStart();
+    void    signalErrorClose();
 };
 
 #endif // SCHEDULE_H

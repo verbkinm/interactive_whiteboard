@@ -1,5 +1,4 @@
 #include "mini_widget.h"
-#include "widgetforminiwidget.h"
 
 #include <QDebug>
 #include <QEvent>
@@ -89,7 +88,7 @@ void Mini_Widget::createImageViewerWidget()
 {
     createLabelForMiniWidget();
 
-    pContent = new Content(struct_text, struct_background.backgroundImage);
+    pContent = new Content(struct_text, struct_background.backgroundImage, struct_miscellanea.timerSec);
     pContent->setObjectName("Content");
     pContent->setTextSize(struct_text.textSize);
 }
@@ -107,16 +106,17 @@ void Mini_Widget::setTypeValue(QString typeStr)
 
 void Mini_Widget::createLabelForMiniWidget()
 {
-    WidgetForMiniWidget *centralWidget = new WidgetForMiniWidget(&struct_path, \
-                                                                 &struct_text, \
-                                                                 &struct_miscellanea, \
-                                                                 &_size, this);
-    centralWidget->move(struct_border.borderClickWidth / 2, \
+   centralWidgetForMiniWidget = new WidgetForMiniWidget(&struct_path, \
+                                                        &struct_text, \
+                                                        &struct_miscellanea, \
+                                                        &_size, \
+                                                        this);
+    centralWidgetForMiniWidget->move(struct_border.borderClickWidth / 2, \
                         struct_border.borderClickWidth / 2);
 
-    connect(centralWidget, SIGNAL(signalImagePressed()), this, SLOT(slotWidgetPressed()));
-    connect(centralWidget, SIGNAL(signalImageReleased()), this, SLOT(slotWidgetReleased()));
-    connect(centralWidget, SIGNAL(signalImageClicked()), this, SLOT(slotWidgetClicked()));
+    connect(centralWidgetForMiniWidget, SIGNAL(signalImagePressed()), this, SLOT(slotWidgetPressed()));
+    connect(centralWidgetForMiniWidget, SIGNAL(signalImageReleased()), this, SLOT(slotWidgetReleased()));
+    connect(centralWidgetForMiniWidget, SIGNAL(signalImageClicked()), this, SLOT(slotWidgetClicked()));
 }
 void Mini_Widget::slotWidgetPressed()
 {
@@ -139,34 +139,54 @@ void Mini_Widget::slotWidgetClicked()
 
             case SCHEDULE:{
                 pSchedule = new Schedule(struct_path.xmlPath, struct_text.textColor, struct_text.textSize, pContent);
-                pSchedule->setObjectName("Schedule");
-                connect(pSchedule, SIGNAL(signalTimerStart()), pContent, SLOT(slotRestartTimer()));
-                pContent->addWidget(pSchedule);
-                pContent->setTitle(pSchedule->getTitle());
-                connect(pContent, SIGNAL(signalClose()), this, SLOT(slotDeleteWidgetInContent()));
+                if(!pSchedule->CRITICAL_ERROR)
+                {
+                    pSchedule->setObjectName("Schedule");
+                    connect(pSchedule, SIGNAL(signalTimerStart()), pContent, SLOT(slotRestartTimer()));
+                    pContent->addWidget(pSchedule);
+                    pContent->setTitle(pSchedule->getTitle());
+                    connect(pContent, SIGNAL(signalClose()), this, SLOT(slotDeleteWidgetInContent()));
 
-                panimOpen = new QPropertyAnimation(pContent, "geometry");
-                panimOpen->setDuration(DURATION);
-                panimOpen->setStartValue(QRect(this->x(), this->y(), this->width(), this->height()));
-                panimOpen->setEndValue(QRect(static_cast<QWidget*>(this->parent())->rect()));
-                panimOpen->setEasingCurve(QEasingCurve::Linear);
-                panimOpen->start();
+                    panimOpen = new QPropertyAnimation(pContent, "geometry");
+                    panimOpen->setDuration(DURATION);
+                    panimOpen->setStartValue(QRect(this->x(), this->y(), this->width(), this->height()));
+                    panimOpen->setEndValue(QRect(static_cast<QWidget*>(this->parent())->rect()));
+                    panimOpen->setEasingCurve(QEasingCurve::Linear);
+                    panimOpen->start();
+                }
+                else
+                {
+                    pSchedule->~Schedule();
+                    pSchedule = nullptr;
+                    pContent->slotAnimCloseWindow();
+                }
+
             }
                 break;
 
             case IMAGE_VIEWER:{
-                pImageViewer = new viewer(struct_path.dirPath, struct_text.textColor, struct_text.textSize, pContent);
-                pImageViewer->setObjectName("ImageViewer");
-                connect(pImageViewer, SIGNAL(signalTimerStart()), pContent, SLOT(slotRestartTimer()));
-                pContent->addWidget(pImageViewer);
-                connect(pContent, SIGNAL(signalClose()), this, SLOT(slotDeleteWidgetInContent()));
+                pImageViewer = new viewer(struct_path.dirPath, struct_text.textColor, struct_text.textSize, \
+                                          centralWidgetForMiniWidget->getCurrentPage(), pContent);
+                if(!pImageViewer->CRITICAL_ERROR)
+                {
+                    pImageViewer->setObjectName("ImageViewer");
+                    connect(pImageViewer, SIGNAL(signalTimerStart()), pContent, SLOT(slotRestartTimer()));
+                    pContent->addWidget(pImageViewer);
+                    connect(pContent, SIGNAL(signalClose()), this, SLOT(slotDeleteWidgetInContent()));
 
-                panimOpen = new QPropertyAnimation(pContent, "geometry");
-                panimOpen->setDuration(DURATION);
-                panimOpen->setStartValue( QRect(this->x(), this->y(), this->width(), this->height()) );
-                panimOpen->setEndValue(QRect(static_cast<QWidget*>(this->parent())->rect()));
-                panimOpen->setEasingCurve(QEasingCurve::InQuad);
-                panimOpen->start();
+                    panimOpen = new QPropertyAnimation(pContent, "geometry");
+                    panimOpen->setDuration(DURATION);
+                    panimOpen->setStartValue( QRect(this->x(), this->y(), this->width(), this->height()) );
+                    panimOpen->setEndValue(QRect(static_cast<QWidget*>(this->parent())->rect()));
+                    panimOpen->setEasingCurve(QEasingCurve::InQuad);
+                    panimOpen->start();
+                }
+                else
+                {
+                    pImageViewer->~viewer();
+                    pImageViewer = nullptr;
+                    pContent->slotAnimCloseWindow();
+                }
             }
                 break;
 
@@ -180,82 +200,7 @@ void Mini_Widget::slotWidgetClicked()
 }
 bool Mini_Widget::event(QEvent *event)
 {
-////    qDebug() << event->type();
-//    static bool cursorOnWidget;
-//    static bool pressingButton;
-
-//// при нажатии на виджет появляется рамка, при ударживании кнопки нажатия и вывыедения курсора за границы виджета рамка исчезает,
-//// а при возвращении обратно - рамка появляется
-//    if(event->type() == QEvent::MouseMove){
-//        QMouseEvent* mouseEvent = static_cast<QMouseEvent*>(event);
-//        if(mouseEvent->x() < 0 || mouseEvent->y() < 0 || mouseEvent->x() > this->width() || mouseEvent->y() > this->height()){
-//            this->borderClick->setVisible(false);
-//            cursorOnWidget = false;
-//        }
-//        else if(mouseEvent->x() > 0 && mouseEvent->y() > 0 && mouseEvent->x() < this->width() && mouseEvent->y() < this->height()){
-//            this->borderClick->setVisible(true);
-//            cursorOnWidget = true;
-//        }
-//    }
-//    if(event->type() == QEvent::MouseButtonPress){
-//        borderClick->setVisible(true);
-//        cursorOnWidget = true;
-//        pressingButton = true;
-//    }
-//// при отпускании кнопки проверяется, где в данный момент находится курсор - над виджетом или нет.
-//// Если над виджетом - выполняются последующие действия
-//    if(event->type() == QEvent::MouseButtonRelease){
-//        borderClick->setVisible(false);
-//        pressingButton = false;
-//        if(pContent != 0 && type != 0 && cursorOnWidget){
-//            switch (*type) {
-//                case LABEL:
-
-//                    break;
-//                case CLOCK:
-//                    break;
-
-//                case SCHEDULE:{
-//                    pSchedule = new Schedule(struct_path.xmlPath, struct_text.textColor, struct_text.textSize, pContent);
-//                    pSchedule->setObjectName("Schedule");
-//                    connect(pSchedule, SIGNAL(signalTimerStart()), pContent, SLOT(slotRestartTimer()));
-//                    pContent->addWidget(pSchedule);
-//                    pContent->setTitle(pSchedule->getTitle());
-//                    connect(pContent, SIGNAL(signalClose()), this, SLOT(slotDeleteWidgetInContent()));
-
-//                    panimOpen = new QPropertyAnimation(pContent, "geometry");
-//                    panimOpen->setDuration(DURATION);
-//                    panimOpen->setStartValue(QRect(this->x(), this->y(), this->width(), this->height()));
-//                    panimOpen->setEndValue(QRect(static_cast<QWidget*>(this->parent())->rect()));
-//                    panimOpen->setEasingCurve(QEasingCurve::Linear);
-//                    panimOpen->start();
-//                }
-//                    break;
-
-//                case IMAGE_VIEWER:{
-//                    pImageViewer = new viewer(struct_path.dirPath, struct_text.textColor, struct_text.textSize, pContent);
-//                    pImageViewer->setObjectName("ImageViewer");
-//                    connect(pImageViewer, SIGNAL(signalTimerStart()), pContent, SLOT(slotRestartTimer()));
-//                    pContent->addWidget(pImageViewer);
-//                    connect(pContent, SIGNAL(signalClose()), this, SLOT(slotDeleteWidgetInContent()));
-
-//                    panimOpen = new QPropertyAnimation(pContent, "geometry");
-//                    panimOpen->setDuration(DURATION);
-//                    panimOpen->setStartValue( QRect(this->x(), this->y(), this->width(), this->height()) );
-//                    panimOpen->setEndValue(QRect(static_cast<QWidget*>(this->parent())->rect()));
-//                    panimOpen->setEasingCurve(QEasingCurve::InQuad);
-//                    panimOpen->start();
-//                }
-//                    break;
-
-//                default:
-//                    break;
-//            }
-//            pContent->setWindowFlag(Qt::SplashScreen);
-//            pContent->setWindowModality(Qt::ApplicationModal);
-//            pContent->show();
-//        }
-//    }
+//    qDebug() << event->type();
 
     return QWidget::event(event);
 }

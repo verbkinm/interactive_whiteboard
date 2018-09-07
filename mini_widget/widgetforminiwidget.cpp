@@ -14,6 +14,7 @@ WidgetForMiniWidget::WidgetForMiniWidget(const struct path *struct_path, \
 
     this->setFixedSize(*size);
 
+
     layout      = new QVBoxLayout;
 
     title       = new QLabel("Title");
@@ -33,35 +34,94 @@ WidgetForMiniWidget::WidgetForMiniWidget(const struct path *struct_path, \
 
     this->setLayout(layout);
 
-    dirPath = struct_path->iconPath;
-
-    setImage();
-
-    if(!struct_miscellanea->dynamicMiniWidget)
-    {
-        title->hide();
-        leafer->hide();
-    }
-
     connect(leafer, SIGNAL(signalPrevios()), this, SLOT(slotPrevios()));
     connect(leafer, SIGNAL(signalNext()), this, SLOT(slotNext()));
+
+    title->hide();
+    leafer->hide();
+    currentPix.load(struct_path->iconPath);
+    setImage();
+
+
+    if(struct_miscellanea->dynamicMiniWidget)
+    {
+        title->setVisible(true);
+        leafer->setVisible(true);
+
+        dirPath = struct_path->dirPath;
+        createImageList(dirPath);
+
+        if(!list.isEmpty())
+        {
+            currentPix.load(list.at(0));
+            connect(&timer, SIGNAL(timeout()), this, SLOT(slotNext()));
+            timer.start(struct_miscellanea->dynamicMiniWidgetTimer*1000);
+        }
+    }
+
+}
+void WidgetForMiniWidget::createImageList(QString dirPath)
+{
+    dir.setPath(dirPath);
+
+    dir.setSorting(QDir::Name);
+    QStringList filters;
+    filters << "*.jpg" << "*.JPG" << "*.png" << "*.PNG" << "*.gif" << "*.GIF";
+
+    dir.setNameFilters(filters);
+
+    QFileInfoList fl = dir.entryInfoList();
+
+    list.clear();
+    foreach (QFileInfo fi, fl)
+        list << fi.filePath();
+
+    leafer->setCounter(it+1, list.length());
 }
 void WidgetForMiniWidget::slotPrevios()
 {
-//    qDebug() << "previos";
+    createImageList(dirPath);
+
+    if(!list.isEmpty())
+    {
+        --it;
+
+        if(it > -1)
+            currentPix  = QPixmap(list.at(it));
+        if(it < 0){
+            currentPix  = QPixmap(list.at(list.length()-1));
+            it = list.length()-1;
+        }
+        setImage();
+        leafer->setCounter(it+1, list.length());
+    }
 }
 void WidgetForMiniWidget::slotNext()
 {
-//    qDebug() << "next";
+    createImageList(dirPath);
+
+    if(!list.isEmpty())
+    {
+        ++it;
+
+        if(it < list.length())
+            currentPix  = QPixmap(list.at(it));
+        if(it >= list.length()){
+            currentPix  = QPixmap(list.at(0));
+            it = 0;
+        }
+
+        setImage();
+        leafer->setCounter(it+1, list.length());
+    }
 }
-QLabel* WidgetForMiniWidget::getLabel()
+int WidgetForMiniWidget::getCurrentPage()
 {
-    return image;
+    return it;
 }
 void WidgetForMiniWidget::setImage()
 {
-    QPixmap pixMap(dirPath);
-    QPixmap newPixmap = pixMap.scaled(image->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    QPixmap newPixmap = currentPix.scaled(image->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
     image->setPixmap(newPixmap);
     image->setStyleSheet("QLabel { background-color : rgba(255, 255, 255, 30%); color : blue; }");
     image->setAlignment(Qt::AlignCenter);
@@ -71,29 +131,33 @@ bool WidgetForMiniWidget::event(QEvent *event)
 //    qDebug() << event->type();
     static bool cursorOnWidget;
 
-    // при нажатии на виджет появляется рамка, при ударживании кнопки нажатия и вывыедения курсора за границы виджета рамка исчезает,
-    // а при возвращении обратно - рамка появляется
+    // при нажатии на виджет (а точнее на виджет изображения - image) появляется рамка, при ударживании кнопки мыши и вывыедения курсора за границы виджета рамка исчезает,
+    // а при возвращении обратно (при удержании кнопки мыши) - рамка появляется
     if(event->type() == QEvent::MouseMove){
-        QMouseEvent* mouseEvent = static_cast<QMouseEvent*>(event);
-        if(mouseEvent->x() < 0 || mouseEvent->y() < 0 || mouseEvent->x() > this->width() || mouseEvent->y() > this->height()){
+        if( image->geometry().contains(this->mapFromGlobal(QCursor::pos())) ){
+            emit signalImagePressed();
+            cursorOnWidget = true;
+
+        }
+        else {
             emit signalImageReleased();
             cursorOnWidget = false;
         }
-        else if(mouseEvent->x() > 0 && mouseEvent->y() > 0 && mouseEvent->x() < this->width() && mouseEvent->y() < this->height()){
+    }
+    if(event->type() == QEvent::MouseButtonPress){
+        if(image->underMouse())
+        {
             emit signalImagePressed();
             cursorOnWidget = true;
         }
     }
-    if(event->type() == QEvent::MouseButtonPress){
-        emit signalImagePressed();
-        cursorOnWidget = true;
-    }
     // при отпускании кнопки проверяется, где в данный момент находится курсор - над виджетом или нет.
     // Если над виджетом - выполняются последующие действия
-    if(event->type() == QEvent::MouseButtonRelease)
+    if(event->type() == QEvent::MouseButtonRelease){
+        emit signalImageReleased();
         if(cursorOnWidget)
             emit signalImageClicked();
-
+    }
 
     if(event->type() == QEvent::Resize)
         setImage();

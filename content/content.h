@@ -16,7 +16,7 @@ class Content : public QLabel
 {
     Q_OBJECT
 public:
-    Content(const struct text &struct_text, QString backgoundImagePath, int timerSec = 5, QWidget *parent = nullptr);
+    Content(const struct text &struct_text, QString backgoundImagePath, int timerSec, QWidget *parent = nullptr);
     ~Content();
 
 // таймер при истечении которого вызывается слот close()

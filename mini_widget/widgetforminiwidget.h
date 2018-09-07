@@ -9,6 +9,8 @@
 #include <QPushButton>
 #include <QVBoxLayout>
 #include <QEvent>
+#include <QDir>
+#include <QTimer>
 
 class WidgetForMiniWidget : public QWidget
 {
@@ -22,7 +24,8 @@ public:
                         QWidget *parent = 0);
     ~WidgetForMiniWidget();
 
-    QLabel* getLabel();
+    int getCurrentPage();
+
 
 private:
 
@@ -36,11 +39,20 @@ private:
 
     QVBoxLayout*    layout      = nullptr;
 
-    QString         dirPath;
-
     Leafer*         leafer      = nullptr;
 
+    QPixmap         currentPix;
+
+    QString         dirPath;
+    QDir            dir;
+    QStringList     list;
+
+    QTimer          timer;
+// итератор при листании слайдов
+    int it     = 0;
+
     void         setImage           ();
+    void createImageList(QString dirPath);
 
     virtual bool event              (QEvent *event);
 

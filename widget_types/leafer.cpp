@@ -31,21 +31,21 @@ void Leafer::setCounter(int currentPosition, int totalPages)
 
 void Leafer::slotPreviosPush()
 {
-    ui->previos->setIconSize(QSize(buttonSize/2, buttonSize/2) );
+    ui->previos->setIcon(QIcon(":/img/img/previos_push.png"));
 }
 void Leafer::slotNextPush()
 {
-    ui->next->setIconSize(QSize(buttonSize/2, buttonSize/2) );
+    ui->next->setIcon(QIcon(":/img/img/next_push.png"));
 }
 
 void Leafer::slotPreviosRelease()
 {
-    ui->previos->setIconSize(QSize(buttonSize, buttonSize) );
+    ui->previos->setIcon(QIcon(":/img/img/previos.png"));
     emit signalPrevios();
 }
 void Leafer::slotNextRelease()
 {
-    ui->next->setIconSize(QSize(buttonSize, buttonSize) );
+    ui->next->setIcon(QIcon(":/img/img/next.png"));
     emit signalNext();
 }
 

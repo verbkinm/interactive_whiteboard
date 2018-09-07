@@ -18,10 +18,10 @@ class viewer : public QWidget
     Q_OBJECT
 
 public:
-    viewer(QString dirPath, QString textColor, unsigned int textSize, QWidget *parent = 0);
+    viewer(QString dirPath, QString textColor, unsigned int textSize, int startPage = 0, QWidget *parent = 0);
     ~viewer();
 
-
+    bool CRITICAL_ERROR = false;
 private:
     Ui::viewer *ui;
 
@@ -32,6 +32,7 @@ private:
 // текущий шаг при масштабировании
     int         step    = 0;
 
+    QString     dirPath;
     QDir dir;
     QStringList list;
 // итератор при листании слайдов

@@ -358,6 +358,8 @@ void Schedule::filling()
 }
 void Schedule::xmlError(ERROR error)
 {
+    CRITICAL_ERROR = true;
+
     QMessageBox msgBox;
 
     switch (error) {
@@ -379,9 +381,9 @@ void Schedule::xmlError(ERROR error)
     default:
         break;
     }
-
     msgBox.exec();
-    exit(1);
+    emit signalErrorClose();
+//    exit(1);
 }
 void Schedule::heightSynchronization()
 {

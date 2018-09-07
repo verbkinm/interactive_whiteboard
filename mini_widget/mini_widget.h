@@ -4,6 +4,8 @@
 #include "widget_types/schedule.h"
 #include "widget_types/myWidgets/viewer/viewer.h"
 #include "widget_types/clock.h"
+#include "widgetforminiwidget.h"
+
 
 #include "content/content.h"
 #include "structes/structes.h"
@@ -31,16 +33,14 @@ public:
 
     ~Mini_Widget();
 
+// функции для создания виджетов по их типу
 void createLabelWidget();
-
 void createClockWidget();
-
 void createScheduleWidget();
-
 void createImageViewerWidget();
-    //~Mini_Widget();
 
 private:
+    WidgetForMiniWidget *centralWidgetForMiniWidget = nullptr;
 
     enum TYPE_WIDGETS{LABEL, CLOCK, SCHEDULE, IMAGE_VIEWER};
 //рамка
@@ -61,9 +61,8 @@ private:
     struct background struct_background;
 // структура разных свойств
     struct miscellanea struct_miscellanea;
-// передаваемый через конструктор параметр size, используется в функциях сосдания конкретных виджетов
+// передаваемый через конструктор параметр size, используется в функциях создания конкретных виджетов
     QSize _size;
-
 
 
 // указатель для анимаций
@@ -73,7 +72,7 @@ private:
     QLabel*                 centralLabel    = nullptr;
 // центральный виджет в таком типе виджета как clock
     QWidget*                centralWidget   = nullptr;
-//указатель на содержимое
+//указатель на содержимое мини виджета, всё что открывается - находится в контейнере класса Content
     Content*                pContent        = nullptr;
 
 //нужно для перевода типа виджета из QString в enum TYPE_WIDGETS
