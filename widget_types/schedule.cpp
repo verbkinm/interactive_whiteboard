@@ -500,13 +500,13 @@ Schedule::~Schedule()
     for (int row = 0; row < tableNumberAndTime->rowCount(); ++row)
         for (int column = 0; column < tableNumberAndTime->columnCount(); ++column) {
             Cell* cell = static_cast<Cell*>(tableNumberAndTime->cellWidget(row,column));
-            delete cell;
+            cell->~Cell();
         }
 
     for (int row = 0; row < tableLessonData->rowCount(); ++row)
         for (int column = 0; column < tableLessonData->columnCount(); ++column) {
             Cell* cell = static_cast<Cell*>(tableLessonData->cellWidget(row,column));
-            delete cell;
+            cell->~Cell();
         }
 
     delete eventFilterTableNumberAndTime;

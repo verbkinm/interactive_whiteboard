@@ -4,6 +4,7 @@
 #include "widget_types/schedule.h"
 #include "widget_types/myWidgets/viewer/viewer.h"
 #include "widget_types/clock.h"
+#include "widget_types/date.h"
 #include "widgetforminiwidget.h"
 
 
@@ -36,20 +37,19 @@ public:
 // функции для создания виджетов по их типу
 void createLabelWidget();
 void createClockWidget();
+void createDateWidget();
 void createScheduleWidget();
 void createImageViewerWidget();
 
 private:
     WidgetForMiniWidget *centralWidgetForMiniWidget = nullptr;
 
-    enum TYPE_WIDGETS{LABEL, CLOCK, SCHEDULE, IMAGE_VIEWER};
+    enum TYPE_WIDGETS{LABEL, CLOCK, DATE, SCHEDULE, IMAGE_VIEWER};
 //рамка
     QLabel*                 border          = nullptr;
 //рамка, которая будет появлятся при нажатии
     QLabel*                 borderClick     = nullptr;
 
-// указатель на виджет часов
-    Clock*                  pClock          = nullptr;
 
 // структура рамки для мини виджета
     struct border struct_border;
@@ -70,8 +70,6 @@ private:
 
 //центральная миниатюра
     QLabel*                 centralLabel    = nullptr;
-// центральный виджет в таком типе виджета как clock
-    QWidget*                centralWidget   = nullptr;
 //указатель на содержимое мини виджета, всё что открывается - находится в контейнере класса Content
     Content*                pContent        = nullptr;
 

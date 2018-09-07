@@ -34,6 +34,9 @@ Mini_Widget::Mini_Widget(const struct border &struct_border, QSize size, \
         case CLOCK:
                 createClockWidget();
              break;
+        case DATE:
+                createDateWidget();
+             break;
         case SCHEDULE:
                 createScheduleWidget();
             break;
@@ -71,10 +74,19 @@ void Mini_Widget::createLabelWidget()
 }
 void Mini_Widget::createClockWidget()
 {
-    centralWidget = new QWidget(this);
+    QWidget *centralWidget = new QWidget(this);
     centralWidget->move(struct_border.borderClickWidth / 2, struct_border.borderClickWidth/2);
-    pClock = new Clock(struct_text.textColor, struct_background.backgroundColor, centralWidget);
+    Clock* pClock = new Clock(struct_text.textColor, struct_background.backgroundColor, centralWidget);
     pClock->setFixedSize(_size);
+}
+void Mini_Widget::createDateWidget()
+{
+    QWidget *centralWidget = new QWidget(this);
+    centralWidget->move(struct_border.borderClickWidth / 2, struct_border.borderClickWidth/2);
+    Date*  pDate = new Date(struct_text.textColor, struct_text.textSize, \
+                            struct_background.backgroundColor, struct_miscellanea.datePattern, \
+                            centralWidget);
+    pDate->setFixedSize(_size);
 }
 void Mini_Widget::createScheduleWidget()
 {
@@ -98,6 +110,8 @@ void Mini_Widget::setTypeValue(QString typeStr)
         type = new int(LABEL);
     else if( typeStr == "clock" )
         type = new int(CLOCK);
+    else if( typeStr == "date" )
+        type = new int(DATE);
     else if( typeStr == "schedule" )
         type = new int(SCHEDULE);
     else if( typeStr == "image_viewer" )
@@ -208,18 +222,17 @@ void Mini_Widget::slotDeleteWidgetInContent()
 {
     if(pSchedule != nullptr){
         disconnect(pSchedule, SIGNAL(signalTimerStart()), pContent, SLOT(slotRestartTimer()));
-        delete pSchedule;
-        delete panimOpen;
+        pSchedule->~Schedule();
         pSchedule = nullptr;
         disconnect(pContent, SIGNAL(signalClose()),this, SLOT(slotDeleteWidgetInContent()));
     }
     if(pImageViewer != nullptr){
         disconnect(pImageViewer, SIGNAL(signalTimerStart()), pContent, SLOT(slotRestartTimer()));
-        delete pImageViewer;
-        delete panimOpen;
+        pImageViewer->~viewer();
         pImageViewer = nullptr;
         disconnect(pContent, SIGNAL(signalClose()),this, SLOT(slotDeleteWidgetInContent()));
     }
+    delete panimOpen;
 
 }
 Mini_Widget::~Mini_Widget()
@@ -233,11 +246,6 @@ Mini_Widget::~Mini_Widget()
     if(type != nullptr)
         delete type;
 
-    if(pClock != nullptr)
-        delete pClock;
-
-    if(centralWidget != nullptr)
-        delete centralWidget;
 
     if(pContent != nullptr)
         delete pContent;

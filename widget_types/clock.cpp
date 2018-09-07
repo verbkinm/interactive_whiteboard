@@ -11,7 +11,7 @@ Clock::Clock(QString textColor, QString backgroundColor, QWidget *parent) : QLCD
     this->setSegmentStyle(QLCDNumber::Flat);
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(slotShowTime()));
-    timer->start(1000);
+    timer->start(200);
 //чтобы при первом запуске не показывало 0
     display(QTime::currentTime().toString("hh:mm"));
 

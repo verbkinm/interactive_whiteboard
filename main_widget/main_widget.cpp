@@ -48,6 +48,7 @@ void Main_Widget::addMyWidgets()
         struct_miscellanea.timerSec         = generals_settings.value("Generals/timerSec", 30).toInt();
         struct_miscellanea.dynamicMiniWidget= widget_settings.value("dynamicMiniWidget", false).toBool();
         struct_miscellanea.dynamicMiniWidgetTimer= widget_settings.value("dynamicMiniWidgetTimer", 5).toInt();
+        struct_miscellanea.datePattern      = widget_settings.value("datePattern", "dd-mm-yy").toString();
 
         struct_background.backgroundColor   = widget_settings.value("backgroundColor", "black").toString();
         struct_background.backgroundImage   = generals_settings.value("Generals/backgoundImage", ":img/school2").toString();
