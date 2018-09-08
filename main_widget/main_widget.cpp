@@ -49,6 +49,7 @@ void Main_Widget::addMyWidgets()
         struct_miscellanea.dynamicMiniWidget= widget_settings.value("dynamicMiniWidget", false).toBool();
         struct_miscellanea.dynamicMiniWidgetTimer= widget_settings.value("dynamicMiniWidgetTimer", 5).toInt();
         struct_miscellanea.datePattern      = widget_settings.value("datePattern", "dd-mm-yy").toString();
+        struct_miscellanea.speed            = widget_settings.value("speed", "1000").toInt();
 
         struct_background.backgroundColor   = widget_settings.value("backgroundColor", "black").toString();
         struct_background.backgroundImage   = generals_settings.value("Generals/backgoundImage", ":img/school2").toString();
@@ -60,6 +61,7 @@ void Main_Widget::addMyWidgets()
         struct_path.dirPath                 = widget_settings.value("dirPath", "\0").toString();
         struct_path.xmlPath                 = widget_settings.value("xmlPath", "\0").toString();
         struct_path.iconPath                = widget_settings.value("iconPath", ":img/logo").toString();
+        struct_path.txtPath                 = widget_settings.value("txtPath", "").toString();
 
 
         widget_settings.endGroup();

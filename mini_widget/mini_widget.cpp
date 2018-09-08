@@ -5,6 +5,7 @@
 #include <QPaintEvent>
 #include <QPainter>
 #include <QPropertyAnimation>
+#include <QTextCodec>
 
 //задержка анимациив
 #define DURATION 1000
@@ -36,6 +37,9 @@ Mini_Widget::Mini_Widget(const struct border &struct_border, QSize size, \
              break;
         case DATE:
                 createDateWidget();
+             break;
+        case RUN_STRING:
+                createRunStringWidget();
              break;
         case SCHEDULE:
                 createScheduleWidget();
@@ -88,6 +92,25 @@ void Mini_Widget::createDateWidget()
                             centralWidget);
     pDate->setFixedSize(_size);
 }
+void Mini_Widget::createRunStringWidget()
+{
+    QString text;
+    QFile file(struct_path.txtPath);
+
+    if( !(file.open(QIODevice::ReadOnly)) || file.size() > 10 * 1024)
+        text = "ОШИБКА ОТКРЫТИЯ ФАЙЛА \"" + struct_path.txtPath + "\"!";
+    else
+        text = QString::fromUtf8(file.readAll());
+
+    file.close();
+
+    QWidget *centralWidget = new QWidget(this);
+    centralWidget->move(struct_border.borderClickWidth / 2, struct_border.borderClickWidth/2);
+    Run_String*  pRun_String = new Run_String(struct_text.textColor, struct_text.textSize, \
+                            struct_background.backgroundColor, text, struct_miscellanea.speed, \
+                            centralWidget);
+    pRun_String->setFixedSize(_size);
+}
 void Mini_Widget::createScheduleWidget()
 {
     createLabelForMiniWidget();
@@ -112,6 +135,8 @@ void Mini_Widget::setTypeValue(QString typeStr)
         type = new int(CLOCK);
     else if( typeStr == "date" )
         type = new int(DATE);
+    else if( typeStr == "run_string" )
+        type = new int(RUN_STRING);
     else if( typeStr == "schedule" )
         type = new int(SCHEDULE);
     else if( typeStr == "image_viewer" )
@@ -149,6 +174,10 @@ void Mini_Widget::slotWidgetClicked()
 
                 break;
             case CLOCK:
+                break;
+            case DATE:
+                break;
+            case RUN_STRING:
                 break;
 
             case SCHEDULE:{

@@ -43,7 +43,8 @@ HEADERS += \
     widget_types/myWidgets/fingerslide/fingerslide.h \
     mini_widget/widgetforminiwidget.h \
     widget_types/leafer.h \
-    widget_types/date.h
+    widget_types/date.h \
+    widget_types/run_string.h
 
 SOURCES += \
     content/content.cpp \
@@ -58,5 +59,6 @@ SOURCES += \
     widget_types/myWidgets/fingerslide/fingerslide.cpp \
     mini_widget/widgetforminiwidget.cpp \
     widget_types/leafer.cpp \
-    widget_types/date.cpp
+    widget_types/date.cpp \
+    widget_types/run_string.cpp
 

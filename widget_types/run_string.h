@@ -1,23 +1,20 @@
-#ifndef WIDGET_H
-#define WIDGET_H
+#ifndef RUN_STRING_H
+#define RUN_STRING_H
 
-#include <QWidget>
+#include <QLabel>
 #include <QTimer>
 
-class Widget : public QWidget
+class Run_String : public QLabel
 {
     Q_OBJECT
-
 public:
-    Widget(QWidget *parent = 0);
-    ~Widget();
-
+    Run_String(QString textColor, int textSize, QString backgroundColor, QString text, int speed, QWidget *parent = nullptr);
+    ~Run_String();
 protected:
     virtual void paintEvent(QPaintEvent*event);
-    virtual bool event(QEvent *event);
 
 private:
-    int x1, x_end, x2;
+    int x, x_end;
     int stringLenght;
     QTimer timer;
 
@@ -29,4 +26,4 @@ private slots:
     void slotRunLine();
 };
 
-#endif // WIDGET_H
+#endif // RUN_STRING_H

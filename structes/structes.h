@@ -23,6 +23,7 @@ struct path
     QString xmlPath             = "\0";     // путь к xml файлу
     QString dirPath             = "\0";     // путь к каталогу
     QString iconPath            = "\0";     // путь к файлу картики
+    QString txtPath             = "\0";     // путь к текстовому файлу
 };
 
 struct background
@@ -38,6 +39,7 @@ struct miscellanea
     int     timerSec                = 0;    //таймер, по которому закрывается виджет - остаётся только главное окно
     bool    dynamicMiniWidget       = false;//является ли виджет динамическим - виджет с заголовком и меняющимися изображениями, а так же с кнопками вперед и назад
     int     dynamicMiniWidgetTimer  = 5;    //таймер для автоматической смены изображений у dynamicMiniWidget
+    int     speed                   = 20;
 };
 
 #endif // STRUCTES_H
