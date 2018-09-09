@@ -19,16 +19,13 @@ private:
 //координаты курсора
     int x, y;
 
-    int preX;
+    int preX, preY;
+    int stepX, stepY;
 
-    int S, t;
-    float V = 0 ;
-    
-    QTime time;
-    QTimer tStep;
+    QTimer Tt, Ts;
 
     QObject* object = nullptr;
-    QEvent* event   = nullptr;
+
 protected:
     virtual bool eventFilter(QObject* object, QEvent* event);
 
@@ -36,8 +33,6 @@ protected:
     void slide(QObject* object, QEvent* event);
 //инерция
     void inertion(QObject* object, QEvent* event);
-
-    enum direction {UP, DOWN};
 
 signals:
 

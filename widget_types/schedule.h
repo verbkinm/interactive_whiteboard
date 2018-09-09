@@ -1,7 +1,7 @@
 #ifndef SCHEDULE_H
 #define SCHEDULE_H
 
-#include "myWidgets/mytablewidget.h"
+#include <QTableWidget>
 #include "myWidgets/fingerslide/fingerslide.h"
 
 

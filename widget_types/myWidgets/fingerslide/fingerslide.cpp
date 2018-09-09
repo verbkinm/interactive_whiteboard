@@ -11,7 +11,7 @@
 
 FingerSlide::FingerSlide(QObject *parent) : QObject(parent)
 {
-
+    object = parent;
 }
 bool FingerSlide::eventFilter(QObject* object, QEvent* event)
 {
@@ -22,15 +22,9 @@ bool FingerSlide::eventFilter(QObject* object, QEvent* event)
     if(event->type() == QEvent::MouseButtonPress){
         QMouseEvent* mouseEvent = static_cast<QMouseEvent*>(event);
         preX = x = mouseEvent->x();
-        y = mouseEvent->y();
-        time.start();
-
-//        if(tStep.isActive()){
-//            tStep.stop();
-//            disconnect(&tStep, SIGNAL(timeout()), this, SLOT(slotInertion()) );
-//            this->object = nullptr;
-//            this->event  = nullptr;
-//        }
+        preY = y = mouseEvent->y();
+        Tt.stop();
+        Ts.stop();
     }
 
     if(event->type() == QEvent::MouseMove){
@@ -40,25 +34,19 @@ bool FingerSlide::eventFilter(QObject* object, QEvent* event)
 
     if(event->type() == QEvent::MouseButtonRelease){
 
-//        QMouseEvent* mouseEvent = static_cast<QMouseEvent*>(event);
+        QMouseEvent* mouseEvent = static_cast<QMouseEvent*>(event);
 
-//        qDebug() << "t - " << t;
-//        S = abs(abs(mouseEvent->x()) - abs(preX));
-//        qDebug() << "S - " << S;
+        stepX = preX - mouseEvent->x();
+        stepY = preY - mouseEvent->y();
 
-//        if(S != 0){
-//            V = float(S) / t;
-//            qDebug() << "V - " << V;
-//            if(V > 0.08){
-//                tStep.start(t);
-//                this->object = object;
-//                this->event = event;
-//                connect(&tStep, SIGNAL(timeout()), this, SLOT(slotInertion()) );
-//            }
-//        }
-//        V = -1  ;
+        connect(&Tt, SIGNAL(timeout()), &Ts, SLOT(stop()));
+        connect(&Ts, SIGNAL(timeout()), this, SLOT(slotInertion()));
 
-        return false;
+        Tt.start(300);
+        Ts.start(20);
+
+
+        return true;
     }
 
     return false;
@@ -72,11 +60,8 @@ void FingerSlide::slide(QObject *object, QEvent *event)
 
     int differenceX, differenceY;
 
-    t = time.elapsed();
-    time.start();
-
-
     preX = x;
+    preY = y;
 
 //горизонтальный прокрутка
     if(x > mouseEvent->x()){
@@ -107,21 +92,12 @@ void FingerSlide::slide(QObject *object, QEvent *event)
 }
 void FingerSlide::slotInertion()
 {
-    static int tEnd = 0;
-    tEnd += t;
-    if( tEnd >= t*100){
-        tStep.stop();
-        disconnect(&tStep, SIGNAL(timeout()), this, SLOT(slotInertion()) );
-        tEnd = 0;
-        V=0;
-    }
+    QAbstractScrollArea* pScrollArea = static_cast<QAbstractScrollArea*>(object->parent());;
+    QScrollBar* pScrollX = pScrollArea->horizontalScrollBar();
+    QScrollBar* pScrollY = pScrollArea->verticalScrollBar();
 
-    QAbstractScrollArea* pScrollArea = static_cast<QAbstractScrollArea*>(this->object->parent());;
-    QScrollBar* pScroll = nullptr;
-
-    pScroll = pScrollArea->horizontalScrollBar();
-    pScroll->setValue( pScroll->value() + V);
-    V += 1;
+    pScrollX->setValue(pScrollX->value() + stepX/20 );
+    pScrollY->setValue(pScrollY->value() + stepY/20 );
 }
 
 FingerSlide::~FingerSlide()

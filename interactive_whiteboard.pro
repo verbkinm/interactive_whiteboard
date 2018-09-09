@@ -36,7 +36,6 @@ HEADERS += \
     mini_widget/mini_widget.h \
     widget_types/cell/cell.h \
     widget_types/myWidgets/viewer/viewer.h \
-    widget_types/myWidgets/mytablewidget.h \
     widget_types/clock.h \
     widget_types/schedule.h \
     structes/structes.h \
@@ -51,7 +50,6 @@ SOURCES += \
     main_widget/main_widget.cpp \
     mini_widget/mini_widget.cpp \
     widget_types/cell/cell.cpp \
-    widget_types/myWidgets/mytablewidget.cpp \
     widget_types/myWidgets/viewer/viewer.cpp \
     widget_types/clock.cpp \
     widget_types/schedule.cpp \
