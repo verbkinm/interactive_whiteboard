@@ -43,7 +43,8 @@ HEADERS += \
     mini_widget/widgetforminiwidget.h \
     widget_types/leafer.h \
     widget_types/date.h \
-    widget_types/run_string.h
+    widget_types/run_string.h \
+    widget_types/myWidgets/easter_bunny/dontclick.h
 
 SOURCES += \
     content/content.cpp \
@@ -58,5 +59,6 @@ SOURCES += \
     mini_widget/widgetforminiwidget.cpp \
     widget_types/leafer.cpp \
     widget_types/date.cpp \
-    widget_types/run_string.cpp
+    widget_types/run_string.cpp \
+    widget_types/myWidgets/easter_bunny/dontclick.cpp
 

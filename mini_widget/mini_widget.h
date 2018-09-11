@@ -6,6 +6,7 @@
 #include "widget_types/clock.h"
 #include "widget_types/date.h"
 #include "widget_types/run_string.h"
+#include "widget_types/myWidgets/easter_bunny/dontclick.h"
 #include "widgetforminiwidget.h"
 
 
@@ -42,11 +43,12 @@ void createDateWidget();
 void createRunStringWidget();
 void createScheduleWidget();
 void createImageViewerWidget();
+void createDontClickWidget();
 
 private:
     WidgetForMiniWidget *centralWidgetForMiniWidget = nullptr;
 
-    enum TYPE_WIDGETS{LABEL, CLOCK, DATE, RUN_STRING, SCHEDULE, IMAGE_VIEWER};
+    enum TYPE_WIDGETS{LABEL, CLOCK, DATE, RUN_STRING, SCHEDULE, IMAGE_VIEWER, DONT_CLICK};
 //рамка
     QLabel*                 border          = nullptr;
 //рамка, которая будет появлятся при нажатии
@@ -81,6 +83,7 @@ private:
 //указатели на типы содержиого мини виджета
     Schedule                *pSchedule      = nullptr;
     viewer                  *pImageViewer   = nullptr;
+    DontClick               *pDontClick     = nullptr;
 
 //FUNCTIONS
 

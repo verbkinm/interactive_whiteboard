@@ -19,7 +19,7 @@ Content::Content(const struct text &struct_text, QString backgoundImagePath, int
 
     pTitle = new QLabel(this->struct_text.titleText);
     pTitle->setAlignment(Qt::AlignCenter);
-    pLayout->addWidget(pTitle);
+    pLayout->addWidget(pTitle,0);
 
 
     home.setText("Закрыть");
@@ -34,7 +34,7 @@ Content::Content(const struct text &struct_text, QString backgoundImagePath, int
 void Content::addWidget(QWidget *w)
 {
     pWidget = w;
-    pLayout->addWidget(w);
+    pLayout->addWidget(w,1);
 
     pHLayout = new QHBoxLayout;
     pHLayout->addStretch(1);

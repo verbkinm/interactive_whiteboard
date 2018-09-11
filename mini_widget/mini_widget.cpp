@@ -47,6 +47,9 @@ Mini_Widget::Mini_Widget(const struct border &struct_border, QSize size, \
         case IMAGE_VIEWER:
                 createImageViewerWidget();
             break;
+        case DONT_CLICK:
+                createDontClickWidget();
+            break;
 
         default:
             break;
@@ -127,6 +130,13 @@ void Mini_Widget::createImageViewerWidget()
     pContent->setObjectName("Content");
     pContent->setTextSize(struct_text.textSize);
 }
+void Mini_Widget::createDontClickWidget()
+{
+    createLabelForMiniWidget();
+    pContent = new Content(struct_text, struct_background.backgroundImage, struct_miscellanea.timerSec);
+    pContent->setObjectName("Content");
+    pContent->setTextSize(struct_text.textSize);
+}
 void Mini_Widget::setTypeValue(QString typeStr)
 {
     if( typeStr == "label" )
@@ -141,6 +151,8 @@ void Mini_Widget::setTypeValue(QString typeStr)
         type = new int(SCHEDULE);
     else if( typeStr == "image_viewer" )
         type = new int(IMAGE_VIEWER);
+    else if( typeStr == "dont_click" )
+        type = new int(DONT_CLICK);
 }
 
 void Mini_Widget::createLabelForMiniWidget()
@@ -232,6 +244,27 @@ void Mini_Widget::slotWidgetClicked()
                 }
             }
                 break;
+            case DONT_CLICK:
+                static int countPush = 0;
+
+                pDontClick = new DontClick(struct_text.textSize, \
+                                           struct_text.textColor, \
+                                           struct_background.backgroundColor, \
+                                           pContent);
+                pDontClick->setCountPush(++countPush);
+                pDontClick->setObjectName("DontClick");
+                pContent->addWidget(pDontClick);
+                connect(pContent, SIGNAL(signalClose()), this, SLOT(slotDeleteWidgetInContent()));
+
+
+                panimOpen = new QPropertyAnimation(pContent, "geometry");
+                panimOpen->setDuration(DURATION);
+                panimOpen->setStartValue( QRect(this->x(), this->y(), this->width(), this->height()) );
+                panimOpen->setEndValue(QRect(static_cast<QWidget*>(this->parent())->rect()));
+                panimOpen->setEasingCurve(QEasingCurve::CosineCurve);
+                panimOpen->start();
+
+                break;
 
             default:
                 break;
@@ -240,6 +273,7 @@ void Mini_Widget::slotWidgetClicked()
         pContent->setWindowModality(Qt::ApplicationModal);
         pContent->show();
     }
+
 }
 bool Mini_Widget::event(QEvent *event)
 {
@@ -261,7 +295,14 @@ void Mini_Widget::slotDeleteWidgetInContent()
         pImageViewer = nullptr;
         disconnect(pContent, SIGNAL(signalClose()),this, SLOT(slotDeleteWidgetInContent()));
     }
-    delete panimOpen;
+    if(pDontClick != nullptr){
+        delete pDontClick;
+        pDontClick = nullptr;
+        disconnect(pContent, SIGNAL(signalClose()),this, SLOT(slotDeleteWidgetInContent()));
+    }
+
+    if(panimOpen != nullptr)
+        delete panimOpen;
 
 }
 Mini_Widget::~Mini_Widget()
@@ -271,6 +312,8 @@ Mini_Widget::~Mini_Widget()
 
     if(pImageViewer != nullptr)
         delete pImageViewer;
+    if(pDontClick != nullptr)
+        delete pDontClick;
 
     if(type != nullptr)
         delete type;
