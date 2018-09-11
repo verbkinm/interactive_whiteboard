@@ -39,10 +39,10 @@ bool FingerSlide::eventFilter(QObject* object, QEvent* event)
         stepX = preX - mouseEvent->x();
         stepY = preY - mouseEvent->y();
 
-        connect(&Tt, SIGNAL(timeout()), &Ts, SLOT(stop()));
+        connect(&Tt, SIGNAL(timeout()), this, SLOT(slotTtStop()));
         connect(&Ts, SIGNAL(timeout()), this, SLOT(slotInertion()));
 
-        Tt.start(300);
+        Tt.start(500);
         Ts.start(20);
 
 
@@ -96,10 +96,16 @@ void FingerSlide::slotInertion()
     QScrollBar* pScrollX = pScrollArea->horizontalScrollBar();
     QScrollBar* pScrollY = pScrollArea->verticalScrollBar();
 
-    pScrollX->setValue(pScrollX->value() + stepX/20 );
-    pScrollY->setValue(pScrollY->value() + stepY/20 );
+    pScrollX->setValue(pScrollX->value() + stepX/10 );
+    pScrollY->setValue(pScrollY->value() + stepY/10 );
 }
+void FingerSlide::slotTtStop()
+{
+    Ts.stop();
+    preX = x = QCursor::pos().x();
+    preY = y = QCursor::pos().y();
 
+}
 FingerSlide::~FingerSlide()
 {
 

@@ -38,6 +38,7 @@ signals:
 
 public slots:
     void slotInertion();
+    void slotTtStop();
 };
 
 #endif // FINGERSLIDE_H
