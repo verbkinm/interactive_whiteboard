@@ -9,5 +9,5 @@ DontClick::DontClick(int textSize, QString textColor, QString backgroundColor, Q
 }
 void DontClick::setCountPush(int count)
 {
-    this->setText("С момента запуска программы, кнопку нажали - " + QString::number(count) + " раз!");
+    this->setText("С момента запуска программы, кнопку нажали - " + QString::number(count) + "-й раз!");
 }

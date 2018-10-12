@@ -50,6 +50,9 @@ Mini_Widget::Mini_Widget(const struct border &struct_border, QSize size, \
         case DONT_CLICK:
                 createDontClickWidget();
             break;
+        case BELLS_MONITOR:
+                createBellsMonitor();
+            break;
 
         default:
             break;
@@ -81,14 +84,14 @@ void Mini_Widget::createLabelWidget()
 }
 void Mini_Widget::createClockWidget()
 {
-    QWidget *centralWidget = new QWidget(this);
+    centralWidget = new QWidget(this);
     centralWidget->move(struct_border.borderClickWidth / 2, struct_border.borderClickWidth/2);
     Clock* pClock = new Clock(struct_text.textColor, struct_background.backgroundColor, centralWidget);
     pClock->setFixedSize(_size);
 }
 void Mini_Widget::createDateWidget()
 {
-    QWidget *centralWidget = new QWidget(this);
+    centralWidget = new QWidget(this);
     centralWidget->move(struct_border.borderClickWidth / 2, struct_border.borderClickWidth/2);
     Date*  pDate = new Date(struct_text.textColor, struct_text.textSize, \
                             struct_background.backgroundColor, struct_miscellanea.datePattern, \
@@ -107,7 +110,7 @@ void Mini_Widget::createRunStringWidget()
 
     file.close();
 
-    QWidget *centralWidget = new QWidget(this);
+    centralWidget = new QWidget(this);
     centralWidget->move(struct_border.borderClickWidth / 2, struct_border.borderClickWidth/2);
     Run_String*  pRun_String = new Run_String(struct_text.textColor, struct_text.textSize, \
                             struct_background.backgroundColor, text, struct_miscellanea.speed, \
@@ -137,6 +140,13 @@ void Mini_Widget::createDontClickWidget()
     pContent->setObjectName("Content");
     pContent->setTextSize(struct_text.textSize);
 }
+void Mini_Widget::createBellsMonitor()
+{
+    centralWidget = new QWidget(this);
+    centralWidget->move(struct_border.borderClickWidth / 2, struct_border.borderClickWidth/2);
+    BellsMonitor* pBellsMonitor = new BellsMonitor(centralWidget);
+    pBellsMonitor->setFixedSize(_size);
+}
 void Mini_Widget::setTypeValue(QString typeStr)
 {
     if( typeStr == "label" )
@@ -153,6 +163,8 @@ void Mini_Widget::setTypeValue(QString typeStr)
         type = new int(IMAGE_VIEWER);
     else if( typeStr == "dont_click" )
         type = new int(DONT_CLICK);
+    else if( typeStr == "bells_monitor" )
+        type = new int(BELLS_MONITOR);
 }
 
 void Mini_Widget::createLabelForMiniWidget()
@@ -266,6 +278,9 @@ void Mini_Widget::slotWidgetClicked()
 
                 break;
 
+            case BELLS_MONITOR:
+                break;
+
             default:
                 break;
         }
@@ -330,4 +345,7 @@ Mini_Widget::~Mini_Widget()
 
     if(border != nullptr)
         delete border;
+
+    if(centralWidget != nullptr)
+        delete centralWidget;
 }

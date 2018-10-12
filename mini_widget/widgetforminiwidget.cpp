@@ -137,7 +137,6 @@ bool WidgetForMiniWidget::event(QEvent *event)
         if( image->geometry().contains(this->mapFromGlobal(QCursor::pos())) ){
             emit signalImagePressed();
             cursorOnWidget = true;
-
         }
         else {
             emit signalImageReleased();

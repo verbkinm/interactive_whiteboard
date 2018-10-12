@@ -27,7 +27,6 @@ Content::Content(const struct text &struct_text, QString backgoundImagePath, int
 
 //таймер бездействия
     connect(&timer, SIGNAL(timeout()), this, SLOT(slotAnimCloseWindow()));
-    timer.start(timerSec);
 
     this->timerSec = timerSec;
 }
@@ -56,6 +55,9 @@ void Content::setTitle(const QString &title)
 }
 void Content::slotAnimCloseWindow()
 {
+    timer.stop();
+    home.setDisabled(true);
+
     panimClose = new QPropertyAnimation(this, "windowOpacity");
     panimClose->setDuration(1000);
     panimClose->setStartValue(1);
@@ -65,6 +67,7 @@ void Content::slotAnimCloseWindow()
 //при закрытии окна, оно на мгновение появляеться полностью, чтобы это избежать - с начало окно скрываем, потом закрываем
     connect(panimClose, SIGNAL(finished()), this, SLOT(hide()));
     connect(panimClose, SIGNAL(finished()), this, SLOT(close()));
+
 }
 void Content::slotRestartTimer()
 {
@@ -78,6 +81,10 @@ bool Content::event(QEvent *event)
         this->setWindowOpacity(1);
         delete panimClose;
         emit signalClose(); // сигнал используется в классе mini_widget
+    }
+    if(event->type() == QEvent::Show){
+        home.setDisabled(false);
+        timer.start(timerSec);
     }
 
     return QWidget::event(event);

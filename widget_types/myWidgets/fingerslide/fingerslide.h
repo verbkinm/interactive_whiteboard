@@ -35,6 +35,7 @@ protected:
     void inertion(QObject* object, QEvent* event);
 
 signals:
+    void signalRelease();
 
 public slots:
     void slotInertion();

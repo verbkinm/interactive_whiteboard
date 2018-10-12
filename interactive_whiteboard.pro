@@ -6,7 +6,7 @@
 
 QT       += core gui xml
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets network
 
 TARGET = interactive_whiteboard
 TEMPLATE = app
@@ -44,7 +44,8 @@ HEADERS += \
     widget_types/leafer.h \
     widget_types/date.h \
     widget_types/run_string.h \
-    widget_types/myWidgets/easter_bunny/dontclick.h
+    widget_types/myWidgets/easter_bunny/dontclick.h \
+    widget_types/bells_monitor/bellsmonitor.h
 
 SOURCES += \
     content/content.cpp \
@@ -60,5 +61,6 @@ SOURCES += \
     widget_types/leafer.cpp \
     widget_types/date.cpp \
     widget_types/run_string.cpp \
-    widget_types/myWidgets/easter_bunny/dontclick.cpp
+    widget_types/myWidgets/easter_bunny/dontclick.cpp \
+    widget_types/bells_monitor/bellsmonitor.cpp
 

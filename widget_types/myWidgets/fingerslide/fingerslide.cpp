@@ -12,19 +12,24 @@
 FingerSlide::FingerSlide(QObject *parent) : QObject(parent)
 {
     object = parent;
+
 }
 bool FingerSlide::eventFilter(QObject* object, QEvent* event)
 {
+//    qDebug() << "event filter" << object->parent()->objectName() << event->type();
+
     if(event->type() == QEvent::MouseButtonDblClick || \
        event->type() == QEvent::Wheel)
         return true;
 
     if(event->type() == QEvent::MouseButtonPress){
+//        qDebug() << "event filter" << object->parent()->objectName() << event->type();
         QMouseEvent* mouseEvent = static_cast<QMouseEvent*>(event);
         preX = x = mouseEvent->x();
         preY = y = mouseEvent->y();
         Tt.stop();
         Ts.stop();
+        return true;
     }
 
     if(event->type() == QEvent::MouseMove){
@@ -45,7 +50,7 @@ bool FingerSlide::eventFilter(QObject* object, QEvent* event)
         Tt.start(500);
         Ts.start(20);
 
-
+        emit signalRelease();
         return true;
     }
 
