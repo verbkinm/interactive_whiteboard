@@ -12,10 +12,11 @@ class Leafer : public QWidget
     Q_OBJECT
 
 public:
-    Leafer(int textSize, QWidget *parent = 0);
+    Leafer(int textSize, QWidget *parent = nullptr);
     ~Leafer();
 
     void setCounter(int currentPosition, int totalPages);
+    void setTextSize(int textSize);
 
 private:
     Ui::Leafer *ui;

@@ -10,25 +10,16 @@
 //задержка анимациив
 #define DURATION 1000
 
-Mini_Widget::Mini_Widget(const struct border &struct_border, QSize size, \
-                         const struct path &struct_path, \
-                         const struct background &struct_background, \
-                         const struct text &struct_text, \
-                         const struct miscellanea &struct_miscellanea, \
+Mini_Widget::Mini_Widget(settingsMiniWidget *struct_settingsMiniWidget, \
                          QWidget *parent) : QWidget(parent)
 {
-    this->struct_border     = struct_border;
-    this->struct_text       = struct_text;
-    this->struct_path       = struct_path;
-    this->struct_background = struct_background;
-    this->struct_miscellanea= struct_miscellanea;
+    borderClick->setLayout(&borderClickLayout);
 
-    this->_size             = size;
+    mainStruct_settingsMiniWidget = *struct_settingsMiniWidget;
 
     generalSettings();
-    setTypeValue(this->struct_miscellanea.type);
 
-    switch (*(this->type)) {
+    switch (mainStruct_settingsMiniWidget.pGetType(mainStruct_settingsMiniWidget.miscellanea.type)) {
         case LABEL:
                 createLabelWidget();
             break;
@@ -54,146 +45,127 @@ Mini_Widget::Mini_Widget(const struct border &struct_border, QSize size, \
                 createBellsMonitor();
             break;
 
+        //bells
+
         default:
             break;
     }
-
 }
 void Mini_Widget::generalSettings()
 {
 //рамка, которая будет появлятся при нажатии
-    borderClick              = new QLabel(this);
-    //example: border-color: rgba(255, 0, 0, 75%)
-    borderClick->setStyleSheet("background-color:" + struct_border.borderClickColor + ";");
-    borderClick->setFixedSize(_size.width() + struct_border.borderClickWidth, _size.height() + struct_border.borderClickWidth);
-    borderClick->hide();
-
+    borderClick->setStyleSheet("background-color: #00000000; border-radius: 20px;");
+    borderClick->setFixedSize(mainStruct_settingsMiniWidget.size);
+    borderClick->layout()->setMargin(mainStruct_settingsMiniWidget.border.borderClickWidth);
 //рамка
-    border              = new QLabel(this);
-    //example: border-color: rgba(255, 0, 0, 75%)
-    border->setStyleSheet("background-color:" + struct_border.borderColor + ";");
-    border->setFixedSize(_size.width() + struct_border.borderWidth, _size.height() + struct_border.borderWidth);
-    border->move(struct_border.borderClickWidth / 2 - struct_border.borderWidth / 2, struct_border.borderClickWidth / 2 - struct_border.borderWidth / 2);
+    borderClickLayout.addWidget(&border);
+    border.setLayout(&borderLayout);
 
-    this->setStyleSheet("border-radius: 20px;");
-    this->setFixedSize(borderClick->size());
+    border.layout()->setMargin(mainStruct_settingsMiniWidget.border.borderWidth);
+    //example: border-color: rgba(255, 0, 0, 75%)
+    border.setStyleSheet("background-color:" + mainStruct_settingsMiniWidget.border.borderColor + ";");
 }
 void Mini_Widget::createLabelWidget()
 {
-    createLabelForMiniWidget();
-}
-void Mini_Widget::createClockWidget()
-{
-    centralWidget = new QWidget(this);
-    centralWidget->move(struct_border.borderClickWidth / 2, struct_border.borderClickWidth/2);
-    Clock* pClock = new Clock(struct_text.textColor, struct_background.backgroundColor, centralWidget);
-    pClock->setFixedSize(_size);
-}
-void Mini_Widget::createDateWidget()
-{
-    centralWidget = new QWidget(this);
-    centralWidget->move(struct_border.borderClickWidth / 2, struct_border.borderClickWidth/2);
-    Date*  pDate = new Date(struct_text.textColor, struct_text.textSize, \
-                            struct_background.backgroundColor, struct_miscellanea.datePattern, \
-                            centralWidget);
-    pDate->setFixedSize(_size);
-}
-void Mini_Widget::createRunStringWidget()
-{
-    QString text;
-    QFile file(struct_path.txtPath);
-
-    if( !(file.open(QIODevice::ReadOnly)) || file.size() > 10 * 1024)
-        text = "ОШИБКА ОТКРЫТИЯ ФАЙЛА \"" + struct_path.txtPath + "\"!";
-    else
-        text = QString::fromUtf8(file.readAll());
-
-    file.close();
-
-    centralWidget = new QWidget(this);
-    centralWidget->move(struct_border.borderClickWidth / 2, struct_border.borderClickWidth/2);
-    Run_String*  pRun_String = new Run_String(struct_text.textColor, struct_text.textSize, \
-                            struct_background.backgroundColor, text, struct_miscellanea.speed, \
-                            centralWidget);
-    pRun_String->setFixedSize(_size);
-}
-void Mini_Widget::createScheduleWidget()
-{
-    createLabelForMiniWidget();
-
-    pContent = new Content(struct_text, struct_background.backgroundImage, struct_miscellanea.timerSec);
-    pContent->setObjectName("Content");
-    pContent->setTextSize(struct_text.textSize);
-}
-void Mini_Widget::createImageViewerWidget()
-{
-    createLabelForMiniWidget();
-
-    pContent = new Content(struct_text, struct_background.backgroundImage, struct_miscellanea.timerSec);
-    pContent->setObjectName("Content");
-    pContent->setTextSize(struct_text.textSize);
-}
-void Mini_Widget::createDontClickWidget()
-{
-    createLabelForMiniWidget();
-    pContent = new Content(struct_text, struct_background.backgroundImage, struct_miscellanea.timerSec);
-    pContent->setObjectName("Content");
-    pContent->setTextSize(struct_text.textSize);
-}
-void Mini_Widget::createBellsMonitor()
-{
-    centralWidget = new QWidget(this);
-    centralWidget->move(struct_border.borderClickWidth / 2, struct_border.borderClickWidth/2);
-    BellsMonitor* pBellsMonitor = new BellsMonitor(centralWidget);
-    pBellsMonitor->setFixedSize(_size);
-}
-void Mini_Widget::setTypeValue(QString typeStr)
-{
-    if( typeStr == "label" )
-        type = new int(LABEL);
-    else if( typeStr == "clock" )
-        type = new int(CLOCK);
-    else if( typeStr == "date" )
-        type = new int(DATE);
-    else if( typeStr == "run_string" )
-        type = new int(RUN_STRING);
-    else if( typeStr == "schedule" )
-        type = new int(SCHEDULE);
-    else if( typeStr == "image_viewer" )
-        type = new int(IMAGE_VIEWER);
-    else if( typeStr == "dont_click" )
-        type = new int(DONT_CLICK);
-    else if( typeStr == "bells_monitor" )
-        type = new int(BELLS_MONITOR);
-}
-
-void Mini_Widget::createLabelForMiniWidget()
-{
-   centralWidgetForMiniWidget = new WidgetForMiniWidget(&struct_path, \
-                                                        &struct_text, \
-                                                        &struct_miscellanea, \
-                                                        &_size, \
-                                                        this);
-    centralWidgetForMiniWidget->move(struct_border.borderClickWidth / 2, \
-                        struct_border.borderClickWidth / 2);
+    centralWidgetForMiniWidget = new WidgetForMiniWidget(&mainStruct_settingsMiniWidget, &border);
+    borderLayout.addWidget(centralWidgetForMiniWidget);
 
     connect(centralWidgetForMiniWidget, SIGNAL(signalImagePressed()), this, SLOT(slotWidgetPressed()));
     connect(centralWidgetForMiniWidget, SIGNAL(signalImageReleased()), this, SLOT(slotWidgetReleased()));
     connect(centralWidgetForMiniWidget, SIGNAL(signalImageClicked()), this, SLOT(slotWidgetClicked()));
 }
+void Mini_Widget::createClockWidget()
+{
+    centralWidgetForMiniWidget = new WidgetForMiniWidget(&mainStruct_settingsMiniWidget, &border);
+    borderLayout.addWidget(centralWidgetForMiniWidget);
+
+    pClock = new Clock(mainStruct_settingsMiniWidget.text.textColor, \
+                       mainStruct_settingsMiniWidget.background.backgroundColor, \
+                       centralWidgetForMiniWidget);
+
+    pClock->setObjectName("clock");
+
+    centralWidgetForMiniWidget->addMainWidget(pClock);
+}
+void Mini_Widget::createDateWidget()
+{
+    centralWidgetForMiniWidget = new WidgetForMiniWidget(&mainStruct_settingsMiniWidget, &border);
+    borderLayout.addWidget(centralWidgetForMiniWidget);
+
+    pDate = new Date(mainStruct_settingsMiniWidget.text.textColor, \
+                     mainStruct_settingsMiniWidget.text.textSize, \
+                     mainStruct_settingsMiniWidget.background.backgroundColor, \
+                     mainStruct_settingsMiniWidget.miscellanea.datePattern, \
+                     centralWidgetForMiniWidget);
+    pDate->setObjectName("date");
+
+    centralWidgetForMiniWidget->addMainWidget(pDate);
+}
+void Mini_Widget::createRunStringWidget()
+{
+    QString text = txtFileToString(mainStruct_settingsMiniWidget.path.txtPath);
+
+    centralWidgetForMiniWidget = new WidgetForMiniWidget(&mainStruct_settingsMiniWidget, &border);
+    borderLayout.addWidget(centralWidgetForMiniWidget);
+
+    pRun_String = new Run_String(mainStruct_settingsMiniWidget.text.textColor, \
+                                 mainStruct_settingsMiniWidget.text.textSize, \
+                                 mainStruct_settingsMiniWidget.background.backgroundColor, \
+                                 text, \
+                                 mainStruct_settingsMiniWidget.miscellanea.speed, \
+                                 centralWidgetForMiniWidget);
+    pRun_String->setObjectName("run_string");
+
+    centralWidgetForMiniWidget->addMainWidget(pRun_String);
+}
+void Mini_Widget::createScheduleWidget()
+{
+    createLabelWidget();
+
+    pContent = new Content(&mainStruct_settingsMiniWidget);
+    pContent->setObjectName("Content");
+    pContent->setTextSize(mainStruct_settingsMiniWidget.text.textSize);
+}
+void Mini_Widget::createImageViewerWidget()
+{
+    createLabelWidget();
+
+    pContent = new Content(&mainStruct_settingsMiniWidget);
+    pContent->setObjectName("Content");
+    pContent->setTextSize(mainStruct_settingsMiniWidget.text.textSize);
+}
+void Mini_Widget::createDontClickWidget()
+{
+    createLabelWidget();
+
+    pContent = new Content(&mainStruct_settingsMiniWidget);
+    pContent->setObjectName("Content");
+    pContent->setTextSize(mainStruct_settingsMiniWidget.text.textSize);
+}
+void Mini_Widget::createBellsMonitor()
+{
+    centralWidgetForMiniWidget = new WidgetForMiniWidget(&mainStruct_settingsMiniWidget, &border);
+    borderLayout.addWidget(centralWidgetForMiniWidget);
+
+    pBellsMonitor = new BellsMonitor(centralWidgetForMiniWidget);
+
+    pBellsMonitor->setObjectName("bels_monitor");
+
+    centralWidgetForMiniWidget->addMainWidget(pBellsMonitor);
+}
 void Mini_Widget::slotWidgetPressed()
 {
-    borderClick->setVisible(true);
+    borderClick->setStyleSheet("background-color:" + mainStruct_settingsMiniWidget.border.borderClickColor + "; border-radius: 20px;");
 }
 void Mini_Widget::slotWidgetReleased()
 {
-    borderClick->setVisible(false);
+    borderClick->setStyleSheet("background-color: #00000000; border-radius: 20px;");
 }
 void Mini_Widget::slotWidgetClicked()
 {
     slotWidgetReleased();
-    if(pContent != 0 && type != 0){
-        switch (*type) {
+    if(pContent != nullptr){
+        switch (mainStruct_settingsMiniWidget.pGetType(mainStruct_settingsMiniWidget.miscellanea.type)) {
             case LABEL:
 
                 break;
@@ -204,8 +176,11 @@ void Mini_Widget::slotWidgetClicked()
             case RUN_STRING:
                 break;
 
-            case SCHEDULE:{
-                pSchedule = new Schedule(struct_path.xmlPath, struct_text.textColor, struct_text.textSize, pContent);
+            case SCHEDULE:
+                pSchedule = new Schedule(mainStruct_settingsMiniWidget.path.xmlPath, \
+                                         mainStruct_settingsMiniWidget.text.textColor, \
+                                         mainStruct_settingsMiniWidget.text.textSize,
+                                         pContent);
                 if(!pSchedule->CRITICAL_ERROR)
                 {
                     pSchedule->setObjectName("Schedule");
@@ -223,17 +198,19 @@ void Mini_Widget::slotWidgetClicked()
                 }
                 else
                 {
-                    pSchedule->~Schedule();
+                    delete pSchedule;
                     pSchedule = nullptr;
                     pContent->slotAnimCloseWindow();
                 }
 
-            }
                 break;
 
-            case IMAGE_VIEWER:{
-                pImageViewer = new viewer(struct_path.dirPath, struct_text.textColor, struct_text.textSize, \
-                                          centralWidgetForMiniWidget->getCurrentPage(), pContent);
+            case IMAGE_VIEWER:
+                pImageViewer = new viewer(mainStruct_settingsMiniWidget.path.dirPath, \
+                                          mainStruct_settingsMiniWidget.text.textColor, \
+                                          mainStruct_settingsMiniWidget.text.textSize, \
+                                          centralWidgetForMiniWidget->getCurrentPage(), \
+                                          pContent);
                 if(!pImageViewer->CRITICAL_ERROR)
                 {
                     pImageViewer->setObjectName("ImageViewer");
@@ -250,24 +227,24 @@ void Mini_Widget::slotWidgetClicked()
                 }
                 else
                 {
-                    pImageViewer->~viewer();
+                    delete pImageViewer;
                     pImageViewer = nullptr;
                     pContent->slotAnimCloseWindow();
                 }
-            }
+
                 break;
+
             case DONT_CLICK:
                 static int countPush = 0;
 
-                pDontClick = new DontClick(struct_text.textSize, \
-                                           struct_text.textColor, \
-                                           struct_background.backgroundColor, \
+                pDontClick = new DontClick(mainStruct_settingsMiniWidget.text.textSize, \
+                                           mainStruct_settingsMiniWidget.text.textColor, \
+                                           mainStruct_settingsMiniWidget.background.backgroundColor, \
                                            pContent);
                 pDontClick->setCountPush(++countPush);
                 pDontClick->setObjectName("DontClick");
                 pContent->addWidget(pDontClick);
                 connect(pContent, SIGNAL(signalClose()), this, SLOT(slotDeleteWidgetInContent()));
-
 
                 panimOpen = new QPropertyAnimation(pContent, "geometry");
                 panimOpen->setDuration(DURATION);
@@ -300,13 +277,13 @@ void Mini_Widget::slotDeleteWidgetInContent()
 {
     if(pSchedule != nullptr){
         disconnect(pSchedule, SIGNAL(signalTimerStart()), pContent, SLOT(slotRestartTimer()));
-        pSchedule->~Schedule();
+        delete pSchedule;
         pSchedule = nullptr;
         disconnect(pContent, SIGNAL(signalClose()),this, SLOT(slotDeleteWidgetInContent()));
     }
     if(pImageViewer != nullptr){
         disconnect(pImageViewer, SIGNAL(signalTimerStart()), pContent, SLOT(slotRestartTimer()));
-        pImageViewer->~viewer();
+        delete pImageViewer;
         pImageViewer = nullptr;
         disconnect(pContent, SIGNAL(signalClose()),this, SLOT(slotDeleteWidgetInContent()));
     }
@@ -320,6 +297,27 @@ void Mini_Widget::slotDeleteWidgetInContent()
         delete panimOpen;
 
 }
+QString Mini_Widget::txtFileToString(QString filePath)
+{
+    QString text;
+    QFile file(filePath);
+
+    if( !(file.open(QIODevice::ReadOnly)) || file.size() > 1000 * 1024)
+        text = "ОШИБКА ОТКРЫТИЯ ФАЙЛА \"" + filePath + "\"!";
+    else
+        text = QString::fromUtf8(file.readAll());
+
+    file.close();
+
+    return text;
+}
+void Mini_Widget::paintEvent(QPaintEvent *)
+{
+    QStyleOption opt;
+    opt.init(this);
+    QPainter p(this);
+    style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
+}
 Mini_Widget::~Mini_Widget()
 {
     if(pSchedule != nullptr)
@@ -330,22 +328,22 @@ Mini_Widget::~Mini_Widget()
     if(pDontClick != nullptr)
         delete pDontClick;
 
-    if(type != nullptr)
-        delete type;
+//    if(type != nullptr)
+//        delete type;
 
 
     if(pContent != nullptr)
         delete pContent;
 
-    if(centralLabel != nullptr)
-        delete centralLabel;
+//    if(centralLabel != nullptr)
+//        delete centralLabel;
 
-    if(borderClick != nullptr)
-        delete borderClick;
+//    if(borderClick != nullptr)
+//        delete borderClick;
 
-    if(border != nullptr)
-        delete border;
+//    if(border != nullptr)
+//        delete border;
 
-    if(centralWidget != nullptr)
-        delete centralWidget;
+//    if(centralWidget != nullptr)
+//        delete centralWidget;
 }

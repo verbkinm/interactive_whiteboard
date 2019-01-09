@@ -19,7 +19,7 @@
 #define dash        "-- : --"
 
 BellsMonitor::BellsMonitor(QWidget *parent) :
-    QWidget(parent), settings("LYCEUM", "Bells-monitor")
+    QWidget(parent), settings(QSettings::IniFormat, QSettings::UserScope, "LYCEUM", "Bells-monitor")
 {
     pTable[0] = nullptr;
     pTable[1] = nullptr;
@@ -27,7 +27,7 @@ BellsMonitor::BellsMonitor(QWidget *parent) :
     readSettings();
 
     m_pTcpSocket = new QTcpSocket(this);
-    m_pTcpSocket->connectToHost(server_ip, server_port);
+    m_pTcpSocket->connectToHost(server_ip, quint16(server_port));
 
     connect(m_pTcpSocket,       SIGNAL(connected()), SLOT(slotConnected()));
     connect(m_pTcpSocket,       SIGNAL(readyRead()), SLOT(slotReadyRead()));
@@ -208,7 +208,7 @@ void BellsMonitor::slotReadyRead()
         isChangesEnabled[1] = false;
         timerCurrentPeriodDisplay.stop();
 
-        if(pDoubleArray != 0)
+        if(pDoubleArray != nullptr)
             for (int i = 0; i < 2; ++i)
                 delete []pDoubleArray[i];
 
@@ -270,7 +270,7 @@ void BellsMonitor::slotReadyRead()
                 break;
             }
 
-            createTable(numbersOfLessonInChange[i], i);
+            createTable(numbersOfLessonInChange[i], unsigned(i));
             pTable[i]->hide();
             pLayout->addWidget(pTable[i]);
         }

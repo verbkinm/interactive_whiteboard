@@ -62,5 +62,6 @@ SOURCES += \
     widget_types/date.cpp \
     widget_types/run_string.cpp \
     widget_types/myWidgets/easter_bunny/dontclick.cpp \
-    widget_types/bells_monitor/bellsmonitor.cpp
+    widget_types/bells_monitor/bellsmonitor.cpp \
+    structes/structes.cpp
 

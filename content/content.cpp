@@ -6,29 +6,27 @@
 
 #include "content.h"
 
-Content::Content(const struct text &struct_text, QString backgoundImagePath, int timerSec, QWidget *parent) : QLabel(parent)
+Content::Content(settingsMiniWidget *struct_settingsMiniWidget, QWidget *parent) : QLabel(parent)
 {
-    timerSec *= 1000;
-    this->struct_text = struct_text;
-    this->struct_text.textSize = this->struct_text.textSize + float(this->struct_text.textSize) / 100 * 50;
+    mainStruct_settingsMiniWidget = *struct_settingsMiniWidget;
 
-    this->backgoundImage = new QPixmap(backgoundImagePath);
+//    this->struct_text.textSize = this->struct_text.textSize + float(this->struct_text.textSize) / 100 * 50;
+
+    this->backgoundImage = new QPixmap(mainStruct_settingsMiniWidget.background.backgroundImage);
 
     pLayout = new QVBoxLayout();
     this->setLayout(pLayout);
 
-    pTitle = new QLabel(this->struct_text.titleText);
+    pTitle = new QLabel(mainStruct_settingsMiniWidget.text.titleText);
     pTitle->setAlignment(Qt::AlignCenter);
     pLayout->addWidget(pTitle,0);
-
 
     home.setText("Закрыть");
     connect(&home, SIGNAL(clicked(bool)), this, SLOT(slotAnimCloseWindow()));
 
 //таймер бездействия
+    timer.setInterval(mainStruct_settingsMiniWidget.miscellanea.timerSec*1000);
     connect(&timer, SIGNAL(timeout()), this, SLOT(slotAnimCloseWindow()));
-
-    this->timerSec = timerSec;
 }
 void Content::addWidget(QWidget *w)
 {
@@ -45,13 +43,14 @@ void Content::addWidget(QWidget *w)
 }
 void Content::setTextSize(const int &textSize)
 {
-    pTitle->setStyleSheet("font-size:" + QString::number(textSize + float(textSize) / 100 * 50 ) + "px;");
-    home.setStyleSheet("font-size:" + QString::number(textSize + float(textSize) / 100 * 50 ) + "px;");
+    pTitle->setStyleSheet("font-size:" + QString::number(textSize + double(float(textSize) / 100 * 50 )) + "px;");
+    home.setStyleSheet("font-size:" + QString::number(textSize + double(float(textSize) / 100 * 50 )) + "px;");
 }
 void Content::setTitle(const QString &title)
 {
-    pTitle->setText(struct_text.titleText + title);
-    pTitle->setStyleSheet("font: bold " + QString::number(struct_text.textSize) + "px;");
+    pTitle->setText(mainStruct_settingsMiniWidget.text.titleText + title);
+    pTitle->setStyleSheet("font: bold " + QString::number(mainStruct_settingsMiniWidget.text.titleTextSize) + "px; \
+                           color:" + mainStruct_settingsMiniWidget.text.titleColor + ";");
 }
 void Content::slotAnimCloseWindow()
 {
@@ -71,7 +70,7 @@ void Content::slotAnimCloseWindow()
 }
 void Content::slotRestartTimer()
 {
-    timer.start(timerSec);
+    timer.start();
 //    qDebug() << "restart timer";
 }
 bool Content::event(QEvent *event)
@@ -84,7 +83,7 @@ bool Content::event(QEvent *event)
     }
     if(event->type() == QEvent::Show){
         home.setDisabled(false);
-        timer.start(timerSec);
+        timer.start();
     }
 
     return QWidget::event(event);

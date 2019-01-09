@@ -16,18 +16,21 @@ class Content : public QLabel
 {
     Q_OBJECT
 public:
-    Content(const struct text &struct_text, QString backgoundImagePath, int timerSec, QWidget *parent = nullptr);
+    Content(struct settingsMiniWidget *struct_settingsMiniWidget, \
+            QWidget *parent = nullptr);
     ~Content();
 
 // таймер при истечении которого вызывается слот close()
     QTimer timer;
-    int timerSec;
+//    int timerSec;
 
     void            addWidget       (QWidget* w);
     void            setTextSize     (const int &textSize);
 
     void            setTitle(const QString &title);
 private:
+    settingsMiniWidget mainStruct_settingsMiniWidget;
+
     QVBoxLayout*    pLayout     = nullptr;
     QHBoxLayout*    pHLayout    = nullptr;
 

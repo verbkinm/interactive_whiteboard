@@ -25,15 +25,12 @@ private:
 
 //указатель на мини виджет
     Mini_Widget *pmini  = nullptr;
-
+//указатель на структуру настроек
+    settingsMiniWidget*                 struct_settingsMiniWidget   = nullptr;
 //FUNCTIONS
     void            addMyWidgets        ();
-    void            addMyWidget         (const QRect &rect, \
-                                         const struct border &struct_border, \
-                                         const struct miscellanea &struct_miscellanea, \
-                                         const struct background &struct_background, \
-                                         const struct path &struct_path, \
-                                         const struct text &struct_text);
+    void            addMyWidget         (settingsMiniWidget *struct_settingsMiniWidget, \
+                                         QString objectName);
 
 
     void            paintEvent          (QPaintEvent*);

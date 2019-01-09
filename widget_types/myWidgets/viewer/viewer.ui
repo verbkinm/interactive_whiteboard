@@ -73,28 +73,6 @@
       <number>0</number>
      </property>
      <item>
-      <widget class="QPushButton" name="prevois">
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset resource="../../../img.qrc">
-         <normaloff>:/img/img/previos.png</normaloff>:/img/img/previos.png</iconset>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="next">
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset resource="../../../img.qrc">
-         <normaloff>:/img/img/next.png</normaloff>:/img/img/next.png</iconset>
-       </property>
-      </widget>
-     </item>
-     <item>
       <spacer name="horizontalSpacer">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
@@ -108,9 +86,31 @@
       </spacer>
      </item>
      <item>
+      <widget class="QPushButton" name="prevois">
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../../../img.qrc">
+         <normaloff>:/img/img/previos.png</normaloff>:/img/img/previos.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QLabel" name="pages">
        <property name="text">
         <string>0/0</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="next">
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../../../img.qrc">
+         <normaloff>:/img/img/next.png</normaloff>:/img/img/next.png</iconset>
        </property>
       </widget>
      </item>

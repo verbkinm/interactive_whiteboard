@@ -48,7 +48,14 @@ void Leafer::slotNextRelease()
     ui->next->setIcon(QIcon(":/img/img/next.png"));
     emit signalNext();
 }
+void Leafer::setTextSize(int textSize)
+{
+    buttonSize = textSize*2;
 
+    ui->count->setStyleSheet("font-size:" + QString::number(textSize) + "px;");
+    ui->previos->setIconSize(QSize(buttonSize, buttonSize));
+    ui->next->setIconSize(QSize(buttonSize, buttonSize));
+}
 Leafer::~Leafer()
 {
     delete ui;
