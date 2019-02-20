@@ -29,6 +29,8 @@ private:
 
     QLabel* pLabel = nullptr;
 
+    QList<QLabel*> listLabel;
+
 public:
     Cell(unsigned int textSize, QString textColor, bool bold = false);
     ~Cell();

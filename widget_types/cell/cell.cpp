@@ -13,6 +13,8 @@ Cell::Cell(unsigned int textSize, QString textColor, bool bold) : QWidget()
     this->bold     = bold;
 
     pGridLayout = new QGridLayout;
+    pGridLayout->setMargin(2);
+    pGridLayout->setSpacing(0);
     this->setLayout(pGridLayout);
 
     setBackgroundColor(NONE);
@@ -25,6 +27,8 @@ void Cell::setText(QString str)
         boldText = "font: bold;";
 
     pLabel = new QLabel(str);
+    listLabel.append(pLabel);
+
     pLabel->setStyleSheet("color:" + textColor + ";"
             "font-size:" + QString::number(textSize) + "px;" +
             boldText );
@@ -74,8 +78,11 @@ void Cell::paintEvent(QPaintEvent *)
 }
 Cell::~Cell()
 {
+    foreach (QLabel* l, listLabel)
+        delete l;
+
 //    qDebug() << "cell destructor";
-    delete pLabel;
+//    delete pLabel;
     delete pHorizontLayout;
     delete pGridLayout;
 }

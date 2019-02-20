@@ -12,6 +12,9 @@ Main_Widget::Main_Widget()
                    widget_settings(QSettings::IniFormat, QSettings::UserScope, "INTERACTIVE_WHITEBOARD","interactive_whiteboard_widgets")
 
 {
+    generals_settings.setIniCodec("utf8");
+    widget_settings.setIniCodec("utf8");
+
     addMyWidgets();
 }
 void Main_Widget::addMyWidgets()
@@ -90,7 +93,7 @@ void Main_Widget::paintEvent(QPaintEvent*)
 {
     QPainter painter(this);
 
-    QPixmap pixMap(generals_settings.value("Generals/backgoundImage", ":img/school2").toString());
+    QPixmap pixMap(generals_settings.value("Generals/backgoundImage", ":img/background").toString());
     QPixmap newPix = pixMap.scaled(this->size(), Qt::IgnoreAspectRatio);
     painter.setBrush(QBrush(Qt::black, newPix));
     painter.drawRect(this->rect());

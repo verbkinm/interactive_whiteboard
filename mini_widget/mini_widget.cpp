@@ -8,7 +8,7 @@
 #include <QTextCodec>
 
 //задержка анимациив
-#define DURATION 1000
+#define DURATION 300
 
 Mini_Widget::Mini_Widget(settingsMiniWidget *struct_settingsMiniWidget, \
                          QWidget *parent) : QWidget(parent)

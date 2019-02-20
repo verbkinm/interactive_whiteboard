@@ -10,8 +10,6 @@ Content::Content(settingsMiniWidget *struct_settingsMiniWidget, QWidget *parent)
 {
     mainStruct_settingsMiniWidget = *struct_settingsMiniWidget;
 
-//    this->struct_text.textSize = this->struct_text.textSize + float(this->struct_text.textSize) / 100 * 50;
-
     this->backgoundImage = new QPixmap(mainStruct_settingsMiniWidget.background.backgroundImage);
 
     pLayout = new QVBoxLayout();

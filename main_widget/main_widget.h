@@ -15,10 +15,12 @@ public:
     Main_Widget();
     ~Main_Widget();
 
-private:
 
 //файл конфигураций для виджетов, добавляемых на доску
     QSettings                       generals_settings, widget_settings;
+
+
+private:
 
 //здесь будут храниться указатели на все виджеты на доске
 //    QList<QObject*>                 current_widgets;

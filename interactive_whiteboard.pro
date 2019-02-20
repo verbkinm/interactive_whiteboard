@@ -45,7 +45,8 @@ HEADERS += \
     widget_types/date.h \
     widget_types/run_string.h \
     widget_types/myWidgets/easter_bunny/dontclick.h \
-    widget_types/bells_monitor/bellsmonitor.h
+    widget_types/bells_monitor/bellsmonitor.h \
+    wrapper.h
 
 SOURCES += \
     content/content.cpp \
@@ -63,5 +64,6 @@ SOURCES += \
     widget_types/run_string.cpp \
     widget_types/myWidgets/easter_bunny/dontclick.cpp \
     widget_types/bells_monitor/bellsmonitor.cpp \
-    structes/structes.cpp
+    structes/structes.cpp \
+    wrapper.cpp
 

@@ -1,13 +1,12 @@
-#include "main_widget/main_widget.h"
+#include "wrapper.h"
 #include <QApplication>
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-//    a.setOverrideCursor(Qt::BlankCursor);
-    Main_Widget w;
+    a.setOverrideCursor(Qt::BlankCursor);
 
-    w.showFullScreen();
+    Wrapper wrapper;
 
     return a.exec();
 }
