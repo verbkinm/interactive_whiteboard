@@ -44,11 +44,11 @@ Schedule::Schedule(QString xmlPath, QString textColor, int textSize, QWidget *pa
 
 //установка кол-ва столбцов и строк
             tableNumberAndTime->setColumnCount(2);
-// +1 для эмитации хедера первой строкой
+// +1 для имитации хедера первой строкой
             tableNumberAndTime->setRowCount(countLesson);
 
             tableLessonData->setColumnCount(countClass);
-// +1 для эмитации хедера первой строкой
+// +1 для имитации хедера первой строкой
             tableLessonData->setRowCount(countLesson);
 
 // таблицы хедеры

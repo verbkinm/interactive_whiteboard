@@ -152,7 +152,7 @@ void BellsMonitor::createTable(int numbersOfLessons, short unsigned int numberOf
 //properties
     pTable[numberOfTable]->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     pTable[numberOfTable]->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
-    pTable[numberOfTable]->setEditTriggers(0);
+    pTable[numberOfTable]->setEditTriggers(nullptr);
     pTable[numberOfTable]->setEditTriggers(QAbstractItemView::NoEditTriggers);
     pTable[numberOfTable]->setSelectionMode(QAbstractItemView::NoSelection);
     pTable[numberOfTable]->setDragDropMode(QAbstractItemView::NoDragDrop);
@@ -368,7 +368,7 @@ void BellsMonitor::slotTryReconnect()
 {
 //    qDebug() << "slot reconnect";
     timerWait.stop();
-    m_pTcpSocket->connectToHost(server_ip, server_port);
+    m_pTcpSocket->connectToHost(server_ip, quint16(server_port));
 }
 void BellsMonitor::slotSetCurrentTime()
 {
@@ -419,7 +419,7 @@ void BellsMonitor::selectCurrentLesson(int currentTimeInSec)
     if(currentPeriodDisplay < 0)
         return;
 
-        if(pTable[currentPeriodDisplay] != 0)
+        if(pTable[currentPeriodDisplay] != nullptr)
         {
             isLessonNow[currentPeriodDisplay] = false;
             numberCurrentLesson[currentPeriodDisplay] = -1;
