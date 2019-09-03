@@ -116,9 +116,6 @@ private slots:
     void slotSetCurrentTime                 (void);
     void slotDisplayPeriod                  (void);
     void slotPingOut                        (void);
-
-    virtual bool event                  (QEvent *event);
-
 };
 
 #endif // BELLSMONITOR_H

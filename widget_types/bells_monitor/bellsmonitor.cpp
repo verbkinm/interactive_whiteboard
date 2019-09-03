@@ -62,7 +62,7 @@ void BellsMonitor::createClock(void)
     clockSetText();
 
     clock.setAlignment(Qt::AlignCenter);
-//    clock.setStyleSheet("font: bold 48px;");
+    clock.setStyleSheet("font: bold 48px;");
     timerCurrentTime.start(200);
 
  //Отображения смен по очедери
@@ -411,6 +411,7 @@ void BellsMonitor::slotSetCurrentTime()
                                                     background-position: center; \
                                                     background-origin: content; background-attachment: scroll; \
                                                     font-size: " + QString::number(textSize_tmp) + "px;");
+        clock.setStyleSheet("font-size: " + QString::number(textSize_tmp) + "px;");
     }
     pTable[currentPeriodDisplay]->clearFocus();
 }
@@ -510,17 +511,12 @@ void BellsMonitor::zebra(short unsigned int numberOfTable)
         pTable[numberOfTable]->item(j + 2, 2)->setBackgroundColor(SelectBackgroundColor);
     }
 }
-bool BellsMonitor::event(QEvent *event)
-{
-//      qDebug() << "bells event" <<event->type();
-
-    return QWidget::event(event);
-}
 void BellsMonitor::readSettings()
 {
     QFile fileSettings(settings.fileName());
 
-    if( !(fileSettings.exists()) ){
+    if( !(fileSettings.exists()) )
+    {
         settings.setValue("settings/server_ip",   "localhost");
         settings.setValue("settings/server_port",  8083);
         settings.setValue("settings/textSize",     48);
