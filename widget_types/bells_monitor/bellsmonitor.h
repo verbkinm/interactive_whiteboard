@@ -22,7 +22,7 @@ class BellsMonitor : public QWidget
     Q_OBJECT
 
 public:
-    BellsMonitor(QWidget *parent = 0);
+    BellsMonitor(QWidget *parent = nullptr);
     ~BellsMonitor();
 
     QVBoxLayout*                pLayout;
@@ -89,7 +89,7 @@ private:
 //
 //****************************************************************************
 
-    unsigned short numbersOfLessonInChange[2] = { 0, 0 };
+    int numbersOfLessonInChange[2] = { 0, 0 };
 
     bool isChangesEnabled[2] = { false, false };
 

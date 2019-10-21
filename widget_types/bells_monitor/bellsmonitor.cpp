@@ -27,6 +27,7 @@ BellsMonitor::BellsMonitor(QWidget *parent) :
     readSettings();
 
     m_pTcpSocket = new QTcpSocket(this);
+    qDebug() << "Connect to " << server_ip << ":" << server_port;
     m_pTcpSocket->connectToHost(server_ip, quint16(server_port));
 
     connect(m_pTcpSocket,       SIGNAL(connected()), SLOT(slotConnected()));
@@ -191,12 +192,11 @@ void BellsMonitor::slotPingOut()
 void BellsMonitor::slotReadyRead()
 {
     QDataStream in(m_pTcpSocket);
-    in.setVersion(QDataStream::Qt_5_3);
-
+    in.setVersion(QDataStream::Qt_5_10);
 
     int typeData;
     in >> typeData;
-//    qDebug() << "typeData - " << typeData;
+    qDebug() << "typeData - " << typeData;
     if(typeData == 1)
     {
         timerPing.start(timerPingDuration);
@@ -214,13 +214,15 @@ void BellsMonitor::slotReadyRead()
 
         pDoubleArray = new lessonTime* [2];
 
-        for (int i = 0; i < 2; ++i) {
-            in >> isChangesEnabled[i] \
-               >> numbersOfLessonInChange[i];
+        for (int i = 0; i < 2; ++i)
+        {
+            in >> isChangesEnabled[i];
+            in >> numbersOfLessonInChange[i];
 
             pDoubleArray[i] = new lessonTime[numbersOfLessonInChange[i]];
 
-            for (int j = 0; j < numbersOfLessonInChange[i]; ++j){
+            for (int j = 0; j < numbersOfLessonInChange[i]; ++j)
+            {
 
                 in >> pDoubleArray[i][j].begin >> pDoubleArray[i][j].end;
 
